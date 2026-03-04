@@ -1,4 +1,4 @@
-<!-- VERSION: 2.6.0 -->
+<!-- VERSION: 2.7.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +133,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ccM{display:flex;align-items:center;flex-wrap:wrap;gap:14px;padding:11px 18px;flex:1;min-width:0}
 .ccR{display:flex;align-items:center;gap:7px;padding:11px 14px;border-left:1.5px solid var(--bd);flex-shrink:0;align-self:stretch}
 .cc-id{font-family:var(--ff-h);font-size:14.5px;font-weight:700;color:var(--ac);white-space:nowrap}
-.cc-ins{font-family:var(--ff-h);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--mu);margin-top:1px}
+.cc-ins{font-family:var(--ff-h);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ac);margin-top:2px;background:rgba(37,99,235,.08);border:1.5px solid rgba(37,99,235,.18);border-radius:4px;padding:1px 5px;display:inline-block}
 .chip{display:flex;flex-direction:column;gap:1px;min-width:0}
 .chip-l{font-family:var(--ff-h);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu)}
 .chip-v{font-size:12.5px;font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
@@ -461,7 +461,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v2.6.0</span>
+      <span class="hdr-ver">v2.7.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -470,9 +470,13 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <option value="dark">Dark</option>
         <option value="auto">Auto (Time)</option>
       </select>
-      <button class="btn btn-g btn-sm" onclick="exportCSV()">
+      <button class="btn btn-g btn-sm" onclick="window.open('https://www.youtube.com','_blank')" title="Custom shortcut">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        CUSTOM
+      </button>
+      <button class="btn btn-g btn-sm" onclick="exportXLSX()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Export CSV
+        Export XLSX
       </button>
       <button class="btn btn-g btn-sm" onclick="doPrintAll()" title="Print all active claims as table">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -660,58 +664,98 @@ function doPrintAll(){
 }
 function openPrintWindow(claims,mode){
   var now=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-  var rows=claims.map(function(cl){
+  function xe(s){return(s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function statusStyle(st){
+    var s=(st||'').toLowerCase();
+    if(s.indexOf('pending')>=0||s.indexOf('awaiting')>=0)return 'background:#fef3c7;color:#92400e';
+    if(s.indexOf('process')>=0)return 'background:#dbeafe;color:#1e40af';
+    if(s.indexOf('complete')>=0)return 'background:#d1fae5;color:#065f46';
+    return 'background:#f3f4f6;color:#374151';
+  }
+  var rows=claims.map(function(cl,idx){
     var r=getRem(cl.remark);
     var did=r.displayId||cl.id;
     var reqs=cl.requests.map(function(q,i){
       var qd=new Date(q.datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
       var txt=(q.text||'').replace(/\n/g,'<br>');
-      return '<div style="margin-bottom:'+(i<cl.requests.length-1?'6px':'0')+'"><span style="font-size:9px;color:#666;display:block">'+qd+(q.requestedBy?' &middot; '+q.requestedBy:'')+'</span><span style="font-size:10.5px">'+txt+'</span></div>';
+      var by=q.requestedBy?'<span class="req-by">'+xe(q.requestedBy)+'</span>':'';
+      return '<div class="req-item">'
+        +'<div class="req-meta"><span class="req-date">'+qd+'</span>'+by+'</div>'
+        +'<div class="req-txt">'+txt+'</div>'
+        +'</div>';
     }).join('');
-    var slo=(cl.status||'').toLowerCase();
-    var stColor=slo.indexOf('pending')>=0||slo.indexOf('awaiting')>=0?'#92400e':'#1e40af';
-    var stBg=slo.indexOf('pending')>=0||slo.indexOf('awaiting')>=0?'#fef3c7':'#dbeafe';
-    return '<tr>'
-      +'<td style="font-weight:700;color:#1a56db;white-space:nowrap">#'+esc(did)+'</td>'
-      +'<td>'+esc(r.insurer||'-')+'</td>'
-      +'<td>'+esc(cl.customer||'-')+'</td>'
-      +'<td>'+esc(r.inscomp||'-')+'</td>'
-      +'<td>'+(r.claimAmount?'USD '+esc(r.claimAmount):'-')+'</td>'
-      +'<td>'+esc(r.accidentDate||'-')+'</td>'
-      +'<td><span style="background:'+stBg+';color:'+stColor+';padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;white-space:nowrap">'+esc(cl.status)+'</span></td>'
-      +'<td>'+(reqs||'-')+'</td>'
-      +'<td style="font-size:10.5px;color:#555">'+esc(r.text||'')+'</td>'
+    var bg=idx%2===0?'#fff':'#f8fafc';
+    var files=r.files&&r.files.length?r.files.map(function(f){return '<span class="file-tag">'+xe(f.name)+'</span>';}).join(''):'';
+    return '<tr style="background:'+bg+'">'
+      +'<td class="td-id">#'+xe(did)+'</td>'
+      +'<td class="td-ins">'+xe(r.insurer||'—')+'</td>'
+      +'<td class="td-name">'+xe(cl.customer||'—')+'</td>'
+      +'<td class="td-co">'+xe(r.inscomp||'—')+'</td>'
+      +'<td class="td-amt">'+(r.claimAmount?'<span class="amt">USD '+xe(r.claimAmount)+'</span>':'—')+'</td>'
+      +'<td class="td-date">'+xe(r.accidentDate||'—')+'</td>'
+      +'<td class="td-st"><span class="stpill" style="'+statusStyle(cl.status)+'">'+xe(cl.status)+'</span></td>'
+      +'<td class="td-req">'+(reqs||'<span style="color:#aaa">—</span>')+'</td>'
+      +'<td class="td-rem">'+(r.text?'<span class="remark">'+xe(r.text)+'</span>':'')+(files?'<div class="files">'+files+'</div>':'')+'</td>'
       +'</tr>';
   }).join('');
-  var title=mode==='single'?'Claim Report':'Active Claims Report';
-  var css='*{box-sizing:border-box;margin:0;padding:0}'
-    +'@page{size:A4 landscape;margin:10mm}'
-    +'body{font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000;background:#fff}'
-    +'h1{font-size:14px;font-weight:700;margin-bottom:3px}'
-    +'.sub{font-size:10px;color:#666;margin-bottom:10px}'
+
+  var css=''
+    +'*{box-sizing:border-box;margin:0;padding:0}'
+    +'@page{size:A4 landscape;margin:8mm}'
+    +'body{font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#111;background:#fff}'
+    +'.ph{display:flex;align-items:center;justify-content:space-between;padding:0 0 7px;border-bottom:2px solid #1e3a5f;margin-bottom:7px}'
+    +'.ph-brand{display:flex;align-items:center;gap:8px}'
+    +'.ph-logo{width:28px;height:28px;background:#1e3a5f;border-radius:6px;display:flex;align-items:center;justify-content:center}'
+    +'.ph-title{font-size:14px;font-weight:700;color:#1e3a5f;letter-spacing:-.3px}'
+    +'.ph-sub{font-size:9px;color:#666;margin-top:1px}'
+    +'.ph-meta{text-align:right;font-size:9px;color:#666;line-height:1.6}'
     +'table{width:100%;border-collapse:collapse;table-layout:fixed}'
-    +'th{background:#1e3a5f;color:#fff;font-size:9.5px;font-weight:700;padding:5px 6px;text-align:left;white-space:nowrap}'
-    +'td{padding:5px 6px;border-bottom:1px solid #e5e7eb;vertical-align:top;font-size:10.5px;word-break:break-word}'
-    +'tr:nth-child(even) td{background:#f8fafc}'
-    +'col.c0{width:9%}col.c1{width:7%}col.c2{width:10%}col.c3{width:10%}'
-    +'col.c4{width:7%}col.c5{width:8%}col.c6{width:11%}col.c7{width:24%}col.c8{width:14%}'
-    +'.footer{margin-top:8px;font-size:9px;color:#999;text-align:right}';
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Query Tracker</title>'
-    +'<style>'+css+'</style></head>'
-    +'<body onload="setTimeout(function(){window.print();},400)">'
-    +'<h1>Query Tracker - '+title+'</h1>'
-    +'<div class="sub">Printed '+now+' - '+claims.length+' claim'+(claims.length!==1?'s':'')+'</div>'
+    +'thead tr{background:#1e3a5f}'
+    +'th{color:#fff;font-size:8.5px;font-weight:700;padding:5px 5px;text-align:left;letter-spacing:.3px;text-transform:uppercase}'
+    +'td{padding:5px 5px;border-bottom:1px solid #e5e7eb;vertical-align:top;font-size:9.5px;word-break:break-word}'
+    +'tr:last-child td{border-bottom:none}'
+    +'.td-id{font-weight:700;color:#1e3a8a;white-space:nowrap;width:8%}'
+    +'.td-ins{width:7%;font-weight:600;color:#1e40af}'
+    +'.td-name{width:9%}'
+    +'.td-co{width:10%}'
+    +'.td-amt{width:8%;text-align:right}'
+    +'.td-date{width:8%;white-space:nowrap;color:#555}'
+    +'.td-st{width:10%;text-align:center}'
+    +'.td-req{width:26%}'
+    +'.td-rem{width:14%;color:#555}'
+    +'.amt{font-weight:700;color:#065f46}'
+    +'.stpill{display:inline-block;padding:2px 6px;border-radius:99px;font-size:8px;font-weight:700;white-space:nowrap}'
+    +'.req-item{margin-bottom:4px;padding-bottom:4px;border-bottom:1px dashed #e5e7eb}'
+    +'.req-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}'
+    +'.req-meta{display:flex;gap:5px;align-items:center;margin-bottom:2px}'
+    +'.req-date{font-size:8px;color:#888;white-space:nowrap}'
+    +'.req-by{font-size:8px;font-weight:700;color:#1e40af;background:#eff6ff;padding:0 4px;border-radius:3px}'
+    +'.req-txt{font-size:9.5px;color:#222;line-height:1.4}'
+    +'.remark{font-style:italic;color:#555;font-size:9px;line-height:1.4}'
+    +'.file-tag{display:inline-block;background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 4px;font-size:8px;color:#374151;margin:1px 1px 0 0}'
+    +'.files{margin-top:3px}'
+    +'.footer{margin-top:6px;display:flex;justify-content:space-between;font-size:8px;color:#aaa;border-top:1px solid #e5e7eb;padding-top:4px}';
+
+  var svgLogo='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>';
+  var title=mode==='single'?'Claim Report':'Active Claims Report';
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Query Tracker</title><style>'+css+'</style></head>'
+    +'<body onload="setTimeout(function(){window.print();},450)">'
+    +'<div class="ph">'
+    +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v2.7.0</div>'
+    +'</div>'
     +'<table><colgroup>'
-    +'<col class="c0"><col class="c1"><col class="c2"><col class="c3">'
-    +'<col class="c4"><col class="c5"><col class="c6"><col class="c7"><col class="c8">'
+    +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
+    +'<col class="td-amt"><col class="td-date"><col class="td-st"><col class="td-req"><col class="td-rem">'
     +'</colgroup><thead><tr>'
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
-    +'<th>Amount</th><th>Acc. Date</th><th>Status</th><th>Requests</th><th>Remark</th>'
+    +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer">Query Tracker v2.6.0 - Generated '+now+'</div>'
+    +'<div class="footer"><span>Query Tracker v2.7.0</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
-  var pw=window.open('','_blank','width=1100,height=750');
-  if(!pw){toast('Pop-up blocked - allow pop-ups for this site','err');return;}
+
+  var pw=window.open('','_blank','width=1200,height=800');
+  if(!pw){toast('Pop-up blocked — allow pop-ups for this site','err');return;}
   pw.document.write(html);
   pw.document.close();
 }
@@ -894,53 +938,42 @@ function handleFileDrop(e,claimId){
 
 async function uploadFilesToDrive(claimId,files){
   if(!files.length)return;
-  toast(`Uploading ${files.length} file${files.length>1?'s':''}…`,'info');
-
-  // Show uploading state on the card
-  const zone=document.getElementById('fdz-'+claimId);
-  if(zone)zone.style.opacity='0.5';
-
+  toast('Uploading '+files.length+' file'+(files.length>1?'s':'')+'…','info');
+  const setZone=op=>{const z=document.getElementById('fdz-'+claimId);if(z)z.style.opacity=op;};
+  setZone('0.5');
   const results=[];
   for(const f of files){
+    // Size guard: Apps Script has ~50MB payload limit but practical limit ~5MB base64
+    if(f.size>5*1024*1024){toast(f.name+' is too large (max 5 MB)','err');results.push({name:f.name,driveId:'',driveUrl:''});continue;}
     try{
-      // Read file as base64
       const b64=await fileToBase64(f);
-      const res=await apicall({
-        action:'uploadFile',
-        claimId,
-        fileName:f.name,
-        mimeType:f.type||'application/octet-stream',
-        fileData:b64,
-        folderId:GDRIVE_FOLDER_ID
-      });
+      const res=await apicall({action:'uploadFile',claimId,fileName:f.name,mimeType:f.type||'application/octet-stream',fileData:b64,folderId:GDRIVE_FOLDER_ID});
       if(res&&res.success){
         results.push({name:f.name,driveId:res.driveId,driveUrl:res.driveUrl});
       } else {
-        // Fallback: store name only if upload fails
         results.push({name:f.name,driveId:'',driveUrl:''});
-        toast(`Upload failed for ${f.name}`,'err');
+        toast('Upload failed: '+(res&&res.error?res.error:f.name),'err');
       }
-    } catch(err){
+    }catch(err){
       results.push({name:f.name,driveId:'',driveUrl:''});
-      toast(`Error uploading ${f.name}`,'err');
+      toast('Error: '+err.message,'err');
     }
   }
-
-  // Attach results to claim
-  const c=DB.claims.find(x=>x.id===claimId);
-  if(!c){if(zone)zone.style.opacity='';return;}
-  const r=getRem(c.remark);
+  const cl=DB.claims.find(x=>x.id===claimId);
+  if(!cl){setZone('');return;}
+  const r=getRem(cl.remark);
   if(!r.files)r.files=[];
-  results.forEach(rf=>{
-    if(!r.files.find(x=>x.name===rf.name&&x.driveId===rf.driveId)){
-      r.files.push(rf);
-    }
-  });
-  c.remark=JSON.stringify(r);c.dateModified=new Date().toISOString();
-  if(zone)zone.style.opacity='';
-  persist(c);
+  results.forEach(rf=>{if(!r.files.find(x=>x.name===rf.name&&x.driveId===rf.driveId)){r.files.push(rf);}});
+  cl.remark=JSON.stringify(r);cl.dateModified=new Date().toISOString();
+  setZone('');
+  // Save without triggering full re-render (preserves open card state)
+  save();
+  await apicall({action:'saveClaim',claim:cl});
+  renderClaims();
   const ok=results.filter(x=>x.driveId).length;
-  if(ok)toast(`${ok} file${ok>1?'s':''} saved to Drive`,'ok');
+  const fail=results.length-ok;
+  if(ok)toast(ok+' file'+(ok>1?'s':'')+' saved to Drive','ok');
+  if(fail)toast(fail+' file'+(fail>1?'s':'')+' failed to upload','err');
 }
 
 function fileToBase64(file){
@@ -1248,18 +1281,40 @@ function statusColor(name){
 }
 
 /* ══ EXPORT ══ */
-function exportCSV(){
-  const maxQ=DB.claims.reduce((m,c)=>Math.max(m,c.requests.length),0);
-  const hdr=['Claim Number','Insurer','Insured Company','Claimant','Handled By','Status','Claim Amount','Accident Date','Open Days','Phone','Personal ID','Remark','Query Count'];
-  for(let i=1;i<=maxQ;i++)hdr.push(`Request ${i} Date`,`Request ${i} By`,`Request ${i} Details`);
-  let csv="\uFEFF"+hdr.map(h=>`"${h}"`).join(',')+'\r\n';
-  DB.claims.forEach(c=>{
-    const r=getRem(c.remark);const q=s=>'"'+(s||'').replace(/"/g,'""')+'"';
-    let row=[r.displayId||c.id,q(r.insurer),q(r.inscomp),q(c.customer),q(r.handler),q(c.status),q(r.claimAmount),q(r.accidentDate),daysSince(c.dateIn),q(r.phone),q(r.personalId),q(r.text),c.requests.length];
-    for(let i=0;i<maxQ;i++){const req=c.requests[i];if(req){row.push(q(new Date(req.datePasted).toLocaleDateString('en-GB')),q(req.requestedBy||''),q(req.text||''));}else{row.push('','','');}}
-    csv+=row.join(',')+'\r\n';
+function exportXLSX(){
+  var maxQ=DB.claims.reduce(function(m,c){return Math.max(m,c.requests.length);},0);
+  var hdrs=['Claim Number','Insurer','Insured Company','Claimant','Handled By','Status',
+    'Claim Amount','Accident Date','Open Days','Phone','Personal ID','Remark','Query Count'];
+  for(var i=1;i<=maxQ;i++){hdrs.push('Request '+i+' Date','Request '+i+' By','Request '+i+' Details');}
+  function xe(s){return(s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function cell(v,bold){return '<Cell ss:StyleID="'+(bold?'h':'d')+'"><Data ss:Type="String">'+xe(v)+'</Data></Cell>';}
+  var rows='<Row>'+hdrs.map(function(h){return cell(h,true);}).join('')+'</Row>\n';
+  DB.claims.forEach(function(c){
+    var r=getRem(c.remark);
+    var base=[r.displayId||c.id,r.insurer||'',r.inscomp||'',c.customer||'',r.handler||'',
+      c.status||'',r.claimAmount||'',r.accidentDate||'',daysSince(c.dateIn),
+      r.phone||'',r.personalId||'',r.text||'',c.requests.length];
+    var extra=[];
+    for(var i=0;i<maxQ;i++){
+      var req=c.requests[i];
+      if(req){extra.push(new Date(req.datePasted).toLocaleDateString('en-GB'),req.requestedBy||'',req.text||'');}
+      else{extra.push('','','');}
+    }
+    rows+='<Row>'+base.concat(extra).map(function(v){return cell(v,false);}).join('')+'</Row>\n';
   });
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURI(csv);a.download=`QueryTracker_${new Date().toISOString().split('T')[0]}.csv`;document.body.appendChild(a);a.click();a.remove();toast('Export complete','ok');
+  var xml='<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>'
+    +'<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+    +'<Styles>'
+    +'<Style ss:ID="h"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#1E3A5F" ss:Pattern="Solid"/></Style>'
+    +'<Style ss:ID="d"><Alignment ss:WrapText="0"/></Style>'
+    +'</Styles>'
+    +'<Worksheet ss:Name="QueryTracker"><Table>'+rows+'</Table></Worksheet></Workbook>';
+  var blob=new Blob([xml],{type:'application/vnd.ms-excel'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='QueryTracker_'+new Date().toISOString().split('T')[0]+'.xls';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+  toast('Export complete','ok');
 }
 
 /* ══ UTILS ══ */
