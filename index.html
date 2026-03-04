@@ -1,4 +1,4 @@
-<!-- VERSION: 2.5.0 -->
+<!-- VERSION: 2.6.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +131,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .cc:hover .ccrow{background:var(--surf3)}
 .ccL{display:flex;flex-direction:column;justify-content:center;padding:13px 16px;border-right:1.5px solid var(--bd);gap:3px;min-width:0}
 .ccM{display:flex;align-items:center;flex-wrap:wrap;gap:14px;padding:11px 18px;flex:1;min-width:0}
-.ccR{display:flex;align-items:center;gap:7px;padding:11px 14px;border-left:1.5px solid var(--bd);flex-shrink:0}
+.ccR{display:flex;align-items:center;gap:7px;padding:11px 14px;border-left:1.5px solid var(--bd);flex-shrink:0;align-self:stretch}
 .cc-id{font-family:var(--ff-h);font-size:14.5px;font-weight:700;color:var(--ac);white-space:nowrap}
 .cc-ins{font-family:var(--ff-h);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--mu);margin-top:1px}
 .chip{display:flex;flex-direction:column;gap:1px;min-width:0}
@@ -163,8 +163,8 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 
 /* Two-column layout inside expand — max-height to fit one screen */
 .exp-layout{display:grid;grid-template-columns:1fr 360px;gap:0;min-height:0}
-.exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd);overflow-y:auto;max-height:calc(100vh - 120px)}
-.exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2);overflow-y:auto;max-height:calc(100vh - 120px)}
+.exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd);overflow-y:auto;max-height:calc(100vh - 110px);min-height:0}
+.exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2);overflow-y:auto;max-height:calc(100vh - 110px);min-height:0}
 
 /* Section box */
 .psec{background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r16);overflow:hidden}
@@ -300,65 +300,10 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 #mblk{display:none;position:fixed;inset:0;background:var(--bg);z-index:99999;align-items:center;justify-content:center;padding:24px}
 @media(max-width:720px){#mblk{display:flex}#lscr,#app{display:none!important}}
 
-/* ═══════════════════════════════════════════ PRINT — A4 Portrait only, direct */
+/* ═══════════════════════════════════════════ PRINT — handled by doPrint popup window */
 @media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
-  html,body{background:#fff!important;color:#000!important;font-family:Arial,sans-serif!important}
-  /* Hide everything except the open card */
-  #ldr,#tdock,#mblk,#lscr,#modal,#nq-overlay,
-  .hdr,.tabbar,.filterbar,
-  .cc:not(.open),
-  .ccR .ib,.ccR .spill,.chevron,
-  .psec-acts,
-  .exp-side .psec:nth-child(1),
-  .exp-side .psec:nth-child(3){display:none!important}
-  /* Layout resets */
-  .wrap{padding:0!important;max-width:100%!important;margin:0!important}
-  .clist{gap:0!important}
-  .cc{border-radius:0!important;box-shadow:none!important;border:none!important;border-bottom:1pt solid #ccc!important;page-break-inside:avoid;margin-bottom:10pt!important;background:#fff!important}
-  .ccrow{cursor:default!important;background:#fff!important}
-  .ccL,.ccM,.ccR{border:none!important;background:#fff!important}
-  /* Expand panel always open in print */
-  .ccp{display:block!important;grid-template-rows:unset!important}
-  .ccp-inner{overflow:visible!important}
-  .ccp-body{background:#fff!important;border:none!important}
-  /* Side panel — show only remark (child 2), hide claim details (1) and files (3) */
-  .exp-layout{grid-template-columns:1fr 280px!important;display:grid!important}
-  .exp-main,.exp-side{max-height:none!important;overflow:visible!important;background:#fff!important;padding:10pt!important}
-  .exp-side{display:block!important;border-left:1pt solid #ddd!important}
-  /* Section boxes */
-  .psec{border-radius:3pt!important;border:1pt solid #ddd!important;background:#fff!important;margin-bottom:8pt!important}
-  .psec-hd{background:#f0f0f0!important;border-bottom:1pt solid #ddd!important;padding:6pt 8pt!important}
-  .psec-t{color:#000!important;font-weight:bold!important}
-  .psec-bd{padding:8pt!important}
-  .psec-ico{display:none!important}
-  /* Identity card */
-  .id-card{border:1pt solid #ddd!important;background:#fff!important;padding:8pt!important}
-  .id-card-icon{display:none!important}
-  .id-name{color:#000!important;font-size:14pt!important}
-  .id-tag{background:#f0f0f0!important;border:1pt solid #ddd!important;color:#000!important}
-  /* Inputs and textareas — show as plain text */
-  input,select,textarea,.ri-ta,.remark-ta{
-    border:1pt solid #ddd!important;
-    background:#fafafa!important;
-    color:#000!important;
-    -webkit-text-fill-color:#000!important;
-    font-size:10pt!important;
-    padding:4pt 6pt!important;
-    border-radius:3pt!important;
-  }
-  /* Request items */
-  .ri{background:#f9f9f9!important;border:1pt solid #ddd!important;border-radius:3pt!important;padding:6pt!important;margin-bottom:4pt!important}
-  .ri-ta{border:none!important;background:transparent!important;padding:0!important}
-  .ri-by{border:none!important;background:transparent!important;color:#555!important;-webkit-text-fill-color:#555!important}
-  .ri-date{background:#eee!important;border:1pt solid #ddd!important;color:#555!important}
-  /* Remark */
-  .remark-ta{min-height:40pt!important}
-  /* Pills and chips */
-  .pill,.id-tag{background:#eee!important;border:1pt solid #ccc!important;color:#000!important}
-  .cc-id{color:#1a56db!important}
-  .fl{color:#555!important}
-  @page{margin:12mm;size:A4 portrait}
+  body > *{display:none!important}
+  #print-win{display:block!important}
 }
 
 /* Ripple */
@@ -516,7 +461,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v2.5.0</span>
+      <span class="hdr-ver">v2.6.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -528,6 +473,10 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       <button class="btn btn-g btn-sm" onclick="exportCSV()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export CSV
+      </button>
+      <button class="btn btn-g btn-sm" onclick="doPrintAll()" title="Print all active claims as table">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print All
       </button>
       <button class="btn btn-g btn-sm" onclick="syncData(true)">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -574,6 +523,20 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 </div>
 </div>
 
+<!-- Confirm dialog -->
+<div id="confirm-veil" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:10000;align-items:center;justify-content:center">
+  <div style="background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r16);width:100%;max-width:360px;margin:24px;box-shadow:var(--s3);overflow:hidden">
+    <div style="padding:18px 20px;border-bottom:1.5px solid var(--bd);background:var(--surf2)">
+      <div id="confirm-title" style="font-family:var(--ff-h);font-size:14px;font-weight:700;color:var(--tx)"></div>
+      <div id="confirm-body" style="font-size:12.5px;color:var(--tx2);margin-top:5px;line-height:1.5"></div>
+    </div>
+    <div style="padding:12px 20px;display:flex;gap:8px;justify-content:flex-end;background:var(--surf2)">
+      <button class="btn btn-g btn-sm" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-sm" id="confirm-ok" style="background:#ef4444;color:#fff;border:none">Confirm</button>
+    </div>
+  </div>
+</div>
+
 <!-- Hidden file input -->
 <input type="file" id="file-picker" style="display:none" multiple>
 
@@ -595,6 +558,20 @@ let DB={claims:[],statuses:[]};
 let TAB='active';
 let PENDING=null;
 let FILE_ATTACH_TARGET=null;
+let _confirmCb=null;
+
+function showConfirm(title,body,cb){
+  document.getElementById('confirm-title').textContent=title;
+  document.getElementById('confirm-body').innerHTML=body;
+  _confirmCb=cb;
+  const v=document.getElementById('confirm-veil');
+  v.style.display='flex';
+  document.getElementById('confirm-ok').onclick=()=>{closeConfirm();if(_confirmCb)_confirmCb();};
+}
+function closeConfirm(){
+  document.getElementById('confirm-veil').style.display='none';
+  _confirmCb=null;
+}
 
 // Debounce timer for saves
 let _saveTimer=null;
@@ -670,24 +647,73 @@ function setNQMode(m){
   document.getElementById('nq-manual').classList.toggle('hidden',m!=='manual');
 }
 
-/* ══ PRINT — direct A4 portrait, no modal ══ */
+/* ══ PRINT — opens clean table popup, works on ALL browsers / PCs ══ */
 function doPrint(claimId){
-  // Open only this card
-  document.querySelectorAll('.cc.open').forEach(el=>{
-    if(el.id!=='card-'+claimId)el.classList.remove('open');
-  });
-  const card=document.getElementById('card-'+claimId);
-  if(card)card.classList.add('open');
-
-  // Temporarily remove dark theme so CSS variables resolve correctly on all browsers
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  if(isDark)document.documentElement.removeAttribute('data-theme');
-
-  setTimeout(()=>{
-    window.print();
-    // Restore dark theme after print dialog
-    if(isDark)setTimeout(()=>document.documentElement.setAttribute('data-theme','dark'),300);
-  },150);
+  // Print single claim
+  const claims=claimId?DB.claims.filter(x=>x.id===claimId):DB.claims.filter(x=>x.status!=='Complete');
+  openPrintWindow(claims, claimId?'single':'all');
+}
+function doPrintAll(){
+  const active=DB.claims.filter(x=>x.status!=='Complete');
+  if(!active.length){toast('No active claims to print','err');return;}
+  openPrintWindow(active,'all');
+}
+function openPrintWindow(claims,mode){
+  var now=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  var rows=claims.map(function(cl){
+    var r=getRem(cl.remark);
+    var did=r.displayId||cl.id;
+    var reqs=cl.requests.map(function(q,i){
+      var qd=new Date(q.datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+      var txt=(q.text||'').replace(/\n/g,'<br>');
+      return '<div style="margin-bottom:'+(i<cl.requests.length-1?'6px':'0')+'"><span style="font-size:9px;color:#666;display:block">'+qd+(q.requestedBy?' &middot; '+q.requestedBy:'')+'</span><span style="font-size:10.5px">'+txt+'</span></div>';
+    }).join('');
+    var slo=(cl.status||'').toLowerCase();
+    var stColor=slo.indexOf('pending')>=0||slo.indexOf('awaiting')>=0?'#92400e':'#1e40af';
+    var stBg=slo.indexOf('pending')>=0||slo.indexOf('awaiting')>=0?'#fef3c7':'#dbeafe';
+    return '<tr>'
+      +'<td style="font-weight:700;color:#1a56db;white-space:nowrap">#'+esc(did)+'</td>'
+      +'<td>'+esc(r.insurer||'-')+'</td>'
+      +'<td>'+esc(cl.customer||'-')+'</td>'
+      +'<td>'+esc(r.inscomp||'-')+'</td>'
+      +'<td>'+(r.claimAmount?'USD '+esc(r.claimAmount):'-')+'</td>'
+      +'<td>'+esc(r.accidentDate||'-')+'</td>'
+      +'<td><span style="background:'+stBg+';color:'+stColor+';padding:2px 8px;border-radius:99px;font-size:9px;font-weight:700;white-space:nowrap">'+esc(cl.status)+'</span></td>'
+      +'<td>'+(reqs||'-')+'</td>'
+      +'<td style="font-size:10.5px;color:#555">'+esc(r.text||'')+'</td>'
+      +'</tr>';
+  }).join('');
+  var title=mode==='single'?'Claim Report':'Active Claims Report';
+  var css='*{box-sizing:border-box;margin:0;padding:0}'
+    +'@page{size:A4 landscape;margin:10mm}'
+    +'body{font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000;background:#fff}'
+    +'h1{font-size:14px;font-weight:700;margin-bottom:3px}'
+    +'.sub{font-size:10px;color:#666;margin-bottom:10px}'
+    +'table{width:100%;border-collapse:collapse;table-layout:fixed}'
+    +'th{background:#1e3a5f;color:#fff;font-size:9.5px;font-weight:700;padding:5px 6px;text-align:left;white-space:nowrap}'
+    +'td{padding:5px 6px;border-bottom:1px solid #e5e7eb;vertical-align:top;font-size:10.5px;word-break:break-word}'
+    +'tr:nth-child(even) td{background:#f8fafc}'
+    +'col.c0{width:9%}col.c1{width:7%}col.c2{width:10%}col.c3{width:10%}'
+    +'col.c4{width:7%}col.c5{width:8%}col.c6{width:11%}col.c7{width:24%}col.c8{width:14%}'
+    +'.footer{margin-top:8px;font-size:9px;color:#999;text-align:right}';
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Query Tracker</title>'
+    +'<style>'+css+'</style></head>'
+    +'<body onload="setTimeout(function(){window.print();},400)">'
+    +'<h1>Query Tracker - '+title+'</h1>'
+    +'<div class="sub">Printed '+now+' - '+claims.length+' claim'+(claims.length!==1?'s':'')+'</div>'
+    +'<table><colgroup>'
+    +'<col class="c0"><col class="c1"><col class="c2"><col class="c3">'
+    +'<col class="c4"><col class="c5"><col class="c6"><col class="c7"><col class="c8">'
+    +'</colgroup><thead><tr>'
+    +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
+    +'<th>Amount</th><th>Acc. Date</th><th>Status</th><th>Requests</th><th>Remark</th>'
+    +'</tr></thead><tbody>'+rows+'</tbody></table>'
+    +'<div class="footer">Query Tracker v2.6.0 - Generated '+now+'</div>'
+    +'</body></html>';
+  var pw=window.open('','_blank','width=1100,height=750');
+  if(!pw){toast('Pop-up blocked - allow pop-ups for this site','err');return;}
+  pw.document.write(html);
+  pw.document.close();
 }
 
 /* ══ FILTERS ══ */
@@ -938,6 +964,11 @@ function openFile(url,name){
   if(!url){toast('No Drive link — file may not have uploaded','err');return;}
   window.open(url,'_blank');
 }
+function openFileByAttr(el){
+  const url=el.dataset.url||el.closest('[data-url]')?.dataset.url;
+  if(!url){toast('No Drive link','err');return;}
+  window.open(url,'_blank');
+}
 
 /* ══ RENDER ══ */
 // Debounced render to avoid thrashing
@@ -990,7 +1021,7 @@ function buildCard(c,isOpen=false){
   const compPill=r.inscomp?`<span class="pill pill-link" onclick="event.stopPropagation();filterByCompany('${esc(r.inscomp)}')" title="Filter by ${esc(r.inscomp)}">${esc(r.inscomp)}</span>`:'';
 
   const qBtn=TAB==='active'
-    ?`<button class="ib chk" title="Mark Complete" onclick="event.stopPropagation();ripple(this);setStatus('${c.id}','Complete')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`
+    ?`<button class="ib chk" title="Mark Complete" onclick="event.stopPropagation();ripple(this);confirmComplete('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`
     :`<button class="ib rec" title="Recover" onclick="event.stopPropagation();ripple(this);recoverClaim('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>`;
 
   /* Request items */
@@ -1010,21 +1041,20 @@ function buildCard(c,isOpen=false){
     </div>`;
   }).join('');
 
-  /* Files list — click icon/name to view in Drive, X to delete */
+  /* Files list — safe onclick via data attributes, click to open in Drive */
   const filesHtml=files.map((f,i)=>{
     const hasDrive=f.driveUrl&&f.driveUrl.startsWith('http');
-    const ext=(f.name||'').split('.').pop().toLowerCase();
     const iconColor=hasDrive?'#2563eb':'#7a8ea6';
+    const clickAttr=hasDrive?`data-url="${esc(f.driveUrl)}" data-fname="${esc(f.name)}" onclick="openFileByAttr(this)" style="cursor:pointer" title="Click to view in Drive"`:'' ;
     return`<div class="file-item">
-      <div class="file-icon" style="${hasDrive?'cursor:pointer;':''}background:${hasDrive?'#eff6ff':'var(--surf3)'};border-color:${hasDrive?'#bfdbfe':'var(--bd)'}"
-        ${hasDrive?`onclick="openFile('${esc(f.driveUrl)}','${esc(f.name)}')" title="Click to open in Drive"`:''}>
+      <div class="file-icon" ${clickAttr} style="background:${hasDrive?'#eff6ff':'var(--surf3)'};border-color:${hasDrive?'#bfdbfe':'var(--bd)'}">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </div>
-      <div style="flex:1;min-width:0;cursor:${hasDrive?'pointer':'default'}" ${hasDrive?`onclick="openFile('${esc(f.driveUrl)}','${esc(f.name)}')" title="Click to open in Drive"`:''}>
-        <span class="file-name" style="${hasDrive?'color:var(--ac);text-decoration:underline;text-underline-offset:2px;':''}">${esc(f.name)}</span>
+      <div style="flex:1;min-width:0" ${clickAttr}>
+        <span class="file-name" style="${hasDrive?'color:#2563eb;text-decoration:underline;text-underline-offset:2px;cursor:pointer':'color:var(--tx2)'}">${esc(f.name)}</span>
         ${hasDrive?`<span class="gdrive-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Drive</span>`:'<span style="font-family:var(--ff-h);font-size:9px;color:var(--mu);margin-left:4px">no link</span>'}
       </div>
-      <button class="file-del" onclick="removeFile('${c.id}',${i})" title="Delete file from list">
+      <button class="file-del" onclick="removeFile('${c.id}',${i})" title="Delete file">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>`;
@@ -1191,6 +1221,15 @@ function updateReqBy(id,i,val){const c=DB.claims.find(x=>x.id===id);c.requests[i
 function deleteReq(id,i){const c=DB.claims.find(x=>x.id===id);if(c.requests.length<=1){toast('Cannot delete the only request','err');return;}c.requests.splice(i,1);c.dateModified=new Date().toISOString();persist(c);toast('Request deleted','ok');}
 
 /* ══ STATUS ══ */
+function confirmComplete(id){
+  const c=DB.claims.find(x=>x.id===id);
+  const did=(getRem(c?.remark).displayId||id);
+  showConfirm(
+    'Mark as Complete?',
+    `Move <strong>#${esc(did)}</strong> to Trash / Recovery?`,
+    ()=>setStatus(id,'Complete')
+  );
+}
 function setStatus(id,val){
   const c=DB.claims.find(x=>x.id===id);
   c.status=val;c.dateModified=new Date().toISOString();
