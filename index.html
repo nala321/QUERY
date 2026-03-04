@@ -1,4 +1,4 @@
-<!-- VERSION: 2.4.0 -->
+<!-- VERSION: 2.5.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,7 +98,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .hdr-logo{width:34px;height:34px;background:var(--acg);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:var(--acs);flex-shrink:0}
 .hdr-title{font-family:var(--ff-h);font-size:16px;font-weight:700;line-height:1}
 /* Version badge next to title */
-.hdr-ver{font-family:var(--ff-h);font-size:9px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 7px;margin-left:2px;letter-spacing:.3px;align-self:flex-end;margin-bottom:1px}
+.hdr-ver{font-family:var(--ff-h);font-size:9px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 7px;margin-left:2px;letter-spacing:.3px;align-self:center}
 .hdr-acts{display:flex;align-items:center;gap:7px}
 .th-sel{background-image:none!important;padding:7px 12px;width:auto;font-size:11px;font-weight:600;font-family:var(--ff-h);border-radius:var(--r12);cursor:pointer;border:1.5px solid var(--bd);background:var(--surf2)!important;color:var(--tx2);transition:border-color var(--d) var(--e),color var(--d) var(--e)}
 .th-sel:hover{border-color:var(--bd2);color:var(--tx)}
@@ -162,7 +162,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ccp-body{border-top:1.5px solid var(--bd);background:var(--surf3)}
 
 /* Two-column layout inside expand — max-height to fit one screen */
-.exp-layout{display:grid;grid-template-columns:1fr 340px;gap:0;min-height:0}
+.exp-layout{display:grid;grid-template-columns:1fr 360px;gap:0;min-height:0}
 .exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd);overflow-y:auto;max-height:calc(100vh - 120px)}
 .exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2);overflow-y:auto;max-height:calc(100vh - 120px)}
 
@@ -302,30 +302,63 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 
 /* ═══════════════════════════════════════════ PRINT — A4 Portrait only, direct */
 @media print{
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  body{background:#fff!important;color:#000!important}
-  #ldr,#tdock,#mblk,#lscr,#modal,#nq-overlay,.hdr,.tabbar,.filterbar{display:none!important}
-  .wrap{padding:0!important;max-width:100%!important}
-  .cc:not(.open){display:none!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  html,body{background:#fff!important;color:#000!important;font-family:Arial,sans-serif!important}
+  /* Hide everything except the open card */
+  #ldr,#tdock,#mblk,#lscr,#modal,#nq-overlay,
+  .hdr,.tabbar,.filterbar,
+  .cc:not(.open),
+  .ccR .ib,.ccR .spill,.chevron,
+  .psec-acts,
+  .exp-side .psec:nth-child(1),
+  .exp-side .psec:nth-child(3){display:none!important}
+  /* Layout resets */
+  .wrap{padding:0!important;max-width:100%!important;margin:0!important}
+  .clist{gap:0!important}
+  .cc{border-radius:0!important;box-shadow:none!important;border:none!important;border-bottom:1pt solid #ccc!important;page-break-inside:avoid;margin-bottom:10pt!important;background:#fff!important}
+  .ccrow{cursor:default!important;background:#fff!important}
+  .ccL,.ccM,.ccR{border:none!important;background:#fff!important}
+  /* Expand panel always open in print */
   .ccp{display:block!important;grid-template-rows:unset!important}
   .ccp-inner{overflow:visible!important}
-  .exp-main,.exp-side{max-height:none!important;overflow:visible!important}
-  .ccrow{cursor:default}
-  .ccR .ib,.ccR .spill,.chevron{display:none!important}
-  .clist{gap:0!important}
-  .cc{border-radius:0!important;box-shadow:none!important;border:none!important;border-bottom:2pt solid #ddd!important;page-break-inside:avoid;margin-bottom:12pt}
-  .ccp-body{background:#fff!important}
-  .exp-layout{grid-template-columns:1fr!important}
-  .exp-side{display:block!important}
-  .exp-side .psec:nth-child(1){display:none!important}
-  .exp-side .psec:nth-child(3){display:none!important}
-  .remark-ta{border-color:#ddd!important;background:#fafafa!important;color:#000!important;-webkit-text-fill-color:#000!important}
-  .psec{border-radius:4pt!important;border-color:#ccc!important}
-  .psec-hd{background:#f5f5f5!important}
-  input,textarea,.ri-ta,.remark-ta{border-color:#ddd!important;background:#fafafa!important;color:#000!important;-webkit-text-fill-color:#000!important}
-  .ri{background:#f9f9f9!important;border-color:#ddd!important}
-  .id-card{border-color:#ddd!important}
-  @page{margin:15mm;size:A4 portrait}
+  .ccp-body{background:#fff!important;border:none!important}
+  /* Side panel — show only remark (child 2), hide claim details (1) and files (3) */
+  .exp-layout{grid-template-columns:1fr 280px!important;display:grid!important}
+  .exp-main,.exp-side{max-height:none!important;overflow:visible!important;background:#fff!important;padding:10pt!important}
+  .exp-side{display:block!important;border-left:1pt solid #ddd!important}
+  /* Section boxes */
+  .psec{border-radius:3pt!important;border:1pt solid #ddd!important;background:#fff!important;margin-bottom:8pt!important}
+  .psec-hd{background:#f0f0f0!important;border-bottom:1pt solid #ddd!important;padding:6pt 8pt!important}
+  .psec-t{color:#000!important;font-weight:bold!important}
+  .psec-bd{padding:8pt!important}
+  .psec-ico{display:none!important}
+  /* Identity card */
+  .id-card{border:1pt solid #ddd!important;background:#fff!important;padding:8pt!important}
+  .id-card-icon{display:none!important}
+  .id-name{color:#000!important;font-size:14pt!important}
+  .id-tag{background:#f0f0f0!important;border:1pt solid #ddd!important;color:#000!important}
+  /* Inputs and textareas — show as plain text */
+  input,select,textarea,.ri-ta,.remark-ta{
+    border:1pt solid #ddd!important;
+    background:#fafafa!important;
+    color:#000!important;
+    -webkit-text-fill-color:#000!important;
+    font-size:10pt!important;
+    padding:4pt 6pt!important;
+    border-radius:3pt!important;
+  }
+  /* Request items */
+  .ri{background:#f9f9f9!important;border:1pt solid #ddd!important;border-radius:3pt!important;padding:6pt!important;margin-bottom:4pt!important}
+  .ri-ta{border:none!important;background:transparent!important;padding:0!important}
+  .ri-by{border:none!important;background:transparent!important;color:#555!important;-webkit-text-fill-color:#555!important}
+  .ri-date{background:#eee!important;border:1pt solid #ddd!important;color:#555!important}
+  /* Remark */
+  .remark-ta{min-height:40pt!important}
+  /* Pills and chips */
+  .pill,.id-tag{background:#eee!important;border:1pt solid #ccc!important;color:#000!important}
+  .cc-id{color:#1a56db!important}
+  .fl{color:#555!important}
+  @page{margin:12mm;size:A4 portrait}
 }
 
 /* Ripple */
@@ -483,7 +516,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v2.4.0</span>
+      <span class="hdr-ver">v2.5.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -639,18 +672,22 @@ function setNQMode(m){
 
 /* ══ PRINT — direct A4 portrait, no modal ══ */
 function doPrint(claimId){
-  // Close all cards then open just this one
-  document.querySelectorAll('.cc.open').forEach(c=>{
-    if(c.id!=='card-'+claimId)c.classList.remove('open');
+  // Open only this card
+  document.querySelectorAll('.cc.open').forEach(el=>{
+    if(el.id!=='card-'+claimId)el.classList.remove('open');
   });
   const card=document.getElementById('card-'+claimId);
-  if(card&&!card.classList.contains('open'))card.classList.add('open');
+  if(card)card.classList.add('open');
 
-  // Force A4 portrait
-  let sty=document.getElementById('print-orient');
-  if(!sty){sty=document.createElement('style');sty.id='print-orient';document.head.appendChild(sty);}
-  sty.textContent='@media print{@page{size:A4 portrait;margin:15mm}}';
-  setTimeout(()=>window.print(),120);
+  // Temporarily remove dark theme so CSS variables resolve correctly on all browsers
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  if(isDark)document.documentElement.removeAttribute('data-theme');
+
+  setTimeout(()=>{
+    window.print();
+    // Restore dark theme after print dialog
+    if(isDark)setTimeout(()=>document.documentElement.setAttribute('data-theme','dark'),300);
+  },150);
 }
 
 /* ══ FILTERS ══ */
@@ -973,21 +1010,21 @@ function buildCard(c,isOpen=false){
     </div>`;
   }).join('');
 
-  /* Files list */
+  /* Files list — click icon/name to view in Drive, X to delete */
   const filesHtml=files.map((f,i)=>{
     const hasDrive=f.driveUrl&&f.driveUrl.startsWith('http');
+    const ext=(f.name||'').split('.').pop().toLowerCase();
+    const iconColor=hasDrive?'#2563eb':'#7a8ea6';
     return`<div class="file-item">
-      <div class="file-icon">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <div class="file-icon" style="${hasDrive?'cursor:pointer;':''}background:${hasDrive?'#eff6ff':'var(--surf3)'};border-color:${hasDrive?'#bfdbfe':'var(--bd)'}"
+        ${hasDrive?`onclick="openFile('${esc(f.driveUrl)}','${esc(f.name)}')" title="Click to open in Drive"`:''}>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </div>
-      <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:4px">
-          <span class="file-name" title="${esc(f.name)}">${esc(f.name)}</span>
-          ${hasDrive?`<span class="gdrive-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Drive</span>`:''}
-        </div>
+      <div style="flex:1;min-width:0;cursor:${hasDrive?'pointer':'default'}" ${hasDrive?`onclick="openFile('${esc(f.driveUrl)}','${esc(f.name)}')" title="Click to open in Drive"`:''}>
+        <span class="file-name" style="${hasDrive?'color:var(--ac);text-decoration:underline;text-underline-offset:2px;':''}">${esc(f.name)}</span>
+        ${hasDrive?`<span class="gdrive-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Drive</span>`:'<span style="font-family:var(--ff-h);font-size:9px;color:var(--mu);margin-left:4px">no link</span>'}
       </div>
-      ${hasDrive?`<button class="file-open" onclick="openFile('${esc(f.driveUrl)}','${esc(f.name)}')" title="Open in Drive">Open</button>`:`<span style="font-family:var(--ff-h);font-size:10px;color:var(--mu);padding:0 6px">No link</span>`}
-      <button class="file-del" onclick="removeFile('${c.id}',${i})" title="Remove attachment">
+      <button class="file-del" onclick="removeFile('${c.id}',${i})" title="Delete file from list">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>`;
@@ -1021,6 +1058,7 @@ function buildCard(c,isOpen=false){
 
   <div class="ccp"><div class="ccp-inner"><div class="ccp-body">
     <div class="exp-layout">
+      <!-- LEFT: identity card + requests + files at bottom -->
       <div class="exp-main">
         <div class="id-card">
           <div class="id-card-icon">
@@ -1041,6 +1079,8 @@ function buildCard(c,isOpen=false){
             </div>
           </div>
         </div>
+
+        <!-- Requests -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
@@ -1049,10 +1089,36 @@ function buildCard(c,isOpen=false){
           </div>
           <div class="psec-bd"><div class="rlist">${reqsHtml}</div></div>
         </div>
-      </div>
-      <div class="exp-side">
 
-        <!-- Claim Details — single column, no cutoff -->
+        <!-- Attached Files — bottom of left panel -->
+        <div class="psec" style="margin-top:auto">
+          <div class="psec-hd">
+            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
+            <span class="psec-t">Attached Files</span>
+            <span class="psec-c">${files.length}</span>
+            <div class="psec-acts">
+              <button class="btn btn-g btn-sm" onclick="attachFileToClaim('${c.id}')">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Attach
+              </button>
+            </div>
+          </div>
+          <div class="psec-bd" style="padding:10px">
+            <div class="file-drop-zone" id="fdz-${c.id}"
+              ondragover="event.preventDefault();this.classList.add('drag')"
+              ondragleave="this.classList.remove('drag')"
+              ondrop="handleFileDrop(event,'${c.id}')"
+              onclick="attachFileToClaim('${c.id}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              <p>Click or drag to upload to Drive</p>
+            </div>
+            ${files.length?`<div class="file-list">${filesHtml}</div>`:''}
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: claim details + remark — scrollable, nothing cut off -->
+      <div class="exp-side">
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg></div>
@@ -1079,7 +1145,7 @@ function buildCard(c,isOpen=false){
           </div>
         </div>
 
-        <!-- Remark box -->
+        <!-- Remark -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
@@ -1089,33 +1155,6 @@ function buildCard(c,isOpen=false){
             <textarea class="remark-ta" placeholder="Internal notes, follow-up actions, observations…" oninput="autoGrow(this)" onchange="updRem('${c.id}','text',this.value)">${esc(r.text||'')}</textarea>
           </div>
         </div>
-
-        <!-- Attached Files — compact, full list visible -->
-        <div class="psec">
-          <div class="psec-hd">
-            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
-            <span class="psec-t">Attached Files</span>
-            <span class="psec-c">${files.length}</span>
-            <div class="psec-acts">
-              <button class="btn btn-g btn-sm" onclick="attachFileToClaim('${c.id}')">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Attach
-              </button>
-            </div>
-          </div>
-          <div class="psec-bd" style="padding:10px">
-            <div class="file-drop-zone" id="fdz-${c.id}"
-              ondragover="event.preventDefault();this.classList.add('drag')"
-              ondragleave="this.classList.remove('drag')"
-              ondrop="handleFileDrop(event,'${c.id}')"
-              onclick="attachFileToClaim('${c.id}')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
-              <p>Click or drag to upload to Drive</p>
-            </div>
-            ${files.length?`<div class="file-list">${filesHtml}</div>`:''}
-          </div>
-        </div>
-
       </div>
     </div>
   </div></div></div>
