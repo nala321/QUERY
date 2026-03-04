@@ -1,21 +1,18 @@
-<!-- VERSION: 2.10.0 -->
+<!-- VERSION: 3.0.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Query Tracker</title>
-<!-- PWA webapp meta -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="QueryTracker">
 <meta name="application-name" content="QueryTracker">
 <meta name="theme-color" content="#2563eb">
-<!-- Home screen icon (iPhone & Android) -->
 <link rel="apple-touch-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDer3AHwDQ5t5k8meBYeyXVpwClXiUxddSQ&s">
 <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDer3AHwDQ5t5k8meBYeyXVpwClXiUxddSQ&s">
-<!-- Tab favicon: white circle -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,7 +106,6 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .hdr-brand{display:flex;align-items:center;gap:11px}
 .hdr-logo{width:34px;height:34px;background:var(--acg);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:var(--acs);flex-shrink:0}
 .hdr-title{font-family:var(--ff-h);font-size:16px;font-weight:700;line-height:1}
-/* Version badge next to title */
 .hdr-ver{font-family:var(--ff-h);font-size:9px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 7px;margin-left:2px;letter-spacing:.3px;align-self:center}
 .hdr-acts{display:flex;align-items:center;gap:7px}
 .th-sel{background-image:none!important;padding:7px 12px;width:auto;font-size:11px;font-weight:600;font-family:var(--ff-h);border-radius:var(--r12);cursor:pointer;border:1.5px solid var(--bd);background:var(--surf2)!important;color:var(--tx2);transition:border-color var(--d) var(--e),color var(--d) var(--e)}
@@ -167,13 +163,13 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .cc.open .chevron{transform:rotate(180deg);background:var(--ac);border-color:var(--ac)}
 .cc.open .chevron svg{color:#fff!important}
 
-/* ═══════════════════════════════════════════ EXPAND PANEL — fits viewport */
+/* ═══════════════════════════════════════════ EXPAND PANEL */
 .ccp{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dl) var(--eo)}
 .cc.open .ccp{grid-template-rows:1fr}
 .ccp-inner{overflow:hidden}
 .ccp-body{border-top:1.5px solid var(--bd);background:var(--surf3)}
 
-/* Two-column layout inside expand — max-height to fit one screen */
+/* Two-column layout inside expand */
 .exp-layout{display:grid;grid-template-columns:1fr 360px;gap:0;min-height:0}
 .exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd);overflow-y:auto;max-height:calc(100vh - 110px);min-height:0}
 .exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2);overflow-y:auto;max-height:calc(100vh - 110px);min-height:0}
@@ -216,11 +212,9 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ri-ta{font-size:13px;border:none;background:transparent;padding:0;resize:none;box-shadow:none;color:var(--tx);line-height:1.6;width:100%;overflow:hidden}
 .ri-ta:hover,.ri-ta:focus{border:none;box-shadow:none;background:transparent}
 
-/* ═══════════════════════════════════════════ FILE ATTACHMENTS — Google Drive */
+/* ═══════════════════════════════════════════ FILE ATTACHMENTS */
 .file-uploading{font-family:var(--ff-h);font-size:10px;color:var(--ac);font-weight:600;padding:2px 0}
 .gdrive-badge{display:inline-flex;align-items:center;gap:3px;font-family:var(--ff-h);font-size:9.5px;font-weight:700;color:#1967d2;background:#e8f0fe;border-radius:var(--rpill);padding:1px 6px;margin-left:4px}
-
-/* File section compact redesign */
 .file-drop-zone{border:2px dashed var(--bd);border-radius:var(--r12);padding:10px 12px;background:var(--surf3);transition:border-color var(--d) var(--e),background var(--d) var(--e);cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px}
 .file-drop-zone:hover,.file-drop-zone.drag{border-color:var(--ac);background:rgba(37,99,235,.04)}
 .file-drop-zone p{font-family:var(--ff-h);font-size:11px;font-weight:600;color:var(--mu);margin:0}
@@ -297,8 +291,8 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .toast.in{opacity:1;transform:translateY(0) scale(1)}
 .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ═══════════════════════════════════════════ LOADER */
-#ldr{position:fixed;top:16px;right:16px;padding:7px 15px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--rpill);font-family:var(--ff-h);font-size:11.5px;font-weight:600;box-shadow:var(--s2);color:var(--tx2);transform:translateY(-60px);opacity:0;transition:all var(--d) var(--e);z-index:9500;display:flex;align-items:center;gap:7px}
+/* ═══════════════════════════════════════════ LOADER — now bottom-right */
+#ldr{position:fixed;bottom:72px;right:16px;padding:7px 15px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--rpill);font-family:var(--ff-h);font-size:11.5px;font-weight:600;box-shadow:var(--s2);color:var(--tx2);transform:translateY(60px);opacity:0;transition:all var(--d) var(--e);z-index:9500;display:flex;align-items:center;gap:7px}
 #ldr.on{transform:translateY(0);opacity:1}
 .lspin{width:12px;height:12px;border-radius:50%;border:2px solid var(--bd);border-top-color:var(--ac);animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -310,9 +304,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 
 /* ═══════════════════════════════════════════ RESPONSIVE ROUTING */
 #mblk{display:none!important}
-/* Desktop: hide mobile UI */
 @media(min-width:721px){#mob-app{display:none!important}}
-/* Mobile: hide desktop app, show mobile UI */
 @media(max-width:720px){
   #app{display:none!important}
   #mob-app{display:flex!important}
@@ -368,18 +360,29 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   background:transparent;transition:all .15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .mtab.on{background:var(--surf3);color:var(--ac);border-color:var(--bd)}
 
-/* List */
+/* List — FIX: don't let flex shrink cards */
 .mlist{flex:1;overflow-y:auto;padding:10px 12px 16px;
   display:flex;flex-direction:column;gap:9px;
   -webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 
-/* Card */
-.mcard{background:var(--surf);border:1.5px solid var(--bd);border-radius:18px;
+/* ═══ MOBILE CARD — FIXED HEIGHT ROW, NO SHRINKING ═══ */
+/* Cards must never shrink when siblings expand */
+.mcard{
+  background:var(--surf);border:1.5px solid var(--bd);border-radius:18px;
   overflow:hidden;transition:border-color .15s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  flex-shrink:0;       /* CRITICAL: prevent card from shrinking */
+}
 .mcard:active .mcard-top{background:var(--surf3)}
-.mcard-top{display:flex;align-items:center;gap:10px;padding:13px 14px;
-  cursor:pointer;transition:background .1s}
+
+/* Top row: fixed height, always centered, never squishes */
+.mcard-top{
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+  cursor:pointer;transition:background .1s;
+  height:70px;          /* fixed row height */
+  min-height:70px;      /* enforce minimum */
+  flex-shrink:0;        /* never compress */
+}
 .mcard-idcol{flex-shrink:0;min-width:52px}
 .mcard-id{font-family:var(--ff-h);font-size:13.5px;font-weight:700;color:var(--ac);line-height:1.2}
 .mcard-ins{font-family:var(--ff-h);font-size:9px;font-weight:800;
@@ -391,10 +394,10 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .mcard-body{flex:1;min-width:0}
 .mcard-name{font-size:14px;font-weight:600;color:var(--tx);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
-.mcard-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;align-items:center}
+.mcard-meta{display:flex;flex-wrap:nowrap;gap:4px;margin-top:4px;align-items:center;overflow:hidden}
 .mpill{font-family:var(--ff-h);font-size:9.5px;font-weight:700;
   padding:2px 8px;border-radius:99px;
-  background:var(--surf3);border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
+  background:var(--surf3);border:1px solid var(--bd);color:var(--mu);white-space:nowrap;flex-shrink:0}
 .mpill-g{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
 .mpill-b{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
 [data-theme=dark] .mpill-g{background:#001a0d;border-color:#166534;color:#4ade80}
@@ -404,9 +407,9 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .mcard-chev{color:var(--mu);transition:transform .25s var(--eo)}
 .mcard.mopen .mcard-chev{transform:rotate(180deg)}
 
-/* Expand — max-height approach, no card-shrinking side effects */
-.mxpand{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(0,0,.2,1)}
-.mcard.mopen .mxpand{max-height:9999px;transition:max-height .5s cubic-bezier(0,0,.2,1)}
+/* Expand — smooth height transition, full content visible */
+.mxpand{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0,0,.2,1)}
+.mcard.mopen .mxpand{max-height:9999px;transition:max-height .55s cubic-bezier(0,0,.2,1)}
 .mxpand-inner{overflow:visible}
 .mxpand-body{border-top:1px solid var(--bd);background:var(--surf2)}
 
@@ -469,7 +472,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
 .mempty-t{font-family:var(--ff-h);font-size:14px;font-weight:700;color:var(--tx2);margin-bottom:4px}
 
-/* ═══════════════════════════════════════════ PRINT — handled by doPrint popup window */
+/* ═══════════════════════════════════════════ PRINT */
 @media print{
   body > *{display:none!important}
   #print-win{display:block!important}
@@ -492,7 +495,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v2.10.0 · View Only</div>
+        <div class="mtb-sub">v3.0.0 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
@@ -657,7 +660,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v2.10.0</span>
+      <span class="hdr-ver">v3.0.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -745,13 +748,6 @@ textarea{resize:none;overflow:hidden;min-height:48px}
    CONFIGURATION
 ══════════════════════════════════════════════════════ */
 const API="https://script.google.com/macros/s/AKfycbwgZyOi0TAyQwXV_j7jqOAi2K4eYq6dBDuv4hFVbST8uE9cXfc4XNohrNWZDEDpaIAa/exec";
-
-/* ── Google Drive upload config ───────────────────────
-   Set GDRIVE_FOLDER_ID to your target folder ID from the
-   Drive URL: drive.google.com/drive/folders/[FOLDER_ID]
-   Leave blank to upload to root of Drive.
-   The upload goes through the same Apps Script endpoint.
-───────────────────────────────────────────────────── */
 const GDRIVE_FOLDER_ID = "1oVb3pwE6Gxnn_ZpCO1yYZqidLHsrllwR";
 
 let DB={claims:[],statuses:[]};
@@ -773,7 +769,6 @@ function closeConfirm(){
   _confirmCb=null;
 }
 
-// Debounce timer for saves
 let _saveTimer=null;
 function debounceSave(fn,ms=400){clearTimeout(_saveTimer);_saveTimer=setTimeout(fn,ms);}
 
@@ -789,7 +784,6 @@ window.onload=()=>{
 };
 function bootApp(){
   if(window.innerWidth<=720){
-    // Mobile mode: show mobile UI, keep desktop hidden
     mobRender();
   } else {
     document.getElementById('app').classList.remove('hidden');
@@ -855,9 +849,8 @@ function setNQMode(m){
   document.getElementById('nq-manual').classList.toggle('hidden',m!=='manual');
 }
 
-/* ══ PRINT — opens clean table popup, works on ALL browsers / PCs ══ */
+/* ══ PRINT ══ */
 function doPrint(claimId){
-  // Print single claim
   const claims=claimId?DB.claims.filter(x=>x.id===claimId):DB.claims.filter(x=>x.status!=='Complete');
   openPrintWindow(claims, claimId?'single':'all');
 }
@@ -946,7 +939,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v2.10.0</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.0.0</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -955,10 +948,9 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v2.10.0</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v3.0.0</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
-  // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
   var ifr=document.getElementById('print-frame');
   if(!ifr){
     ifr=document.createElement('iframe');
@@ -968,7 +960,6 @@ function openPrintWindow(claims,mode){
   }
   var doc=ifr.contentDocument||ifr.contentWindow.document;
   doc.open();doc.write(html);doc.close();
-  // Wait for iframe content to render, then print it
   setTimeout(function(){
     ifr.contentWindow.focus();
     ifr.contentWindow.print();
@@ -1001,21 +992,14 @@ function processInput(){
     const rm=txt.match(/Date:[^\n]*\n([\s\S]*?)(?=View Claim Details|This notification)/i);if(rm)p.reqtext=rm[1].trim();
   } else if(/AIA BROKER|(Send Back By[\s\S]{0,30}Reimbursement)/i.test(txt)){
     p.insurer='AIA';
-    // ── Claim number ─────────────────────────────────────────────────────────
     const cm=txt.match(/Reimbursement\s*-\s*#([A-Z0-9]+)/i)||txt.match(/#([A-Z][A-Z0-9]{4,})/);
     if(cm)p.claimid=cm[1];
-    // ── Requester (Send Back By) ──────────────────────────────────────────────
-    // Layout A (Khmer UI): "Send Back By\n<KhmerLabel>\n<Name>"
-    // Layout B (English):  "Send Back By\n<Name>"
-    // Grab block up to next section header; pick first line with a Latin character.
     const sbBlock=txt.match(/Send Back By\s*\n([\s\S]{0,150}?)(?=កាលបរិច្ឆេទ|Send Back Date)/i);
     if(sbBlock){
       const sbLines=sbBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
       const nameLine=sbLines.find(l=>/[a-zA-Z]/.test(l));
       if(nameLine)p.reqby=nameLine;
     }
-    // ── Date (Send Back Date) ─────────────────────────────────────────────────
-    // Grab block up to next section header; pick first line that contains a digit.
     const sdBlock=txt.match(/Send Back Date\s*\n([\s\S]{0,150}?)(?=មូលហេតុ|Reason for Need|Comments on Need|ការកំណត់)/i);
     if(sdBlock){
       const sdLines=sdBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
@@ -1025,32 +1009,22 @@ function processInput(){
       const sd=txt.match(/Send Back Date\s*\n([^\n]+)/i)||txt.match(/Send Back Date\s+([^\n]+)/i);
       if(sd){const d=new Date(sd[1].trim());if(!isNaN(d))p.datePasted=d.toISOString();}
     }
-    // ── Request text (Comments on Need Information) ───────────────────────────
-    // Grab everything after the heading, stop before "Total Claim Amount".
     const co=txt.match(/Comments on Need Information\s*\n([\s\S]*?)(?=Total Claim Amount|$)/i);
     if(co){
       let raw=co[1];
-      // Strip trailing: "(PC) See more", "(VSN) See more", "See more" etc.
       raw=raw.replace(/\s*\(?\w{1,5}\)?\s*See more\s*$/i,'').trim();
-      // Strip AIA closing disclaimer + everything after it (Khmer).
       const discIdx=raw.indexOf('\u179f\u17bc\u1798\u1794\u1789\u17d2\u1787\u17b6\u1780\u17d2\u178f\u17b6');
       if(discIdx>0)raw=raw.substring(0,discIdx).trim();
-      // Detect and strip Khmer greeting paragraph.
-      // The greeting always ends with "ងរបស់លោកអ្នក៖" — take everything after it.
       const greetMarker='\u1784\u179a\u1794\u179f\u17cb\u179b\u17c4\u1780\u17a2\u17d2\u1793\u1780\u17d6';
       const greetIdx=raw.indexOf(greetMarker);
       if(greetIdx>=0){
         raw=raw.substring(greetIdx+greetMarker.length).trim();
       } else {
-        // No Khmer greeting: check if there's a preamble before the first numbered item
-        // and skip it only if a numbered/bulleted item exists.
         const bulletIdx=raw.search(/(?:^|\n)\s*\d+[\/\.]\s|(?:^|\n)\s*[•\-]\s/);
         if(bulletIdx>0)raw=raw.substring(bulletIdx).trim();
-        // If no bullets either, use the whole text as-is (English direct requests).
       }
       p.reqtext=raw.trim();
     }
-    // ── Claim amount ──────────────────────────────────────────────────────────
     const am=txt.match(/Total Claim Amount Submitted\s+[A-Z]+\s*([\d,.]+)/i)||txt.match(/USD\s*([\d,.]+)/i);
     if(am)p.amount=am[1];
   } else if(txt.includes('Send Back By')&&txt.includes('Comments on Need Information')){
@@ -1129,11 +1103,7 @@ function saveManual(){
   setNQMode('paste');commitQuery(p);
 }
 
-/* ══ FILE ATTACHMENTS — Google Drive Upload ══
-   Files are uploaded to Google Drive via the Apps Script endpoint.
-   The stored record contains: {name, driveId, driveUrl}
-   Falls back gracefully if Drive upload is not configured.
-══════════════════════════════════════════════ */
+/* ══ FILE ATTACHMENTS ══ */
 function attachFileToClaim(claimId){
   FILE_ATTACH_TARGET=claimId;
   document.getElementById('file-picker').value='';
@@ -1158,7 +1128,6 @@ async function uploadFilesToDrive(claimId,files){
   setZone('0.5');
   const results=[];
   for(const f of files){
-    // Size guard: Apps Script has ~50MB payload limit but practical limit ~5MB base64
     if(f.size>5*1024*1024){toast(f.name+' is too large (max 5 MB)','err');results.push({name:f.name,driveId:'',driveUrl:''});continue;}
     try{
       const b64=await fileToBase64(f);
@@ -1181,7 +1150,6 @@ async function uploadFilesToDrive(claimId,files){
   results.forEach(rf=>{if(!r.files.find(x=>x.name===rf.name&&x.driveId===rf.driveId)){r.files.push(rf);}});
   cl.remark=JSON.stringify(r);cl.dateModified=new Date().toISOString();
   setZone('');
-  // Save without triggering full re-render (preserves open card state)
   save();
   await apicall({action:'saveClaim',claim:cl});
   renderClaims();
@@ -1219,7 +1187,6 @@ function openFileByAttr(el){
 }
 
 /* ══ RENDER ══ */
-// Debounced render to avoid thrashing
 let _renderTimer=null;
 function renderClaims(){clearTimeout(_renderTimer);_renderTimer=setTimeout(_doRender,16);}
 function _doRender(){
@@ -1272,7 +1239,6 @@ function buildCard(c,isOpen=false){
     ?`<button class="ib chk" title="Mark Complete" onclick="event.stopPropagation();ripple(this);confirmComplete('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`
     :`<button class="ib rec" title="Recover" onclick="event.stopPropagation();ripple(this);recoverClaim('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>`;
 
-  /* Request items */
   const reqsHtml=c.requests.map((req,i)=>{
     const rd=new Date(req.datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
     return`<div class="ri">
@@ -1289,7 +1255,6 @@ function buildCard(c,isOpen=false){
     </div>`;
   }).join('');
 
-  /* Files list — safe onclick via data attributes, click to open in Drive */
   const filesHtml=files.map((f,i)=>{
     const hasDrive=f.driveUrl&&f.driveUrl.startsWith('http');
     const iconColor=hasDrive?'#2563eb':'#7a8ea6';
@@ -1336,7 +1301,6 @@ function buildCard(c,isOpen=false){
 
   <div class="ccp"><div class="ccp-inner"><div class="ccp-body">
     <div class="exp-layout">
-      <!-- LEFT: identity card + requests + files at bottom -->
       <div class="exp-main">
         <div class="id-card">
           <div class="id-card-icon">
@@ -1358,7 +1322,6 @@ function buildCard(c,isOpen=false){
           </div>
         </div>
 
-        <!-- Requests -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
@@ -1368,7 +1331,6 @@ function buildCard(c,isOpen=false){
           <div class="psec-bd"><div class="rlist">${reqsHtml}</div></div>
         </div>
 
-        <!-- Attached Files — bottom of left panel -->
         <div class="psec" style="margin-top:auto">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
@@ -1395,7 +1357,6 @@ function buildCard(c,isOpen=false){
         </div>
       </div>
 
-      <!-- RIGHT: claim details + remark — scrollable, nothing cut off -->
       <div class="exp-side">
         <div class="psec">
           <div class="psec-hd">
@@ -1423,7 +1384,6 @@ function buildCard(c,isOpen=false){
           </div>
         </div>
 
-        <!-- Remark -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
@@ -1552,7 +1512,7 @@ dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');co
 
 
 /* ═══════════════════════════════════════════════════════
-   MOBILE UI LOGIC — view-only, only remark is editable
+   MOBILE UI LOGIC
 ═══════════════════════════════════════════════════════ */
 var _MOB_TAB = 'active';
 
@@ -1590,13 +1550,11 @@ function mobRender() {
     return;
   }
 
-  // Preserve open card IDs across re-render
   var openIds = {};
   [].forEach.call(document.querySelectorAll('.mcard.mopen'), function(el){ openIds[el.dataset.cid]=true; });
 
   list.innerHTML = items.map(function(cl){ return mobCard(cl, !!openIds[cl.id]); }).join('');
 
-  // Re-attach auto-grow on visible remarks
   [].forEach.call(document.querySelectorAll('.mremark'), function(ta){ mobGrow(ta); });
 }
 
@@ -1609,12 +1567,10 @@ function mobCard(cl, isOpen) {
            : slo.indexOf('process')>=0 ? '#3b82f6'
            : slo.indexOf('complete')>=0 ? '#10b981' : '#94a3b8';
 
-  // Pills
+  // Collapsed row pills — keep to max 2 to avoid overflow
   var pills = '';
   if(r.inscomp) pills += '<span class="mpill">'+esc(r.inscomp)+'</span>';
   if(r.claimAmount) pills += '<span class="mpill mpill-g">USD '+esc(r.claimAmount)+'</span>';
-  var days = daysSince(cl.dateIn);
-  pills += '<span class="mpill">'+days+'d open</span>';
 
   // Requests
   var reqsHtml = cl.requests.length ? cl.requests.map(function(q){
@@ -1641,12 +1597,15 @@ function mobCard(cl, isOpen) {
     }).join('');
   }
 
-  // Info grid
+  // Full info grid — includes ALL fields including insurer
+  var days = daysSince(cl.dateIn);
   var infoGrid = '<div class="migrid">';
-  infoGrid += '<div class="miitem"><span class="milabel">Handler</span><span class="mival">'+(r.handler?esc(r.handler):'<span class="mu">Unassigned</span>')+'</span></div>';
+  infoGrid += '<div class="miitem"><span class="milabel">Status</span><span class="mival" style="font-family:var(--ff-h);font-weight:700;font-size:12px;color:'+col.tx+';background:'+col.bg+';padding:3px 10px;border-radius:99px;display:inline-block">'+esc(cl.status)+'</span></div>';
   infoGrid += '<div class="miitem"><span class="milabel">Days Open</span><span class="mival">'+days+'d</span></div>';
+  if(r.insurer) infoGrid += '<div class="miitem"><span class="milabel">Insurer</span><span class="mival mpill-b" style="font-weight:700;font-family:var(--ff-h);font-size:12px">'+esc(r.insurer)+'</span></div>';
+  if(r.claimAmount) infoGrid += '<div class="miitem"><span class="milabel">Amount</span><span class="mival" style="font-weight:700;color:#15803d">USD '+esc(r.claimAmount)+'</span></div>';
   if(r.accidentDate) infoGrid += '<div class="miitem"><span class="milabel">Acc. Date</span><span class="mival">'+esc(r.accidentDate)+'</span></div>';
-  if(r.claimAmount) infoGrid += '<div class="miitem"><span class="milabel">Amount</span><span class="mival mpill-g" style="font-weight:700">USD '+esc(r.claimAmount)+'</span></div>';
+  infoGrid += '<div class="miitem"><span class="milabel">Handler</span><span class="mival">'+(r.handler?esc(r.handler):'<span style="color:var(--mu);font-style:italic">Unassigned</span>')+'</span></div>';
   if(r.phone) infoGrid += '<div class="miitem"><span class="milabel">Phone</span><span class="mival">'+esc(r.phone)+'</span></div>';
   if(r.personalId) infoGrid += '<div class="miitem"><span class="milabel">Personal ID</span><span class="mival">'+esc(r.personalId)+'</span></div>';
   if(r.inscomp) infoGrid += '<div class="miitem full"><span class="milabel">Insured Company</span><span class="mival">'+esc(r.inscomp)+'</span></div>';
@@ -1657,8 +1616,7 @@ function mobCard(cl, isOpen) {
   var expandHtml = '<div class="mxpand"><div class="mxpand-inner"><div class="mxpand-body">'
     // Info
     + '<div class="msec">'
-    + '<div class="msec-title">'+secIco('<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>')+'Info</div>'
-    + '<span class="mstbadge" style="background:'+col.bg+';color:'+col.tx+'">'+esc(cl.status)+'</span>'
+    + '<div class="msec-title">'+secIco('<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>')+'Claim Info</div>'
     + infoGrid
     + '</div>'
     // Requests
@@ -1667,7 +1625,7 @@ function mobCard(cl, isOpen) {
     + 'Requests <span style="background:var(--surf3);border:1px solid var(--bd);border-radius:99px;padding:0 6px;font-size:10px;margin-left:3px">'+cl.requests.length+'</span></div>'
     + reqsHtml
     + '</div>'
-    // Remark — ONLY editable field
+    // Remark
     + '<div class="msec">'
     + '<div class="msec-title">'+secIco('<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>')
     + 'Remark <span style="font-size:9px;font-weight:500;color:var(--su);margin-left:4px;text-transform:none;letter-spacing:0">✎ editable</span></div>'
@@ -1697,7 +1655,6 @@ function mobToggle(id) {
   var opening = !el.classList.contains('mopen');
   el.classList.toggle('mopen');
   if(opening) {
-    // Auto-grow remark and scroll card into view after animation
     setTimeout(function(){
       var ta = el.querySelector('.mremark');
       if(ta) mobGrow(ta);
