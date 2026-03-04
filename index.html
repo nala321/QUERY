@@ -1,3 +1,4 @@
+<!-- VERSION: 2.4.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +35,6 @@
   --sdb:#f8fafc;--sdt:#374151;
 }
 [data-theme=dark]{
-  /* TRUE BLACK dark theme */
   --bg:#0a0a0a;--bg2:#111111;
   --surf:#141414;--surf2:#1c1c1c;--surf3:#212121;
   --bd:#2a2a2a;--bd2:#383838;
@@ -67,7 +67,6 @@ input[type=date]{cursor:pointer}
 select{appearance:none;-webkit-appearance:none;padding-right:36px;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='none' stroke='%237a8ea6' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 10px center}
-/* Auto-grow textarea */
 textarea{resize:none;overflow:hidden;min-height:48px}
 .fl{font-family:var(--ff-h);font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.65px;margin-bottom:5px;display:block}
 .fl-row{display:flex;align-items:center;gap:6px;margin-bottom:5px}
@@ -83,7 +82,6 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .btn-g{background:var(--surf);color:var(--tx2);border:1.5px solid var(--bd);box-shadow:var(--s1)}
 .btn-g:hover{transform:translateY(-1px);border-color:var(--bd2);box-shadow:var(--s2);color:var(--tx)}
 .btn-sm{padding:6px 13px;font-size:11.5px;border-radius:var(--r8)}
-/* icon button */
 .ib{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--bd);background:var(--surf2);color:var(--mu);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0;transition:transform var(--d) var(--es),background var(--d) var(--e),border-color var(--d) var(--e),box-shadow var(--d) var(--e),color var(--d) var(--e)}
 .ib:hover{transform:scale(1.12);box-shadow:var(--s1)}
 .ib.chk:hover{background:var(--skb);color:var(--skt);border-color:var(--su)}
@@ -99,6 +97,8 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .hdr-brand{display:flex;align-items:center;gap:11px}
 .hdr-logo{width:34px;height:34px;background:var(--acg);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:var(--acs);flex-shrink:0}
 .hdr-title{font-family:var(--ff-h);font-size:16px;font-weight:700;line-height:1}
+/* Version badge next to title */
+.hdr-ver{font-family:var(--ff-h);font-size:9px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 7px;margin-left:2px;letter-spacing:.3px;align-self:flex-end;margin-bottom:1px}
 .hdr-acts{display:flex;align-items:center;gap:7px}
 .th-sel{background-image:none!important;padding:7px 12px;width:auto;font-size:11px;font-weight:600;font-family:var(--ff-h);border-radius:var(--r12);cursor:pointer;border:1.5px solid var(--bd);background:var(--surf2)!important;color:var(--tx2);transition:border-color var(--d) var(--e),color var(--d) var(--e)}
 .th-sel:hover{border-color:var(--bd2);color:var(--tx)}
@@ -155,16 +155,16 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .cc.open .chevron{transform:rotate(180deg);background:var(--ac);border-color:var(--ac)}
 .cc.open .chevron svg{color:#fff!important}
 
-/* ═══════════════════════════════════════════ EXPAND PANEL */
+/* ═══════════════════════════════════════════ EXPAND PANEL — fits viewport */
 .ccp{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dl) var(--eo)}
 .cc.open .ccp{grid-template-rows:1fr}
 .ccp-inner{overflow:hidden}
 .ccp-body{border-top:1.5px solid var(--bd);background:var(--surf3)}
 
-/* Two-column layout inside expand */
+/* Two-column layout inside expand — max-height to fit one screen */
 .exp-layout{display:grid;grid-template-columns:1fr 340px;gap:0;min-height:0}
-.exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd)}
-.exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2)}
+.exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd);overflow-y:auto;max-height:calc(100vh - 120px)}
+.exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2);overflow-y:auto;max-height:calc(100vh - 120px)}
 
 /* Section box */
 .psec{background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r16);overflow:hidden}
@@ -173,8 +173,9 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .psec-t{font-family:var(--ff-h);font-size:11px;font-weight:700;color:var(--tx2);flex:1}
 .psec-c{font-family:var(--ff-h);font-size:10.5px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 8px}
 .psec-bd{padding:13px}
+.psec-acts{margin-left:auto}
 
-/* Summary identity card at top of expand */
+/* Summary identity card */
 .id-card{background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r16);padding:14px 16px;display:flex;gap:16px;align-items:flex-start}
 .id-card-icon{width:40px;height:40px;border-radius:var(--r12);background:var(--acg);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--acs)}
 .id-card-body{flex:1;min-width:0}
@@ -203,22 +204,30 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ri-ta{font-size:13px;border:none;background:transparent;padding:0;resize:none;box-shadow:none;color:var(--tx);line-height:1.6;width:100%;overflow:hidden}
 .ri-ta:hover,.ri-ta:focus{border:none;box-shadow:none;background:transparent}
 
-/* ═══════════════════════════════════════════ FILE ATTACHMENTS */
-.file-drop-zone{border:2px dashed var(--bd);border-radius:var(--r12);padding:12px 14px;background:var(--surf3);transition:border-color var(--d) var(--e),background var(--d) var(--e);cursor:pointer;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+/* ═══════════════════════════════════════════ FILE ATTACHMENTS — Google Drive */
+.file-uploading{font-family:var(--ff-h);font-size:10px;color:var(--ac);font-weight:600;padding:2px 0}
+.gdrive-badge{display:inline-flex;align-items:center;gap:3px;font-family:var(--ff-h);font-size:9.5px;font-weight:700;color:#1967d2;background:#e8f0fe;border-radius:var(--rpill);padding:1px 6px;margin-left:4px}
+
+/* File section compact redesign */
+.file-drop-zone{border:2px dashed var(--bd);border-radius:var(--r12);padding:10px 12px;background:var(--surf3);transition:border-color var(--d) var(--e),background var(--d) var(--e);cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px}
 .file-drop-zone:hover,.file-drop-zone.drag{border-color:var(--ac);background:rgba(37,99,235,.04)}
-.file-drop-zone p{font-family:var(--ff-h);font-size:11.5px;font-weight:600;color:var(--mu)}
-.file-drop-zone span{font-size:11px;color:var(--mu);opacity:.7}
-.file-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-.file-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r8);transition:border-color var(--d) var(--e)}
+.file-drop-zone p{font-family:var(--ff-h);font-size:11px;font-weight:600;color:var(--mu);margin:0}
+.file-drop-zone span{font-size:10px;color:var(--mu);opacity:.7}
+.file-list{display:flex;flex-direction:column;gap:5px;margin-top:7px}
+.file-item{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r8);transition:border-color var(--d) var(--e)}
 .file-item:hover{border-color:var(--bd2)}
-.file-icon{width:28px;height:28px;border-radius:7px;background:var(--surf3);border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.file-name{font-family:var(--ff-h);font-size:11.5px;font-weight:600;color:var(--tx2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.file-open{font-family:var(--ff-h);font-size:10.5px;font-weight:700;color:var(--ac);cursor:pointer;background:none;border:none;padding:3px 8px;border-radius:6px;transition:background var(--d) var(--e);white-space:nowrap}
+.file-icon{width:24px;height:24px;border-radius:6px;background:var(--surf3);border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.file-name{font-family:var(--ff-h);font-size:11px;font-weight:600;color:var(--tx2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-open{font-family:var(--ff-h);font-size:10px;font-weight:700;color:var(--ac);cursor:pointer;background:none;border:none;padding:2px 7px;border-radius:5px;transition:background var(--d) var(--e);white-space:nowrap;flex-shrink:0}
 .file-open:hover{background:rgba(37,99,235,.08)}
-.file-del{color:var(--mu);cursor:pointer;background:none;border:none;padding:3px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color var(--d) var(--e),background var(--d) var(--e)}
+.file-del{color:var(--mu);cursor:pointer;background:none;border:none;padding:2px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:color var(--d) var(--e),background var(--d) var(--e)}
 .file-del:hover{color:var(--dg);background:rgba(239,68,68,.08)}
-.file-path{font-size:10px;color:var(--mu);opacity:.65;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;display:block;margin-top:1px}
-.no-open-note{font-size:10.5px;color:var(--mu);text-align:center;line-height:1.5;padding:4px 0}
+
+/* Remark textarea */
+.remark-ta{width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:var(--r12);background:var(--surf2);color:var(--tx);font-size:12.5px;font-family:var(--ff-b);line-height:1.6;resize:none;overflow:hidden;min-height:70px;transition:border-color var(--d) var(--e),box-shadow var(--d) var(--e),background var(--d) var(--e);outline:none}
+.remark-ta::placeholder{color:var(--mu)}
+.remark-ta:hover{border-color:var(--bd2)}
+.remark-ta:focus{border-color:var(--ac);background:var(--surf);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 
 /* ═══════════════════════════════════════════ NEW QUERY DRAWER */
 .nq-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:6000;opacity:0;pointer-events:none;transition:opacity var(--dl) var(--e)}
@@ -263,23 +272,6 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ftag-o{background:var(--surf3);color:var(--mu);border:1.5px solid var(--bd)}
 .inwarn{border-color:var(--wa)!important;box-shadow:0 0 0 3px rgba(245,158,11,.1)!important}
 
-/* ═══════════════════════════════════════════ PRINT MODAL */
-.pveil{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--dl) var(--e)}
-.pveil.open{opacity:1;pointer-events:all}
-.pbox{background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r20);width:100%;max-width:440px;margin:24px;box-shadow:var(--s3);transform:translateY(16px) scale(.97);transition:transform var(--dl) var(--es);overflow:hidden}
-.pveil.open .pbox{transform:translateY(0) scale(1)}
-.phd{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1.5px solid var(--bd);background:var(--surf2)}
-.pht{font-family:var(--ff-h);font-size:15px;font-weight:700}
-.pbdy{padding:16px 20px;display:flex;flex-direction:column;gap:9px}
-.popt{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1.5px solid var(--bd);border-radius:var(--r16);cursor:pointer;transition:border-color var(--d) var(--e),background var(--d) var(--e),box-shadow var(--d) var(--e);background:var(--surf2)}
-.popt:hover{border-color:var(--acl);background:var(--surf3);box-shadow:var(--s1)}
-.popt-ico{width:38px;height:38px;background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--r12);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--d) var(--e),border-color var(--d) var(--e)}
-.popt:hover .popt-ico{background:var(--acg);border-color:var(--ac)}
-.popt:hover .popt-ico svg{stroke:#fff}
-.popt-t{font-family:var(--ff-h);font-size:13px;font-weight:700;color:var(--tx)}
-.popt-s{font-size:11.5px;color:var(--mu);margin-top:2px}
-.pft{padding:12px 20px;border-top:1.5px solid var(--bd);background:var(--surf2);display:flex;justify-content:flex-end}
-
 /* ═══════════════════════════════════════════ LOGIN */
 #lscr{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:8000;transition:opacity var(--dl) var(--e)}
 .lcard{width:100%;max-width:360px;margin:24px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r20);padding:32px;box-shadow:var(--s3)}
@@ -308,28 +300,32 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 #mblk{display:none;position:fixed;inset:0;background:var(--bg);z-index:99999;align-items:center;justify-content:center;padding:24px}
 @media(max-width:720px){#mblk{display:flex}#lscr,#app{display:none!important}}
 
-/* ═══════════════════════════════════════════ PRINT */
+/* ═══════════════════════════════════════════ PRINT — A4 Portrait only, direct */
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff!important;color:#000!important}
-  #ldr,#tdock,#mblk,#lscr,#modal,#nq-overlay,#print-modal,.hdr,.tabbar,.filterbar{display:none!important}
+  #ldr,#tdock,#mblk,#lscr,#modal,#nq-overlay,.hdr,.tabbar,.filterbar{display:none!important}
   .wrap{padding:0!important;max-width:100%!important}
   .cc:not(.open){display:none!important}
   .ccp{display:block!important;grid-template-rows:unset!important}
   .ccp-inner{overflow:visible!important}
+  .exp-main,.exp-side{max-height:none!important;overflow:visible!important}
   .ccrow{cursor:default}
   .ccR .ib,.ccR .spill,.chevron{display:none!important}
   .clist{gap:0!important}
   .cc{border-radius:0!important;box-shadow:none!important;border:none!important;border-bottom:2pt solid #ddd!important;page-break-inside:avoid;margin-bottom:12pt}
   .ccp-body{background:#fff!important}
   .exp-layout{grid-template-columns:1fr!important}
-  .exp-side{display:none!important}
+  .exp-side{display:block!important}
+  .exp-side .psec:nth-child(1){display:none!important}
+  .exp-side .psec:nth-child(3){display:none!important}
+  .remark-ta{border-color:#ddd!important;background:#fafafa!important;color:#000!important;-webkit-text-fill-color:#000!important}
   .psec{border-radius:4pt!important;border-color:#ccc!important}
   .psec-hd{background:#f5f5f5!important}
-  input,textarea,.ri-ta{border-color:#ddd!important;background:#fafafa!important;color:#000!important;-webkit-text-fill-color:#000!important}
+  input,textarea,.ri-ta,.remark-ta{border-color:#ddd!important;background:#fafafa!important;color:#000!important;-webkit-text-fill-color:#000!important}
   .ri{background:#f9f9f9!important;border-color:#ddd!important}
   .id-card{border-color:#ddd!important}
-  @page{margin:15mm;size:A4}
+  @page{margin:15mm;size:A4 portrait}
 }
 
 /* Ripple */
@@ -425,29 +421,6 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   </div>
 </div>
 
-<!-- Print modal -->
-<div id="print-modal" class="pveil">
-  <div class="pbox">
-    <div class="phd">
-      <span class="pht H">Print / Save Claim</span>
-      <button class="mcl" onclick="closePrintModal()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="pbdy">
-      <div class="popt" onclick="doPrint('portrait')">
-        <div class="popt-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg></div>
-        <div><div class="popt-t">Portrait — A4</div><div class="popt-s">Vertical layout, standard</div></div>
-      </div>
-      <div class="popt" onclick="doPrint('landscape')">
-        <div class="popt-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="14" y2="16"/></svg></div>
-        <div><div class="popt-t">Landscape — A4</div><div class="popt-s">Wide layout, more field space</div></div>
-      </div>
-    </div>
-    <div class="pft"><button class="btn btn-g btn-sm" onclick="closePrintModal()">Cancel</button></div>
-  </div>
-</div>
-
 <!-- New Query Drawer -->
 <div id="nq-overlay" class="nq-overlay" onclick="if(event.target===this)closeDrawer()">
   <div class="nq-drawer">
@@ -462,7 +435,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       <button class="nq-mbtn" id="nqm-manual" onclick="setNQMode('manual')">Manual Entry</button>
     </div>
     <div id="nq-paste" class="nq-body">
-      <p style="font-size:12px;color:var(--mu);line-height:1.6">Paste an copy from <strong style="color:var(--tx2)">Mail or Portal</strong> or <strong style="color:var(--tx2)">To Auto Fill</strong>.:D.</p>
+      <p style="font-size:12px;color:var(--mu);line-height:1.6">Paste a copy from <strong style="color:var(--tx2)">Mail or Portal</strong> to Auto Fill.</p>
       <div>
         <label class="fl">Email Notification Text</label>
         <div class="dz" id="drop-zone">
@@ -510,6 +483,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
+      <span class="hdr-ver">v2.4.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -571,13 +545,27 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 <input type="file" id="file-picker" style="display:none" multiple>
 
 <script>
+/* ══════════════════════════════════════════════════════
+   CONFIGURATION
+══════════════════════════════════════════════════════ */
 const API="https://script.google.com/macros/s/AKfycbwgZyOi0TAyQwXV_j7jqOAi2K4eYq6dBDuv4hFVbST8uE9cXfc4XNohrNWZDEDpaIAa/exec";
+
+/* ── Google Drive upload config ───────────────────────
+   Set GDRIVE_FOLDER_ID to your target folder ID from the
+   Drive URL: drive.google.com/drive/folders/[FOLDER_ID]
+   Leave blank to upload to root of Drive.
+   The upload goes through the same Apps Script endpoint.
+───────────────────────────────────────────────────── */
+const GDRIVE_FOLDER_ID = "1oVb3pwE6Gxnn_ZpCO1yYZqidLHsrllwR";
+
 let DB={claims:[],statuses:[]};
 let TAB='active';
 let PENDING=null;
-let PRINT_ID=null;
-// FILE_ATTACH_TARGET = {claimId, index} or null
 let FILE_ATTACH_TARGET=null;
+
+// Debounce timer for saves
+let _saveTimer=null;
+function debounceSave(fn,ms=400){clearTimeout(_saveTimer);_saveTimer=setTimeout(fn,ms);}
 
 /* ══ BOOT ══ */
 window.onload=()=>{
@@ -649,17 +637,19 @@ function setNQMode(m){
   document.getElementById('nq-manual').classList.toggle('hidden',m!=='manual');
 }
 
-/* ══ PRINT ══ */
-function openPrintModal(id){PRINT_ID=id;document.getElementById('print-modal').classList.add('open');}
-function closePrintModal(){document.getElementById('print-modal').classList.remove('open');}
-function doPrint(orientation){
-  closePrintModal();
-  document.querySelectorAll('.cc.open').forEach(c=>{if(c.id!=='card-'+PRINT_ID)c.classList.remove('open');});
-  const card=document.getElementById('card-'+PRINT_ID);
+/* ══ PRINT — direct A4 portrait, no modal ══ */
+function doPrint(claimId){
+  // Close all cards then open just this one
+  document.querySelectorAll('.cc.open').forEach(c=>{
+    if(c.id!=='card-'+claimId)c.classList.remove('open');
+  });
+  const card=document.getElementById('card-'+claimId);
   if(card&&!card.classList.contains('open'))card.classList.add('open');
+
+  // Force A4 portrait
   let sty=document.getElementById('print-orient');
   if(!sty){sty=document.createElement('style');sty.id='print-orient';document.head.appendChild(sty);}
-  sty.textContent=`@media print{@page{size:A4 ${orientation};margin:14mm}}`;
+  sty.textContent='@media print{@page{size:A4 portrait;margin:15mm}}';
   setTimeout(()=>window.print(),120);
 }
 
@@ -689,12 +679,58 @@ function processInput(){
     const rm=txt.match(/Date:[^\n]*\n([\s\S]*?)(?=View Claim Details|This notification)/i);if(rm)p.reqtext=rm[1].trim();
   } else if(/AIA BROKER|(Send Back By[\s\S]{0,30}Reimbursement)/i.test(txt)){
     p.insurer='AIA';
-    const cm=txt.match(/Reimbursement\s*-\s*#([A-Z0-9]+)/i)||txt.match(/#([A-Z][A-Z0-9]{4,})/);if(cm)p.claimid=cm[1];
-    const sb=txt.match(/Send Back By\s*\n([^\n]+)/i)||txt.match(/Send Back By\s+([^\n]+)/i);if(sb)p.reqby=sb[1].trim();
-    const sd=txt.match(/Send Back Date\s*\n([^\n]+)/i)||txt.match(/Send Back Date\s+([^\n]+)/i);if(sd){const d=new Date(sd[1].trim());if(!isNaN(d))p.datePasted=d.toISOString();}
-    const co=txt.match(/Comments on Need Information\s*\n([\s\S]*?)(?=សូមអរគុណ|See more|$)/i);
-    if(co){let raw=co[1].trim();const bs=raw.search(/[:：]\s|\d+\//);p.reqtext=bs>0?raw.substring(bs).trim():raw;}
-    const am=txt.match(/Total Claim Amount Submitted\s+[A-Z]+\s*([\d,.]+)/i)||txt.match(/USD\s*([\d,.]+)/i);if(am)p.amount=am[1];
+    // ── Claim number ─────────────────────────────────────────────────────────
+    const cm=txt.match(/Reimbursement\s*-\s*#([A-Z0-9]+)/i)||txt.match(/#([A-Z][A-Z0-9]{4,})/);
+    if(cm)p.claimid=cm[1];
+    // ── Requester (Send Back By) ──────────────────────────────────────────────
+    // Layout A (Khmer UI): "Send Back By\n<KhmerLabel>\n<Name>"
+    // Layout B (English):  "Send Back By\n<Name>"
+    // Grab block up to next section header; pick first line with a Latin character.
+    const sbBlock=txt.match(/Send Back By\s*\n([\s\S]{0,150}?)(?=កាលបរិច្ឆេទ|Send Back Date)/i);
+    if(sbBlock){
+      const sbLines=sbBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
+      const nameLine=sbLines.find(l=>/[a-zA-Z]/.test(l));
+      if(nameLine)p.reqby=nameLine;
+    }
+    // ── Date (Send Back Date) ─────────────────────────────────────────────────
+    // Grab block up to next section header; pick first line that contains a digit.
+    const sdBlock=txt.match(/Send Back Date\s*\n([\s\S]{0,150}?)(?=មូលហេតុ|Reason for Need|Comments on Need|ការកំណត់)/i);
+    if(sdBlock){
+      const sdLines=sdBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
+      const dateLine=sdLines.find(l=>/\d/.test(l));
+      if(dateLine){const d=new Date(dateLine);if(!isNaN(d))p.datePasted=d.toISOString();}
+    } else {
+      const sd=txt.match(/Send Back Date\s*\n([^\n]+)/i)||txt.match(/Send Back Date\s+([^\n]+)/i);
+      if(sd){const d=new Date(sd[1].trim());if(!isNaN(d))p.datePasted=d.toISOString();}
+    }
+    // ── Request text (Comments on Need Information) ───────────────────────────
+    // Grab everything after the heading, stop before "Total Claim Amount".
+    const co=txt.match(/Comments on Need Information\s*\n([\s\S]*?)(?=Total Claim Amount|$)/i);
+    if(co){
+      let raw=co[1];
+      // Strip trailing: "(PC) See more", "(VSN) See more", "See more" etc.
+      raw=raw.replace(/\s*\(?\w{1,5}\)?\s*See more\s*$/i,'').trim();
+      // Strip AIA closing disclaimer + everything after it (Khmer).
+      const discIdx=raw.indexOf('\u179f\u17bc\u1798\u1794\u1789\u17d2\u1787\u17b6\u1780\u17d2\u178f\u17b6');
+      if(discIdx>0)raw=raw.substring(0,discIdx).trim();
+      // Detect and strip Khmer greeting paragraph.
+      // The greeting always ends with "ងរបស់លោកអ្នក៖" — take everything after it.
+      const greetMarker='\u1784\u179a\u1794\u179f\u17cb\u179b\u17c4\u1780\u17a2\u17d2\u1793\u1780\u17d6';
+      const greetIdx=raw.indexOf(greetMarker);
+      if(greetIdx>=0){
+        raw=raw.substring(greetIdx+greetMarker.length).trim();
+      } else {
+        // No Khmer greeting: check if there's a preamble before the first numbered item
+        // and skip it only if a numbered/bulleted item exists.
+        const bulletIdx=raw.search(/(?:^|\n)\s*\d+[\/\.]\s|(?:^|\n)\s*[•\-]\s/);
+        if(bulletIdx>0)raw=raw.substring(bulletIdx).trim();
+        // If no bullets either, use the whole text as-is (English direct requests).
+      }
+      p.reqtext=raw.trim();
+    }
+    // ── Claim amount ──────────────────────────────────────────────────────────
+    const am=txt.match(/Total Claim Amount Submitted\s+[A-Z]+\s*([\d,.]+)/i)||txt.match(/USD\s*([\d,.]+)/i);
+    if(am)p.amount=am[1];
   } else if(txt.includes('Send Back By')&&txt.includes('Comments on Need Information')){
     const cm=txt.match(/Claim\s+#([A-Z0-9]+)/i);if(cm)p.claimid=cm[1];
     const ic=txt.match(/Customer:\s*([^,\n]+)/i);if(ic)p.inscomp=ic[1].trim();
@@ -771,10 +807,11 @@ function saveManual(){
   setNQMode('paste');commitQuery(p);
 }
 
-/* ══ FILE ATTACHMENTS ══ */
-// Files are stored as [{name,path}] in remark.files
-// "path" is the file:// URL obtained from the File object
-// Opening: window.open(path) — works in same-origin browser from local HTML file
+/* ══ FILE ATTACHMENTS — Google Drive Upload ══
+   Files are uploaded to Google Drive via the Apps Script endpoint.
+   The stored record contains: {name, driveId, driveUrl}
+   Falls back gracefully if Drive upload is not configured.
+══════════════════════════════════════════════ */
 function attachFileToClaim(claimId){
   FILE_ATTACH_TARGET=claimId;
   document.getElementById('file-picker').value='';
@@ -784,27 +821,74 @@ document.getElementById('file-picker').addEventListener('change',function(){
   if(!FILE_ATTACH_TARGET||!this.files.length)return;
   const claimId=FILE_ATTACH_TARGET;
   FILE_ATTACH_TARGET=null;
-  addFilesToClaim(claimId,[...this.files]);
+  uploadFilesToDrive(claimId,[...this.files]);
 });
-function addFilesToClaim(claimId,files){
-  const c=DB.claims.find(x=>x.id===claimId);if(!c)return;
+function handleFileDrop(e,claimId){
+  e.preventDefault();e.stopPropagation();
+  e.currentTarget.classList.remove('drag');
+  if(e.dataTransfer.files.length)uploadFilesToDrive(claimId,[...e.dataTransfer.files]);
+}
+
+async function uploadFilesToDrive(claimId,files){
+  if(!files.length)return;
+  toast(`Uploading ${files.length} file${files.length>1?'s':''}…`,'info');
+
+  // Show uploading state on the card
+  const zone=document.getElementById('fdz-'+claimId);
+  if(zone)zone.style.opacity='0.5';
+
+  const results=[];
+  for(const f of files){
+    try{
+      // Read file as base64
+      const b64=await fileToBase64(f);
+      const res=await apicall({
+        action:'uploadFile',
+        claimId,
+        fileName:f.name,
+        mimeType:f.type||'application/octet-stream',
+        fileData:b64,
+        folderId:GDRIVE_FOLDER_ID
+      });
+      if(res&&res.success){
+        results.push({name:f.name,driveId:res.driveId,driveUrl:res.driveUrl});
+      } else {
+        // Fallback: store name only if upload fails
+        results.push({name:f.name,driveId:'',driveUrl:''});
+        toast(`Upload failed for ${f.name}`,'err');
+      }
+    } catch(err){
+      results.push({name:f.name,driveId:'',driveUrl:''});
+      toast(`Error uploading ${f.name}`,'err');
+    }
+  }
+
+  // Attach results to claim
+  const c=DB.claims.find(x=>x.id===claimId);
+  if(!c){if(zone)zone.style.opacity='';return;}
   const r=getRem(c.remark);
   if(!r.files)r.files=[];
-  let added=0;
-  files.forEach(f=>{
-    // Use webkitRelativePath or name; path via URL.createObjectURL isn't persistent.
-    // Store the file path. On local file:// served pages, File.path gives full path (Chrome).
-    const path=f.path||f.webkitRelativePath||f.name;
-    // Avoid duplicate paths
-    if(!r.files.find(x=>x.path===path&&x.name===f.name)){
-      r.files.push({name:f.name,path:path});
-      added++;
+  results.forEach(rf=>{
+    if(!r.files.find(x=>x.name===rf.name&&x.driveId===rf.driveId)){
+      r.files.push(rf);
     }
   });
   c.remark=JSON.stringify(r);c.dateModified=new Date().toISOString();
+  if(zone)zone.style.opacity='';
   persist(c);
-  toast(`${added} file${added!==1?'s':''} attached`,'ok');
+  const ok=results.filter(x=>x.driveId).length;
+  if(ok)toast(`${ok} file${ok>1?'s':''} saved to Drive`,'ok');
 }
+
+function fileToBase64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.onerror=()=>rej(new Error('Read failed'));
+    r.readAsDataURL(file);
+  });
+}
+
 function removeFile(claimId,idx){
   const c=DB.claims.find(x=>x.id===claimId);if(!c)return;
   const r=getRem(c.remark);
@@ -813,27 +897,16 @@ function removeFile(claimId,idx){
   c.remark=JSON.stringify(r);c.dateModified=new Date().toISOString();
   persist(c);toast('File removed','ok');
 }
-function openFile(path,name){
-  if(!path||path===name){
-    toast('Full path not available — reattach file for direct open','err');return;
-  }
-  // Try file:// URL
-  let url=path;
-  if(!url.startsWith('file://')&&!url.startsWith('http')){
-    // Windows path like C:\... or Unix /home/...
-    url=path.startsWith('/')?'file://'+path:'file:///'+path.replace(/\\/g,'/');
-  }
+function openFile(url,name){
+  if(!url){toast('No Drive link — file may not have uploaded','err');return;}
   window.open(url,'_blank');
-}
-function handleFileDrop(e,claimId){
-  e.preventDefault();e.stopPropagation();
-  const zone=e.currentTarget;
-  zone.classList.remove('drag');
-  if(e.dataTransfer.files.length)addFilesToClaim(claimId,[...e.dataTransfer.files]);
 }
 
 /* ══ RENDER ══ */
-function renderClaims(){
+// Debounced render to avoid thrashing
+let _renderTimer=null;
+function renderClaims(){clearTimeout(_renderTimer);_renderTimer=setTimeout(_doRender,16);}
+function _doRender(){
   populateFilters();
   const list=document.getElementById('clist');
   const q=document.getElementById('search').value.toLowerCase();
@@ -861,7 +934,6 @@ function renderClaims(){
   }
   const openIds=new Set([...document.querySelectorAll('.cc.open')].map(el=>el.id.replace('card-','')));
   list.innerHTML=items.map(c=>buildCard(c,openIds.has(c.id))).join('');
-  // After render, auto-grow all textareas
   document.querySelectorAll('.ri-ta').forEach(ta=>autoGrow(ta));
 }
 
@@ -884,7 +956,7 @@ function buildCard(c,isOpen=false){
     ?`<button class="ib chk" title="Mark Complete" onclick="event.stopPropagation();ripple(this);setStatus('${c.id}','Complete')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`
     :`<button class="ib rec" title="Recover" onclick="event.stopPropagation();ripple(this);recoverClaim('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>`;
 
-  /* ── Request items (LEFT side) ── */
+  /* Request items */
   const reqsHtml=c.requests.map((req,i)=>{
     const rd=new Date(req.datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
     return`<div class="ri">
@@ -901,40 +973,36 @@ function buildCard(c,isOpen=false){
     </div>`;
   }).join('');
 
-  /* ── Files list (RIGHT side) ── */
-  const filesHtml=files.map((f,i)=>`
-    <div class="file-item">
+  /* Files list */
+  const filesHtml=files.map((f,i)=>{
+    const hasDrive=f.driveUrl&&f.driveUrl.startsWith('http');
+    return`<div class="file-item">
       <div class="file-icon">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </div>
       <div style="flex:1;min-width:0">
-        <div class="file-name" title="${esc(f.name)}">${esc(f.name)}</div>
-        <span class="file-path" title="${esc(f.path)}">${esc(f.path)}</span>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span class="file-name" title="${esc(f.name)}">${esc(f.name)}</span>
+          ${hasDrive?`<span class="gdrive-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Drive</span>`:''}
+        </div>
       </div>
-      <button class="file-open" onclick="openFile('${esc(f.path)}','${esc(f.name)}')" title="Open file">Open</button>
+      ${hasDrive?`<button class="file-open" onclick="openFile('${esc(f.driveUrl)}','${esc(f.name)}')" title="Open in Drive">Open</button>`:`<span style="font-family:var(--ff-h);font-size:10px;color:var(--mu);padding:0 6px">No link</span>`}
       <button class="file-del" onclick="removeFile('${c.id}',${i})" title="Remove attachment">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   return`<div class="cc${isOpen?' open':''}" id="card-${c.id}">
-
-  <!-- ── Summary Row ── -->
   <div class="ccrow" onclick="toggleCard('${c.id}')">
     <div class="ccL">
       <div class="cc-id">#${esc(did)}</div>
       ${r.insurer?`<div class="cc-ins">${esc(r.insurer)}</div>`:''}
     </div>
     <div class="ccM">
-      <div class="chip">
-        <span class="chip-l">Claimant</span>
-        <span class="chip-v">${esc(c.customer)||'—'}</span>
-      </div>
+      <div class="chip"><span class="chip-l">Claimant</span><span class="chip-v">${esc(c.customer)||'—'}</span></div>
       ${r.inscomp?`<div class="chip"><span class="chip-l">Insured Co.</span><span class="chip-v">${esc(r.inscomp)}</span></div>`:''}
-      <div class="chip">
-        <span class="chip-l">Handler</span>
-        <span class="chip-v">${esc(handler)}</span>
-      </div>
+      <div class="chip"><span class="chip-l">Handler</span><span class="chip-v">${esc(handler)}</span></div>
       <div class="pills">
         <span class="pill">${qcount} quer${qcount===1?'y':'ies'}</span>
         <span class="pill">${days}d open</span>
@@ -943,7 +1011,7 @@ function buildCard(c,isOpen=false){
     </div>
     <div class="ccR">
       ${qBtn}
-      <button class="ib" title="Print / Save" onclick="event.stopPropagation();openPrintModal('${c.id}')">
+      <button class="ib" title="Print A4 Portrait" onclick="event.stopPropagation();doPrint('${c.id}')">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       </button>
       <select class="spill" style="background-color:${col.bg};color:${col.tx}" onclick="event.stopPropagation()" onchange="setStatus('${c.id}',this.value)">${statOpts}</select>
@@ -951,14 +1019,9 @@ function buildCard(c,isOpen=false){
     </div>
   </div>
 
-  <!-- ── Expand Panel ── -->
   <div class="ccp"><div class="ccp-inner"><div class="ccp-body">
     <div class="exp-layout">
-
-      <!-- LEFT: Identity + Requests -->
       <div class="exp-main">
-
-        <!-- Identity card — first thing you see -->
         <div class="id-card">
           <div class="id-card-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -978,8 +1041,6 @@ function buildCard(c,isOpen=false){
             </div>
           </div>
         </div>
-
-        <!-- Document Requests -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
@@ -988,35 +1049,48 @@ function buildCard(c,isOpen=false){
           </div>
           <div class="psec-bd"><div class="rlist">${reqsHtml}</div></div>
         </div>
-
-      </div><!-- /exp-main -->
-
-      <!-- RIGHT: Claim details + contacts + files -->
+      </div>
       <div class="exp-side">
 
-        <!-- Claim Info -->
+        <!-- Claim Details — single column, no cutoff -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg></div>
             <span class="psec-t">Claim Details</span>
           </div>
           <div class="psec-bd">
-            <div class="fg2">
-              <div style="grid-column:1/-1"><label class="fl">Claim Number</label><input type="text" value="${esc(did)}" onchange="updRem('${c.id}','displayId',this.value)"></div>
-              <div><label class="fl">Insurer</label><input type="text" value="${esc(r.insurer||'')}" placeholder="e.g. AIA" onchange="updRem('${c.id}','insurer',this.value)"></div>
-              <div><label class="fl">Claim Amount (USD)</label><input type="text" value="${esc(r.claimAmount||'')}" placeholder="0.00" onchange="updRem('${c.id}','claimAmount',this.value)"></div>
-              <div style="grid-column:1/-1"><label class="fl">Insured Company</label><input type="text" value="${esc(r.inscomp||'')}" placeholder="Employer / group" onchange="updRem('${c.id}','inscomp',this.value)"></div>
-              <div style="grid-column:1/-1"><label class="fl">Accident / Incident Date</label><input type="date" value="${esc(r.accidentDate||'')}" onchange="updRem('${c.id}','accidentDate',this.value)"></div>
-              <div><label class="fl">Phone</label><input type="text" value="${esc(r.phone||'')}" placeholder="Contact" onchange="updRem('${c.id}','phone',this.value)"></div>
-              <div><label class="fl">Personal ID</label><input type="text" value="${esc(r.personalId||'')}" placeholder="NID" onchange="updRem('${c.id}','personalId',this.value)"></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div><label class="fl">Claim Number</label><input type="text" value="${esc(did)}" onchange="updRem('${c.id}','displayId',this.value)"></div>
+              <div class="fg2">
+                <div><label class="fl">Insurer</label><input type="text" value="${esc(r.insurer||'')}" placeholder="e.g. AIA" onchange="updRem('${c.id}','insurer',this.value)"></div>
+                <div><label class="fl">Amount (USD)</label><input type="text" value="${esc(r.claimAmount||'')}" placeholder="0.00" onchange="updRem('${c.id}','claimAmount',this.value)"></div>
+              </div>
+              <div><label class="fl">Insured Company</label><input type="text" value="${esc(r.inscomp||'')}" placeholder="Employer / group" onchange="updRem('${c.id}','inscomp',this.value)"></div>
               <div><label class="fl">Claimant — Patient</label><input type="text" value="${esc(c.customer)}" placeholder="Patient name" onchange="updCustomer('${c.id}',this.value)"></div>
-              <div><label class="fl">Handler</label><input type="text" value="${esc(handler)}" placeholder="Assign handler" onchange="updRem('${c.id}','handler',this.value)"></div>
-              <div style="grid-column:1/-1"><label class="fl">Internal Remark</label><input type="text" value="${esc(r.text||'')}" placeholder="Notes" onchange="updRem('${c.id}','text',this.value)"></div>
+              <div class="fg2">
+                <div><label class="fl">Phone</label><input type="text" value="${esc(r.phone||'')}" placeholder="Contact" onchange="updRem('${c.id}','phone',this.value)"></div>
+                <div><label class="fl">Personal ID</label><input type="text" value="${esc(r.personalId||'')}" placeholder="NID" onchange="updRem('${c.id}','personalId',this.value)"></div>
+              </div>
+              <div class="fg2">
+                <div><label class="fl">Accident Date</label><input type="date" value="${esc(r.accidentDate||'')}" onchange="updRem('${c.id}','accidentDate',this.value)"></div>
+                <div><label class="fl">Handler</label><input type="text" value="${esc(handler)}" placeholder="Assign handler" onchange="updRem('${c.id}','handler',this.value)"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- File Attachments -->
+        <!-- Remark box -->
+        <div class="psec">
+          <div class="psec-hd">
+            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <span class="psec-t">Remark</span>
+          </div>
+          <div class="psec-bd">
+            <textarea class="remark-ta" placeholder="Internal notes, follow-up actions, observations…" oninput="autoGrow(this)" onchange="updRem('${c.id}','text',this.value)">${esc(r.text||'')}</textarea>
+          </div>
+        </div>
+
+        <!-- Attached Files — compact, full list visible -->
         <div class="psec">
           <div class="psec-hd">
             <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
@@ -1029,23 +1103,21 @@ function buildCard(c,isOpen=false){
               </button>
             </div>
           </div>
-          <div class="psec-bd">
+          <div class="psec-bd" style="padding:10px">
             <div class="file-drop-zone" id="fdz-${c.id}"
               ondragover="event.preventDefault();this.classList.add('drag')"
               ondragleave="this.classList.remove('drag')"
               ondrop="handleFileDrop(event,'${c.id}')"
               onclick="attachFileToClaim('${c.id}')">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
-              <p>Click or drag files here</p>
-              <span>File path will be stored — not the file itself</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+              <p>Click or drag to upload to Drive</p>
             </div>
-            ${files.length?`<div class="file-list">${filesHtml}</div><p class="no-open-note">Files open from your local drive. If "Open" doesn't work, try running this app from a <code>file://</code> address.</p>`:''}
+            ${files.length?`<div class="file-list">${filesHtml}</div>`:''}
           </div>
         </div>
 
-      </div><!-- /exp-side -->
-
-    </div><!-- /exp-layout -->
+      </div>
+    </div>
   </div></div></div>
 </div>`;
 }
@@ -1065,10 +1137,7 @@ function toggleCard(id){
 }
 
 /* ══ AUTO-GROW textarea ══ */
-function autoGrow(el){
-  el.style.height='auto';
-  el.style.height=el.scrollHeight+'px';
-}
+function autoGrow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
 
 /* ══ FILTER HELPERS ══ */
 function filterByInsurer(v){document.getElementById('flt-insurer').value=v;renderClaims();}
@@ -1127,7 +1196,7 @@ function toast(msg,type='info'){
 }
 function ripple(btn){btn.classList.remove('rpling');void btn.offsetWidth;btn.classList.add('rpling');setTimeout(()=>btn.classList.remove('rpling'),500);}
 
-/* ══ DRAG & DROP (email) ══ */
+/* ══ DRAG & DROP (email paste zone) ══ */
 const dz=document.getElementById('drop-zone');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
@@ -1135,8 +1204,6 @@ dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');co
 
 /* Backdrops */
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('print-modal').addEventListener('click',function(e){if(e.target===this)closePrintModal();});
 </script>
 </body>
 </html>
-
