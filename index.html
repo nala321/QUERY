@@ -1,10 +1,22 @@
-<!-- VERSION: 2.8.0 -->
+<!-- VERSION: 2.9.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Query-Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Query Tracker</title>
+<!-- PWA webapp meta -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="QueryTracker">
+<meta name="application-name" content="QueryTracker">
+<meta name="theme-color" content="#2563eb">
+<!-- Home screen icon (iPhone & Android) -->
+<link rel="apple-touch-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDer3AHwDQ5t5k8meBYeyXVpwClXiUxddSQ&s">
+<link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDer3AHwDQ5t5k8meBYeyXVpwClXiUxddSQ&s">
+<!-- Tab favicon: white circle -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -296,9 +308,166 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .empty-ico{width:48px;height:48px;background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--r16);margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
 .empty-t{font-family:var(--ff-h);font-size:14px;font-weight:700;color:var(--tx2);margin-bottom:4px}
 
-/* ═══════════════════════════════════════════ MOBILE BLOCK */
-#mblk{display:none;position:fixed;inset:0;background:var(--bg);z-index:99999;align-items:center;justify-content:center;padding:24px}
-@media(max-width:720px){#mblk{display:flex}#lscr,#app{display:none!important}}
+/* ═══════════════════════════════════════════ RESPONSIVE ROUTING */
+#mblk{display:none!important}
+/* Desktop: hide mobile UI */
+@media(min-width:721px){#mob-app{display:none!important}}
+/* Mobile: hide desktop app, show mobile UI */
+@media(max-width:720px){
+  #app{display:none!important}
+  #mob-app{display:flex!important}
+}
+
+/* ═══════════════════════════════════════════ MOBILE UI */
+#mob-app{
+  display:none;flex-direction:column;
+  height:100vh;height:100dvh;
+  background:#f0f4fa;overflow:hidden;
+  font-family:var(--ff-b);
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+[data-theme=dark] #mob-app{background:#0a0a0a}
+
+/* Top bar */
+.mtb{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
+  background:var(--surf);border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px}
+.mtb-brand{display:flex;align-items:center;gap:9px;min-width:0}
+.mtb-logo{width:32px;height:32px;background:var(--acg);border-radius:9px;display:flex;
+  align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(37,99,235,.3)}
+.mtb-text{min-width:0}
+.mtb-title{font-family:var(--ff-h);font-size:15px;font-weight:700;color:var(--tx);line-height:1.1}
+.mtb-sub{font-size:9px;color:var(--mu);font-weight:500;margin-top:1px}
+.mtb-acts{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.mtb-sync{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--bd);
+  background:var(--surf2);color:var(--tx2);display:flex;align-items:center;
+  justify-content:center;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;
+  transition:background .15s,transform .1s;touch-action:manipulation}
+.mtb-sync:active{transform:scale(.88);background:var(--surf3)}
+.mtb-custom{padding:7px 13px;border-radius:99px;background:var(--acg);color:#fff;
+  font-family:var(--ff-h);font-size:11.5px;font-weight:700;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:5px;box-shadow:var(--acs);
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .1s}
+.mtb-custom:active{transform:scale(.93)}
+
+/* Search */
+.msrch{padding:9px 14px 7px;background:var(--surf);border-bottom:1px solid var(--bd);flex-shrink:0}
+.msrch-inner{display:flex;align-items:center;gap:8px;background:var(--surf2);
+  border:1.5px solid var(--bd);border-radius:12px;padding:8px 12px;transition:border-color .2s}
+.msrch-inner:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.msrch-inner svg{flex-shrink:0;color:var(--mu)}
+.msrch-inner input{flex:1;border:none;background:transparent;font-size:13.5px;
+  color:var(--tx);outline:none;min-width:0}
+.msrch-inner input::placeholder{color:var(--mu)}
+
+/* Tabs */
+.mtabs{display:flex;padding:8px 14px 6px;background:var(--surf);
+  border-bottom:1px solid var(--bd);gap:6px;flex-shrink:0}
+.mtab{flex:1;padding:8px 0;border-radius:10px;font-family:var(--ff-h);
+  font-size:12px;font-weight:700;color:var(--mu);cursor:pointer;border:1.5px solid transparent;
+  background:transparent;transition:all .15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mtab.on{background:var(--surf3);color:var(--ac);border-color:var(--bd)}
+
+/* List */
+.mlist{flex:1;overflow-y:auto;padding:10px 12px 16px;
+  display:flex;flex-direction:column;gap:9px;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+
+/* Card */
+.mcard{background:var(--surf);border:1.5px solid var(--bd);border-radius:18px;
+  overflow:hidden;transition:border-color .15s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mcard:active .mcard-top{background:var(--surf3)}
+.mcard-top{display:flex;align-items:center;gap:10px;padding:13px 14px;
+  cursor:pointer;transition:background .1s}
+.mcard-idcol{flex-shrink:0;min-width:52px}
+.mcard-id{font-family:var(--ff-h);font-size:13.5px;font-weight:700;color:var(--ac);line-height:1.2}
+.mcard-ins{font-family:var(--ff-h);font-size:9px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.5px;
+  color:#fff;background:#2563eb;border-radius:5px;
+  padding:2px 6px;display:inline-block;margin-top:3px;
+  box-shadow:0 1px 3px rgba(37,99,235,.3)}
+[data-theme=dark] .mcard-ins{background:#1d4ed8}
+.mcard-body{flex:1;min-width:0}
+.mcard-name{font-size:14px;font-weight:600;color:var(--tx);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.mcard-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;align-items:center}
+.mpill{font-family:var(--ff-h);font-size:9.5px;font-weight:700;
+  padding:2px 8px;border-radius:99px;
+  background:var(--surf3);border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
+.mpill-g{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.mpill-b{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
+[data-theme=dark] .mpill-g{background:#001a0d;border-color:#166534;color:#4ade80}
+[data-theme=dark] .mpill-b{background:#0f1f3d;border-color:#1e40af;color:#93c5fd}
+.mcard-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.mcard-dot{width:9px;height:9px;border-radius:50%}
+.mcard-chev{color:var(--mu);transition:transform .25s var(--eo)}
+.mcard.mopen .mcard-chev{transform:rotate(180deg)}
+
+/* Expand */
+.mxpand{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s var(--eo)}
+.mcard.mopen .mxpand{grid-template-rows:1fr}
+.mxpand-inner{overflow:hidden}
+.mxpand-body{border-top:1px solid var(--bd);background:var(--surf2)}
+
+/* Section */
+.msec{padding:13px 14px;border-bottom:1px solid var(--bd)}
+.msec:last-child{border-bottom:none}
+.msec-title{font-family:var(--ff-h);font-size:9.5px;font-weight:700;
+  color:var(--mu);text-transform:uppercase;letter-spacing:.7px;
+  margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.msec-title svg{color:var(--ac);flex-shrink:0}
+
+/* Info grid */
+.migrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.miitem{display:flex;flex-direction:column;gap:2px}
+.miitem.full{grid-column:1/-1}
+.milabel{font-family:var(--ff-h);font-size:9px;font-weight:700;
+  color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+.mival{font-size:13.5px;color:var(--tx);font-weight:500;word-break:break-word;line-height:1.4}
+.mival.mu{color:var(--mu);font-style:italic;font-size:12px}
+
+/* Status badge */
+.mstbadge{display:inline-flex;align-items:center;padding:5px 14px;
+  border-radius:99px;font-family:var(--ff-h);font-size:11.5px;font-weight:700;margin-bottom:10px}
+
+/* Request item */
+.mreq{background:var(--surf);border:1px solid var(--bd);
+  border-radius:11px;padding:10px 12px;margin-bottom:7px}
+.mreq:last-child{margin-bottom:0}
+.mreq-top{display:flex;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap}
+.mreq-by{font-family:var(--ff-h);font-size:10px;font-weight:700;color:var(--ac)}
+.mreq-date{font-family:var(--ff-h);font-size:9.5px;color:var(--mu);
+  background:var(--surf3);border:1px solid var(--bd);border-radius:99px;
+  padding:1px 7px;margin-left:auto;white-space:nowrap}
+.mreq-txt{font-size:13px;color:var(--tx);line-height:1.6}
+
+/* Remark textarea */
+.mremark{width:100%;padding:11px 12px;
+  border:1.5px solid var(--bd);border-radius:11px;
+  background:var(--surf);color:var(--tx);
+  font-size:13.5px;line-height:1.65;font-family:var(--ff-b);
+  resize:none;overflow:hidden;min-height:76px;outline:none;
+  transition:border-color .2s,box-shadow .2s}
+.mremark::placeholder{color:var(--mu)}
+.mremark:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+/* File row */
+.mfile-row{display:flex;align-items:center;gap:10px;
+  padding:9px 0;border-bottom:1px solid var(--bd)}
+.mfile-row:last-child{border-bottom:none}
+.mfile-name{flex:1;font-size:13px;color:var(--tx2);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mfile-open{font-family:var(--ff-h);font-size:10.5px;font-weight:700;
+  color:#2563eb;background:#eff6ff;border:1px solid #bfdbfe;
+  border-radius:7px;padding:4px 10px;cursor:pointer;white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;border-style:solid;touch-action:manipulation}
+
+/* Empty state */
+.mempty{text-align:center;padding:48px 20px;color:var(--mu)}
+.mempty-ico{width:46px;height:46px;background:var(--surf3);border:1.5px solid var(--bd);
+  border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.mempty-t{font-family:var(--ff-h);font-size:14px;font-weight:700;color:var(--tx2);margin-bottom:4px}
 
 /* ═══════════════════════════════════════════ PRINT — handled by doPrint popup window */
 @media print{
@@ -313,15 +482,46 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 </head>
 <body>
 
-<!-- Mobile block -->
-<div id="mblk">
-  <div style="background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r20);padding:32px;max-width:340px;box-shadow:var(--s3);text-align:center">
-    <div style="width:44px;height:44px;background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--r16);margin:0 auto 12px;display:flex;align-items:center;justify-content:center">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+<!-- ═══════ MOBILE APP UI ═══════ -->
+<div id="mob-app">
+  <!-- Top Bar -->
+  <div class="mtb">
+    <div class="mtb-brand">
+      <div class="mtb-logo">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="mtb-text">
+        <div class="mtb-title">Query Tracker</div>
+        <div class="mtb-sub">v2.9.0 · View Only</div>
+      </div>
     </div>
-    <h2 style="font-family:var(--ff-h);font-size:16px;font-weight:700;margin-bottom:6px">Desktop Required</h2>
-    <p style="font-size:12px;color:var(--mu);line-height:1.6">Switch to a larger screen to access the full workspace.</p>
+    <div class="mtb-acts">
+      <button class="mtb-custom" onclick="window.open('https://www.youtube.com','_blank')">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        CUSTOM
+      </button>
+      <button class="mtb-sync" onclick="mobSync(this)" title="Sync">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      </button>
+    </div>
   </div>
+
+  <!-- Search -->
+  <div class="msrch">
+    <div class="msrch-inner">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="mob-search" placeholder="Search claims, patients, companies…" oninput="mobRender()" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="mtabs">
+    <button class="mtab on" id="mob-tab-active" onclick="mobTab('active')">Active</button>
+    <button class="mtab" id="mob-tab-trash" onclick="mobTab('trash')">Completed</button>
+  </div>
+
+  <!-- List -->
+  <div class="mlist" id="mob-list"></div>
 </div>
 
 <div id="ldr"><div class="lspin"></div>Syncing…</div>
@@ -461,7 +661,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v2.8.0</span>
+      <span class="hdr-ver">v2.9.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -592,8 +792,13 @@ window.onload=()=>{
   }
 };
 function bootApp(){
-  document.getElementById('app').classList.remove('hidden');
-  renderClaims();
+  if(window.innerWidth<=720){
+    // Mobile mode: show mobile UI, keep desktop hidden
+    mobRender();
+  } else {
+    document.getElementById('app').classList.remove('hidden');
+    renderClaims();
+  }
 }
 
 /* ══ API ══ */
@@ -606,7 +811,10 @@ function setLdr(s){document.getElementById('ldr').classList.toggle('on',s);}
 
 async function syncData(manual){
   const r=await apicall({action:'sync'});
-  if(r&&r.success){DB.claims=r.claims;DB.statuses=r.statuses;save();renderClaims();}
+  if(r&&r.success){
+    DB.claims=r.claims;DB.statuses=r.statuses;save();
+    if(window.innerWidth<=720)mobRender();else renderClaims();
+  }
   if(manual)toast(r&&r.success?'Synced successfully':'Sync failed',r&&r.success?'ok':'err');
 }
 async function persist(claim){save();renderClaims();await apicall({action:'saveClaim',claim});}
@@ -742,7 +950,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v2.8.0</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v2.9.0</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -751,7 +959,7 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v2.8.0</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v2.9.0</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
   // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
@@ -1345,6 +1553,173 @@ const dz=document.getElementById('drop-zone');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');const d=e.dataTransfer.getData('text');if(d){document.getElementById('email-input').value=d;processInput();}});
+
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE UI LOGIC — view-only, only remark is editable
+═══════════════════════════════════════════════════════ */
+var _MOB_TAB = 'active';
+
+function mobTab(t) {
+  _MOB_TAB = t;
+  var a = document.getElementById('mob-tab-active');
+  var b = document.getElementById('mob-tab-trash');
+  if(a) { a.classList.toggle('on', t==='active'); }
+  if(b) { b.classList.toggle('on', t==='trash'); }
+  mobRender();
+}
+
+function mobSync(btn) {
+  if(btn) { btn.style.transform='rotate(360deg)'; btn.style.transition='transform .6s'; }
+  syncData(true);
+  setTimeout(function(){ if(btn){btn.style.transform='';} mobRender(); }, 1400);
+}
+
+function mobRender() {
+  var list = document.getElementById('mob-list');
+  if(!list) return;
+  var q = (document.getElementById('mob-search').value || '').toLowerCase().trim();
+
+  var items = DB.claims.filter(function(cl) {
+    var r = getRem(cl.remark);
+    var s = (r.displayId||cl.id)+' '+cl.customer+' '+(r.insurer||'')+' '+(r.inscomp||'')+' '+(r.text||'')+' '+(r.handler||'')+' '+(r.phone||'');
+    return s.toLowerCase().indexOf(q) >= 0 &&
+      (_MOB_TAB==='trash' ? cl.status==='Complete' : cl.status!=='Complete');
+  });
+
+  items.sort(function(a,b){ return new Date(b.dateModified) - new Date(a.dateModified); });
+
+  if(!items.length) {
+    list.innerHTML = '<div class="mempty"><div class="mempty-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="mempty-t">No claims found</div><p style="font-size:12px">No '+(_MOB_TAB==='trash'?'completed':'active')+' claims match.</p></div>';
+    return;
+  }
+
+  // Preserve open card IDs across re-render
+  var openIds = {};
+  [].forEach.call(document.querySelectorAll('.mcard.mopen'), function(el){ openIds[el.dataset.cid]=true; });
+
+  list.innerHTML = items.map(function(cl){ return mobCard(cl, !!openIds[cl.id]); }).join('');
+
+  // Re-attach auto-grow on visible remarks
+  [].forEach.call(document.querySelectorAll('.mremark'), function(ta){ mobGrow(ta); });
+}
+
+function mobCard(cl, isOpen) {
+  var r = getRem(cl.remark);
+  var did = r.displayId || cl.id;
+  var col = statusColor(cl.status);
+  var slo = (cl.status||'').toLowerCase();
+  var dot = slo.indexOf('pending')>=0||slo.indexOf('awaiting')>=0 ? '#f59e0b'
+           : slo.indexOf('process')>=0 ? '#3b82f6'
+           : slo.indexOf('complete')>=0 ? '#10b981' : '#94a3b8';
+
+  // Pills
+  var pills = '';
+  if(r.inscomp) pills += '<span class="mpill">'+esc(r.inscomp)+'</span>';
+  if(r.claimAmount) pills += '<span class="mpill mpill-g">USD '+esc(r.claimAmount)+'</span>';
+  var days = daysSince(cl.dateIn);
+  pills += '<span class="mpill">'+days+'d open</span>';
+
+  // Requests
+  var reqsHtml = cl.requests.length ? cl.requests.map(function(q){
+    var rd = new Date(q.datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    return '<div class="mreq">'
+      +'<div class="mreq-top">'
+      +(q.requestedBy?'<span class="mreq-by">'+esc(q.requestedBy)+'</span>':'')
+      +'<span class="mreq-date">'+rd+'</span>'
+      +'</div>'
+      +'<div class="mreq-txt">'+esc(q.text||'').replace(/\n/g,'<br>')+'</div>'
+      +'</div>';
+  }).join('') : '<p style="font-size:12px;color:var(--mu);font-style:italic">No requests yet.</p>';
+
+  // Files
+  var filesHtml = '';
+  if(r.files && r.files.length) {
+    filesHtml = r.files.map(function(f){
+      var hasDrive = f.driveUrl && f.driveUrl.indexOf('http')===0;
+      return '<div class="mfile-row">'
+        +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="'+(hasDrive?'#2563eb':'var(--mu)')+'" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
+        +'<span class="mfile-name">'+esc(f.name)+'</span>'
+        +(hasDrive?'<button class="mfile-open" onclick="window.open(\''+f.driveUrl+'\',\'_blank\')">View</button>':'<span style="font-size:10px;color:var(--mu)">No link</span>')
+        +'</div>';
+    }).join('');
+  }
+
+  // Info grid
+  var infoGrid = '<div class="migrid">';
+  infoGrid += '<div class="miitem"><span class="milabel">Handler</span><span class="mival">'+(r.handler?esc(r.handler):'<span class="mu">Unassigned</span>')+'</span></div>';
+  infoGrid += '<div class="miitem"><span class="milabel">Days Open</span><span class="mival">'+days+'d</span></div>';
+  if(r.accidentDate) infoGrid += '<div class="miitem"><span class="milabel">Acc. Date</span><span class="mival">'+esc(r.accidentDate)+'</span></div>';
+  if(r.claimAmount) infoGrid += '<div class="miitem"><span class="milabel">Amount</span><span class="mival mpill-g" style="font-weight:700">USD '+esc(r.claimAmount)+'</span></div>';
+  if(r.phone) infoGrid += '<div class="miitem"><span class="milabel">Phone</span><span class="mival">'+esc(r.phone)+'</span></div>';
+  if(r.personalId) infoGrid += '<div class="miitem"><span class="milabel">Personal ID</span><span class="mival">'+esc(r.personalId)+'</span></div>';
+  if(r.inscomp) infoGrid += '<div class="miitem full"><span class="milabel">Insured Company</span><span class="mival">'+esc(r.inscomp)+'</span></div>';
+  infoGrid += '</div>';
+
+  var secIco = function(path){ return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">'+path+'</svg>'; };
+
+  var expandHtml = '<div class="mxpand"><div class="mxpand-inner"><div class="mxpand-body">'
+    // Info
+    + '<div class="msec">'
+    + '<div class="msec-title">'+secIco('<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>')+'Info</div>'
+    + '<span class="mstbadge" style="background:'+col.bg+';color:'+col.tx+'">'+esc(cl.status)+'</span>'
+    + infoGrid
+    + '</div>'
+    // Requests
+    + '<div class="msec">'
+    + '<div class="msec-title">'+secIco('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>')
+    + 'Requests <span style="background:var(--surf3);border:1px solid var(--bd);border-radius:99px;padding:0 6px;font-size:10px;margin-left:3px">'+cl.requests.length+'</span></div>'
+    + reqsHtml
+    + '</div>'
+    // Remark — ONLY editable field
+    + '<div class="msec">'
+    + '<div class="msec-title">'+secIco('<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>')
+    + 'Remark <span style="font-size:9px;font-weight:500;color:var(--su);margin-left:4px;text-transform:none;letter-spacing:0">✎ editable</span></div>'
+    + '<textarea class="mremark" placeholder="Internal notes, follow-up actions…" oninput="mobGrow(this)" onchange="mobSaveRemark(\''+cl.id+'\',this.value)">'+esc(r.text||'')+'</textarea>'
+    + '</div>'
+    // Files
+    + (r.files && r.files.length
+      ? '<div class="msec"><div class="msec-title">'+secIco('<path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>')+'Files ('+r.files.length+')</div>'+filesHtml+'</div>'
+      : '')
+    + '</div></div></div>';
+
+  return '<div class="mcard'+(isOpen?' mopen':'')+'" data-cid="'+cl.id+'">'
+    + '<div class="mcard-top" onclick="mobToggle(\''+cl.id+'\')">'
+    + '<div class="mcard-idcol"><div class="mcard-id">#'+esc(did)+'</div>'+(r.insurer?'<div class="mcard-ins">'+esc(r.insurer)+'</div>':'')+'</div>'
+    + '<div class="mcard-body"><div class="mcard-name">'+esc(cl.customer||'Unknown')+'</div><div class="mcard-meta">'+pills+'</div></div>'
+    + '<div class="mcard-right"><div class="mcard-dot" style="background:'+dot+'"></div>'
+    + '<svg class="mcard-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>'
+    + '</div>'
+    + '</div>'
+    + expandHtml
+    + '</div>';
+}
+
+function mobToggle(id) {
+  var el = document.querySelector('.mcard[data-cid="'+id+'"]');
+  if(!el) return;
+  el.classList.toggle('mopen');
+  // Auto-grow any remark textarea that just became visible
+  var ta = el.querySelector('.mremark');
+  if(ta && el.classList.contains('mopen')) setTimeout(function(){ mobGrow(ta); }, 30);
+}
+
+function mobGrow(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = (ta.scrollHeight + 2) + 'px';
+}
+
+function mobSaveRemark(claimId, val) {
+  var cl = DB.claims.find(function(x){ return x.id===claimId; });
+  if(!cl) return;
+  var r = getRem(cl.remark);
+  r.text = val;
+  cl.remark = JSON.stringify(r);
+  cl.dateModified = new Date().toISOString();
+  save();
+  apicall({action:'saveClaim', claim:cl});
+  toast('Remark saved', 'ok');
+}
 
 /* Backdrops */
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
