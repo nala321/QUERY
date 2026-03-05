@@ -345,9 +345,16 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .toast.in{opacity:1;transform:translateY(0) scale(1)}
 .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
+
+/* ═══ SYNC BUTTON SPINNING STATE ═══ */
+@keyframes syncSpin{to{transform:rotate(360deg)}}
+#hdr-sync-btn.syncing .sync-ico,
+#mob-sync-btn.syncing .sync-ico{animation:syncSpin .7s linear infinite}
+#hdr-sync-btn.syncing,
+#mob-sync-btn.syncing{opacity:.7;pointer-events:none;cursor:default}
+#hdr-sync-btn .sync-lbl{transition:none}
 /* ═══════════════════════════════════════════ LOADER */
-#ldr{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-60px);padding:7px 15px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--rpill);font-family:var(--ff-h);font-size:11.5px;font-weight:600;box-shadow:var(--s2);color:var(--tx2);opacity:0;transition:transform var(--d) var(--e),opacity var(--d) var(--e);z-index:9500;display:flex;align-items:center;gap:7px}
-#ldr.on{transform:translateX(-50%) translateY(0);opacity:1}
+#ldr{display:none!important}
 .lspin{width:12px;height:12px;border-radius:50%;border:2px solid var(--bd);border-top-color:var(--ac);animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -457,26 +464,25 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   -webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 
 /* Card */
-.mcard{background:var(--surf);border:1.5px solid var(--bd);border-radius:14px;
-  overflow:hidden;transition:border-color .15s,box-shadow .15s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  contain:layout style}
-.mcard:not(.mopen){border-radius:10px}
+.mcard{background:var(--surf);border:1.5px solid var(--bd);border-radius:12px;
+  overflow:hidden;transition:border-color .15s,box-shadow .15s,border-radius .2s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .mcard:active .mcard-top{background:var(--surf3)}
-.mcard-top{display:flex;align-items:center;gap:8px;padding:0 10px;
-  height:44px;cursor:pointer;transition:background .1s;overflow:hidden}
-.mcard-idcol{flex-shrink:0;min-width:48px;display:flex;align-items:center;gap:0;flex-direction:column;align-items:flex-start;justify-content:center}
-.mcard-id{font-family:var(--ff-h);font-size:12px;font-weight:700;color:var(--ac);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:72px}
-.mcard-ins{font-family:var(--ff-h);font-size:8px;font-weight:800;
+.mcard-top{display:flex;align-items:center;gap:8px;padding:0 12px;
+  height:45px;min-height:45px;cursor:pointer;transition:background .1s}
+.mcard-idcol{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;gap:1px;min-width:0;max-width:90px}
+.mcard-id{font-family:var(--ff-h);font-size:12px;font-weight:700;color:var(--ac);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard-ins{font-family:var(--ff-h);font-size:7.5px;font-weight:800;
   text-transform:uppercase;letter-spacing:.5px;
-  color:#fff;background:#2563eb;border-radius:4px;
-  padding:1px 5px;display:inline-block;margin-top:2px;
-  box-shadow:0 1px 3px rgba(37,99,235,.3)}
+  color:#fff;background:#2563eb;border-radius:3px;
+  padding:1px 4px;display:inline-block;line-height:1.4;
+  box-shadow:0 1px 3px rgba(37,99,235,.3);width:fit-content}
 [data-theme=dark] .mcard-ins{background:#1d4ed8}
-.mcard-body{flex:1;min-width:0;display:flex;align-items:center;gap:6px;overflow:hidden}
+.mcard-body{flex:1;min-width:0;overflow:hidden}
 .mcard-name{font-size:13px;font-weight:600;color:var(--tx);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1;flex:1;min-width:0}
-.mcard-meta{display:none}
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.mcard-meta{display:none;flex-wrap:wrap;gap:4px;margin-top:4px;align-items:center}
+.mcard.mopen .mcard-meta{display:flex}
 .mpill{font-family:var(--ff-h);font-size:9.5px;font-weight:700;
   padding:2px 8px;border-radius:99px;
   background:var(--surf3);border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
@@ -484,22 +490,17 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .mpill-b{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
 [data-theme=dark] .mpill-g{background:#001a0d;border-color:#166534;color:#4ade80}
 [data-theme=dark] .mpill-b{background:#0f1f3d;border-color:#1e40af;color:#93c5fd}
-.mcard-right{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0}
+.mcard-right{display:flex;flex-direction:row;align-items:center;gap:6px;flex-shrink:0}
 .mcard-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.mcard-chev{color:var(--mu);transition:transform .25s var(--eo)}
+.mcard-chev{color:var(--mu);transition:transform .25s var(--eo);flex-shrink:0}
 .mcard.mopen .mcard-chev{transform:rotate(180deg)}
 
-/* Expand — max-height approach, no card-shrinking side effects */
-.mxpand{max-height:0;overflow:hidden;transition:max-height .3s cubic-bezier(0,0,.2,1)}
-.mcard.mopen .mxpand{max-height:9999px;transition:max-height .45s cubic-bezier(0,0,.2,1)}
-.mcard.mopen{border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
-.mcard.mopen .mcard-top{height:auto;padding:11px 12px}
-.mcard.mopen .mcard-name{white-space:normal;line-height:1.3}
-.mcard.mopen .mcard-id{font-size:13.5px}
-.mcard.mopen .mcard-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;align-items:center}
-.mcard.mopen .mcard-body{flex-direction:column;align-items:flex-start;gap:2px}
-.mxpand-inner{overflow:visible}
-.mxpand-body{border-top:1px solid var(--bd);background:var(--surf2)}
+/* Expand */
+.mxpand{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(0,0,.2,1)}
+.mcard.mopen .mxpand{grid-template-rows:1fr}
+.mxpand-inner{overflow:hidden;min-height:0}
+.mxpand-body{border-top:1.5px solid var(--bd);background:var(--surf2)}
+.mcard.mopen{border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.09);border-color:var(--bd2)}
 
 /* Section */
 .msec{padding:13px 14px;border-bottom:1px solid var(--bd)}
@@ -583,15 +584,15 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v3.3.0 · View Only</div>
+        <div class="mtb-sub">v3.5.0 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
       <button class="mtb-sync" onclick="mobCycleTheme(this)" title="Toggle theme" id="mob-theme-btn">
         <svg id="mob-theme-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
-      <button class="mtb-sync" onclick="mobSync(this)" title="Sync">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      <button class="mtb-sync" onclick="manualSync()" id="mob-sync-btn" title="Sync">
+        <svg class="sync-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
       </button>
     </div>
   </div>
@@ -759,12 +760,12 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v3.3.0</span>
+      <span class="hdr-ver">v3.5.0</span>
     </div>
     <div class="hdr-acts">
-      <button class="btn btn-g btn-sm" onclick="syncData(true)" id="hdr-sync-btn">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-        Sync
+      <button class="btn btn-g btn-sm" onclick="manualSync()" id="hdr-sync-btn">
+        <svg class="sync-ico" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        <span class="sync-lbl">Sync</span>
       </button>
       <div class="hdrmenu-wrap" id="hdrmenu-wrap">
         <button class="btn btn-g btn-sm hdrmenu-trigger" onclick="toggleHdrMenu()" id="hdrmenu-btn" aria-haspopup="true" aria-expanded="false">
@@ -930,15 +931,89 @@ function bootApp(){
     document.getElementById('app').classList.remove('hidden');
     renderClaims();
   }
-  // Poll every 45s — updates all open sessions when data changes
-  if(!window._pollTimer){
-    window._pollTimer=setInterval(()=>syncData(false),45000);
+  startSmartScheduler();
+}
+
+/* ══ SMART AUTO-REFRESH SCHEDULER ══
+   8:30–17:30  → every 30s
+   17:30–23:00 → no continuous refresh
+   23:00–05:00 → one-shot at 23:00 & 05:00
+   05:00–08:30 → no continuous refresh
+*/
+function startSmartScheduler(){
+  if(window._schedTimer)clearTimeout(window._schedTimer);
+  if(window._pollTimer){clearInterval(window._pollTimer);window._pollTimer=null;}
+
+  function scheduleNext(){
+    if(window._schedTimer)clearTimeout(window._schedTimer);
+    if(window._pollTimer){clearInterval(window._pollTimer);window._pollTimer=null;}
+
+    var now=new Date();
+    var h=now.getHours(),m=now.getMinutes();
+    var mins=h*60+m; // minutes since midnight
+    var DAY_START=8*60+30;  // 08:30
+    var DAY_END=17*60+30;   // 17:30
+    var NIGHT_PING1=23*60;  // 23:00
+    var NIGHT_PING2=5*60;   // 05:00
+
+    if(mins>=DAY_START && mins<DAY_END){
+      // ── WORK HOURS: poll every 30s ──
+      window._pollTimer=setInterval(function(){
+        // Re-check time each tick; stop if outside window
+        var n=new Date(),hh=n.getHours(),mm=n.getMinutes(),t=hh*60+mm;
+        if(t<DAY_START||t>=DAY_END){
+          clearInterval(window._pollTimer);window._pollTimer=null;
+          scheduleNext();
+          return;
+        }
+        syncData(false);
+      },30000);
+      // Schedule a re-evaluation at DAY_END
+      var msToEnd=((DAY_END - mins)*60 - now.getSeconds())*1000 - now.getMilliseconds();
+      window._schedTimer=setTimeout(scheduleNext, msToEnd+500);
+
+    } else if(mins>=DAY_END && mins<NIGHT_PING1){
+      // ── EVENING: no polling, wait until 23:00 ──
+      var msToNight=((NIGHT_PING1 - mins)*60 - now.getSeconds())*1000 - now.getMilliseconds();
+      window._schedTimer=setTimeout(function(){syncData(false);scheduleNext();}, msToNight+500);
+
+    } else if(mins>=NIGHT_PING1 || mins<NIGHT_PING2){
+      // ── NIGHT: already fired or between 23:00–05:00 ──
+      // Calculate ms until 05:00
+      var minsTo5;
+      if(mins>=NIGHT_PING1){minsTo5=(24*60 - mins)+NIGHT_PING2;}
+      else{minsTo5=NIGHT_PING2 - mins;}
+      var msTo5=(minsTo5*60 - now.getSeconds())*1000 - now.getMilliseconds();
+      window._schedTimer=setTimeout(function(){syncData(false);scheduleNext();}, msTo5+500);
+
+    } else {
+      // ── EARLY MORNING 05:00–08:30: no polling, wait until DAY_START ──
+      var msToDay=((DAY_START - mins)*60 - now.getSeconds())*1000 - now.getMilliseconds();
+      window._schedTimer=setTimeout(scheduleNext, msToDay+500);
+    }
   }
+
+  scheduleNext();
+}
+
+/* ══ MANUAL SYNC — dual-purpose button ══ */
+function manualSync(){
+  setSyncBusy(true);
+  syncData(true).then(function(){setSyncBusy(false);}).catch(function(){setSyncBusy(false);});
+}
+function setSyncBusy(busy){
+  var db=document.getElementById('hdr-sync-btn');
+  var mb=document.getElementById('mob-sync-btn');
+  if(db){
+    db.classList.toggle('syncing',busy);
+    var lbl=db.querySelector('.sync-lbl');
+    if(lbl)lbl.textContent=busy?'Syncing…':'Sync';
+  }
+  if(mb)mb.classList.toggle('syncing',busy);
 }
 
 /* ══ API ══ */
 async function apicall(p,silent=false){
-  if(!silent)setLdr(true);
   try{
     // Apps Script web apps always redirect /exec → googleusercontent.com
     // Must use redirect:'follow' and no custom headers to avoid CORS preflight
@@ -948,14 +1023,11 @@ async function apicall(p,silent=false){
     try{d=JSON.parse(text);}
     catch{
       console.error('API response not JSON:',text.substring(0,300));
-      if(!silent)setLdr(false);
       if(!silent)toast('Server error — check Apps Script deployment','err');
       return null;
     }
-    if(!silent)setLdr(false);
     return d;
   }catch(e){
-    if(!silent)setLdr(false);
     if(!silent)toast('Network error: '+e.message,'err');
     console.error('apicall error:',e);
     return null;
@@ -976,7 +1048,7 @@ async function uploadApicall(p){
     return{success:false,error:e.message};
   }
 }
-function setLdr(s){document.getElementById('ldr').classList.toggle('on',s);}
+function setLdr(s){/* removed */}
 
 async function syncData(manual){
   const r=await apicall({action:'sync'});
@@ -1149,7 +1221,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.3.0</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.5.0</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -1158,7 +1230,7 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v3.3.0</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v3.5.0</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
   // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
@@ -2003,11 +2075,7 @@ function mobCycleTheme(btn){
   }
   toast("Theme: "+next,"ok");
 }
-function mobSync(btn) {
-  if(btn) { btn.style.transform='rotate(360deg)'; btn.style.transition='transform .6s'; }
-  syncData(true);
-  setTimeout(function(){ if(btn){btn.style.transform='';} mobRender(); }, 1400);
-}
+/* mobSync replaced by manualSync() */
 
 function mobRender() {
   var list = document.getElementById('mob-list');
