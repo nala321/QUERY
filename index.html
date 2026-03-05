@@ -1,4 +1,4 @@
-<!-- VERSION: 3.2.2 -->
+<!-- VERSION: 3.2.3 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -540,7 +540,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v3.2.2 · View Only</div>
+        <div class="mtb-sub">v3.2.3 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
@@ -713,7 +713,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v3.2.2</span>
+      <span class="hdr-ver">v3.2.3</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -840,7 +840,11 @@ window.onload=()=>{
   if(localStorage.getItem('qt_auth')){
     const ls=document.getElementById('lscr');
     ls.style.opacity=0;
-    setTimeout(()=>{ls.classList.add('hidden');bootApp();syncData();},300);
+    setTimeout(()=>{
+      ls.classList.add('hidden');
+      bootApp();         // render immediately from cache
+      syncData(false);   // then fetch fresh from sheet
+    },300);
   }
 };
 function bootApp(){
@@ -850,33 +854,47 @@ function bootApp(){
     document.getElementById('app').classList.remove('hidden');
     renderClaims();
   }
-  // Sync triggered on data entry only — no background polling
+  // Poll every 45s — updates all open sessions when data changes
+  if(!window._pollTimer){
+    window._pollTimer=setInterval(()=>syncData(false),45000);
+  }
 }
 
 /* ══ API ══ */
 async function apicall(p,silent=false){
   if(!silent)setLdr(true);
   try{
-    const r=await fetch(API,{method:'POST',mode:'cors',body:JSON.stringify(p)});
-    const d=await r.json();
+    // Apps Script web apps always redirect /exec → googleusercontent.com
+    // Must use redirect:'follow' and no custom headers to avoid CORS preflight
+    const r=await fetch(API,{method:'POST',redirect:'follow',body:JSON.stringify(p)});
+    const text=await r.text();
+    let d;
+    try{d=JSON.parse(text);}
+    catch{
+      console.error('API response not JSON:',text.substring(0,300));
+      if(!silent)setLdr(false);
+      if(!silent)toast('Server error — check Apps Script deployment','err');
+      return null;
+    }
     if(!silent)setLdr(false);
     return d;
   }catch(e){
     if(!silent)setLdr(false);
-    if(!silent)toast('Network error','err');
+    if(!silent)toast('Network error: '+e.message,'err');
+    console.error('apicall error:',e);
     return null;
   }
 }
-// Dedicated file upload call — no loader flicker, clearer error reporting
+// Dedicated file upload call — 2min timeout, detailed errors
 async function uploadApicall(p){
   try{
     const ctrl=new AbortController();
-    const tid=setTimeout(()=>ctrl.abort(),120000); // 2 min timeout for large files
-    const r=await fetch(API,{method:'POST',mode:'cors',body:JSON.stringify(p),signal:ctrl.signal});
+    const tid=setTimeout(()=>ctrl.abort(),120000);
+    const r=await fetch(API,{method:'POST',redirect:'follow',body:JSON.stringify(p),signal:ctrl.signal});
     clearTimeout(tid);
     const text=await r.text();
     try{return JSON.parse(text);}
-    catch{console.error('Upload response not JSON:',text.substring(0,200));return{success:false,error:'Invalid server response'};}
+    catch{console.error('Upload response not JSON:',text.substring(0,300));return{success:false,error:'Invalid server response: '+text.substring(0,100)};}
   }catch(e){
     if(e.name==='AbortError')return{success:false,error:'Upload timed out (file may be too large)'};
     return{success:false,error:e.message};
@@ -887,10 +905,17 @@ function setLdr(s){document.getElementById('ldr').classList.toggle('on',s);}
 async function syncData(manual){
   const r=await apicall({action:'sync'});
   if(r&&r.success){
-    DB.claims=r.claims;DB.statuses=r.statuses;save();
+    DB.claims=r.claims||[];
+    DB.statuses=r.statuses||DB.statuses;
+    save();
     if(window.innerWidth<=720)mobRender();else renderClaims();
+    if(manual)toast('Synced — '+DB.claims.length+' claims','ok');
+  } else {
+    // Always render with cached data even if sync fails
+    if(window.innerWidth<=720)mobRender();else renderClaims();
+    if(manual)toast(r&&r.error?'Sync failed: '+r.error:'Sync failed — showing cached data','err');
+    else if(r&&r.error)console.warn('Auto-sync error:',r.error);
   }
-  if(manual)toast(r&&r.success?'Synced successfully':'Sync failed',r&&r.success?'ok':'err');
 }
 async function persist(claim){save();renderClaims();await apicall({action:'saveClaim',claim});}
 function save(){localStorage.setItem('qt_db',JSON.stringify(DB));}
@@ -1025,7 +1050,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.2.2</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.2.3</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -1034,7 +1059,7 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v3.2.2</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v3.2.3</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
   // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
