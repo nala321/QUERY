@@ -37,10 +37,11 @@
   --s1:0 1px 4px rgba(13,27,46,.06),0 0 0 1px rgba(13,27,46,.04);
   --s2:0 4px 16px rgba(13,27,46,.08),0 1px 4px rgba(13,27,46,.04);
   --s3:0 14px 44px rgba(13,27,46,.13),0 2px 8px rgba(13,27,46,.06);
-  --d:200ms;--dl:340ms;
-  --e:cubic-bezier(.4,0,.2,1);
+  --d:180ms;--dl:300ms;
+  --e:cubic-bezier(.25,.1,.25,1);
   --eo:cubic-bezier(0,0,.2,1);
-  --es:cubic-bezier(.34,1.56,.64,1);
+  --es:cubic-bezier(.34,1.4,.64,1);
+  --ef:cubic-bezier(.22,1,.36,1);
   --spb:#fffbeb;--spt:#92400e;
   --scb:#eff6ff;--sct:#1e40af;
   --skb:#f0fdf4;--skt:#166534;
@@ -105,13 +106,13 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .wrap{max-width:100%;margin:0 auto;padding:22px 26px;width:100%}
 
 /* ═══════════════════════════════════════════ HEADER */
-.hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;margin-bottom:18px;background:var(--surf);border-radius:var(--r20);border:1.5px solid var(--bd);box-shadow:var(--s1)}
+.hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;margin-bottom:18px;background:var(--surf);border-radius:var(--r20);border:1.5px solid var(--bd);box-shadow:var(--s1);position:relative;z-index:200}
 .hdr-brand{display:flex;align-items:center;gap:11px}
 .hdr-logo{width:34px;height:34px;background:var(--acg);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:var(--acs);flex-shrink:0}
 .hdr-title{font-family:var(--ff-h);font-size:16px;font-weight:700;line-height:1}
 /* Version badge next to title */
 .hdr-ver{font-family:var(--ff-h);font-size:9px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 7px;margin-left:2px;letter-spacing:.3px;align-self:center}
-.hdr-acts{display:flex;align-items:center;gap:7px}
+.hdr-acts{display:flex;align-items:center;gap:7px;position:relative;z-index:201}
 .th-sel{background-image:none!important;padding:7px 12px;width:auto;font-size:11px;font-weight:600;font-family:var(--ff-h);border-radius:var(--r12);cursor:pointer;border:1.5px solid var(--bd);background:var(--surf2)!important;color:var(--tx2);transition:border-color var(--d) var(--e),color var(--d) var(--e)}
 .th-sel:hover{border-color:var(--bd2);color:var(--tx)}
 
@@ -375,7 +376,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 
 
 /* ═══════════════════════════════════════════ HEADER DROPDOWN MENU */
-.hdrmenu-wrap{position:relative}
+.hdrmenu-wrap{position:relative;z-index:9900;isolation:isolate}
 .hdrmenu-trigger{gap:5px}
 .hdrmenu-chev{transition:transform var(--d) var(--e);flex-shrink:0}
 .hdrmenu-wrap.open .hdrmenu-chev{transform:rotate(180deg)}
@@ -383,7 +384,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   position:absolute;top:calc(100% + 8px);right:0;
   background:var(--surf);border:1.5px solid var(--bd);
   border-radius:var(--r16);box-shadow:var(--s3);
-  min-width:200px;z-index:8000;
+  min-width:200px;z-index:9999;
   opacity:0;transform:translateY(-8px) scale(.97);pointer-events:none;
   transition:opacity var(--d) var(--e),transform var(--d) var(--es);
   overflow:hidden;padding:6px}
@@ -570,6 +571,200 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 /* Ripple */
 @keyframes ripple{0%{transform:scale(0);opacity:.4}100%{transform:scale(2.5);opacity:0}}
 .rpling::before{content:'';position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,.3);animation:ripple .5s var(--e) forwards}
+
+/* ════════════════════════════════════════════════════════
+   BUTTERY-SMOOTH ANIMATION LAYER  v3.9.0
+════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ── */
+@keyframes fadeUp   {from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown {from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn   {from{opacity:0}                             to{opacity:1}}
+@keyframes scaleIn  {from{opacity:0;transform:scale(.92)}        to{opacity:1;transform:scale(1)}}
+@keyframes slideInR {from{opacity:0;transform:translateX(18px)}  to{opacity:1;transform:translateX(0)}}
+@keyframes slideInL {from{opacity:0;transform:translateX(-18px)} to{opacity:1;transform:translateX(0)}}
+@keyframes popIn    {from{opacity:0;transform:scale(.80)}        to{opacity:1;transform:scale(1)}}
+@keyframes bubbleIn {from{opacity:0;transform:scale(.88) translateY(6px)} to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer  {0%{background-position:200% 0} 100%{background-position:-200% 0}}
+
+/* ── Page-load entrance ── */
+.hdr       {animation:fadeDown .45s var(--ef) both}
+.tabbar    {animation:fadeUp   .42s var(--ef) .06s both}
+.filterbar {animation:fadeUp   .42s var(--ef) .10s both}
+body.boot-anim .clist{animation:fadeUp .44s var(--ef) .14s both}
+
+/* ── Desktop claim card — entrance only on first login of day ── */
+.cc{
+  transition:
+    border-color var(--d) var(--e),
+    box-shadow   var(--d) var(--e),
+    transform    var(--d) var(--es),
+    background   var(--d) var(--e);
+}
+.cc:hover{transform:translateY(-1px)}
+body.boot-anim .cc{animation:fadeUp .38s var(--ef) both}
+body.boot-anim .cc:nth-child(1){animation-delay:.04s}
+body.boot-anim .cc:nth-child(2){animation-delay:.07s}
+body.boot-anim .cc:nth-child(3){animation-delay:.10s}
+body.boot-anim .cc:nth-child(4){animation-delay:.13s}
+body.boot-anim .cc:nth-child(5){animation-delay:.16s}
+body.boot-anim .cc:nth-child(6){animation-delay:.19s}
+body.boot-anim .cc:nth-child(7){animation-delay:.22s}
+body.boot-anim .cc:nth-child(8){animation-delay:.25s}
+body.boot-anim .cc:nth-child(n+9){animation-delay:.28s}
+
+/* ── Expand panel content fade-in ── */
+.cc.open .ccp-body {animation:fadeIn .22s var(--e) both}
+.cc.open .id-card  {animation:fadeUp .25s var(--ef) .04s both}
+.cc.open .psec     {animation:fadeUp .25s var(--ef) .06s both}
+.cc.open .ri       {animation:fadeUp .22s var(--ef) both}
+.cc.open .ri:nth-child(2){animation-delay:.04s}
+.cc.open .ri:nth-child(3){animation-delay:.07s}
+.cc.open .chat-q,
+.cc.open .chat-r   {animation:bubbleIn .24s var(--es) both}
+
+/* ── Tab panel switch ── */
+.exp-panel{transition:opacity .18s var(--e),transform .18s var(--ef)}
+.exp-panel:not(.on){transform:translateY(4px)}
+.exp-panel.on{transform:translateY(0)}
+
+/* ── Tab indicator underline ── */
+.exp-tab{position:relative;overflow:hidden}
+.exp-tab::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:var(--ac);border-radius:2px;transition:width .22s var(--ef),left .22s var(--ef)}
+.exp-tab.on::after{left:0;width:100%}
+
+/* ── Chip / pill hover ── */
+.chip{transition:transform var(--d) var(--es)}
+.cc:hover .chip{transform:translateY(-1px)}
+.pill,.mpill{transition:transform var(--d) var(--es),box-shadow var(--d) var(--e)}
+.pill:hover,.mpill:hover{transform:translateY(-1px);box-shadow:var(--s1)}
+
+/* ── Icon buttons ── */
+.ib{transition:transform var(--d) var(--es),background var(--d) var(--e),border-color var(--d) var(--e),box-shadow var(--d) var(--e),color var(--d) var(--e)}
+.ib:hover{transform:scale(1.18)!important}
+.ib:active{transform:scale(.88)!important}
+
+/* ── Status pill dropdown ── */
+.spill{transition:box-shadow var(--d) var(--e),transform var(--d) var(--es),background var(--d) var(--e)}
+.spill:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.14)}
+
+/* ── Send button ── */
+.exp-chat-send{transition:transform var(--d) var(--es),box-shadow var(--d) var(--e),background var(--d) var(--e)}
+.exp-chat-send:hover{transform:scale(1.1) rotate(-8deg)}
+.exp-chat-send:active{transform:scale(.9)}
+
+/* ── Chat bubbles entrance (new ones added via JS) ── */
+.chat-q,.chat-r{animation:bubbleIn .28s var(--es) both}
+
+/* ── Section boxes ── */
+.psec{transition:box-shadow var(--d) var(--e),border-color var(--d) var(--e)}
+.psec:hover{box-shadow:var(--s2);border-color:var(--bd2)}
+
+/* ── Header dropdown ── */
+.hdrmenu{transition:opacity .2s var(--e),transform .22s var(--es)}
+.hdrmenu-item{transition:background .15s var(--e),color .15s var(--e),transform .15s var(--es)}
+.hdrmenu-item:hover{transform:translateX(3px)}
+.hdrmenu-item:active{transform:scale(.97)}
+.hdrmenu-ico{transition:background .15s var(--e),transform .15s var(--es)}
+.hdrmenu-item:hover .hdrmenu-ico{transform:scale(1.1)}
+
+/* ── Filter bar inputs ── */
+.filterbar input,.filterbar select{transition:border-color var(--d) var(--e),box-shadow var(--d) var(--e),background var(--d) var(--e),transform var(--d) var(--es)}
+.filterbar input:focus,.filterbar select:focus{transform:translateY(-1px)}
+
+/* ── Tabbar tab buttons ── */
+.tabi{transition:background var(--d) var(--e),color var(--d) var(--e),border-color var(--d) var(--e),box-shadow var(--d) var(--e),transform var(--d) var(--es)}
+.tabi:not(.on):hover{transform:translateY(-1px)}
+.tabi.on{animation:popIn .25s var(--es) both}
+
+/* ── Toast ── */
+.toast{transition:opacity var(--d) var(--e),transform .3s var(--es)}
+
+/* ── Modal ── */
+.mveil{transition:opacity var(--dl) var(--e),backdrop-filter var(--dl) var(--e)}
+.mbox{transition:transform var(--dl) var(--es),opacity var(--dl) var(--e)}
+
+/* ── Login card entrance ── */
+.lcard{animation:scaleIn .5s var(--es) both}
+.llogo{animation:popIn .5s var(--es) .1s both}
+.lcard input{transition:border-color var(--d) var(--e),box-shadow var(--d) var(--e),transform var(--d) var(--es)}
+.lcard input:focus{transform:translateY(-1px)}
+
+/* ── New query drawer ── */
+.nq-drawer{transition:transform var(--dl) var(--es)}
+
+/* ── Confirm dialog ── */
+#confirm-veil>div{transition:transform .3s var(--es),opacity .3s var(--e)}
+
+/* ── File items ── */
+.file-item{transition:border-color var(--d) var(--e),transform var(--d) var(--es),box-shadow var(--d) var(--e)}
+.file-item:hover{transform:translateY(-1px);box-shadow:var(--s1)}
+
+/* ── Request items ── */
+.ri{transition:border-color var(--d) var(--e),box-shadow var(--d) var(--e),transform var(--d) var(--es)}
+.ri:hover{transform:translateY(-1px)}
+
+/* ── Header ── */
+.hdr{transition:box-shadow var(--d) var(--e),border-color var(--d) var(--e),background var(--dl) var(--e)}
+
+/* ── Theme switch — smooth color crossfade on all surfaces ── */
+*{transition-property:background-color,border-color,color,box-shadow;transition-duration:var(--dl);transition-timing-function:var(--e)}
+/* Override: keep transform/opacity transitions snappy — don't let * rule slow them */
+.btn,.ib,.cc,.mcard,.pill,.mpill,.spill,.file-item,.ri,.psec,.hdrmenu-item,.tabi,.exp-chat-send,.lcard,.toast{
+  transition-property:background-color,border-color,color,box-shadow,transform,opacity;
+  transition-duration:var(--d);
+  transition-timing-function:var(--e);
+}
+
+/* ── Mobile card ── */
+.mcard{transition:border-color .18s var(--e),box-shadow .18s var(--e),border-radius .22s var(--e)}
+.mcard-top{transition:background .12s var(--e)}
+.mcard:hover{box-shadow:var(--s2)}
+/* Mobile staggered entrance — only on first login of day */
+body.boot-anim .mcard{animation:fadeUp .32s var(--ef) both}
+body.boot-anim .mcard:nth-child(1){animation-delay:.02s}
+body.boot-anim .mcard:nth-child(2){animation-delay:.05s}
+body.boot-anim .mcard:nth-child(3){animation-delay:.08s}
+body.boot-anim .mcard:nth-child(4){animation-delay:.10s}
+body.boot-anim .mcard:nth-child(5){animation-delay:.12s}
+body.boot-anim .mcard:nth-child(n+6){animation-delay:.14s}
+
+/* ── Mobile tab bar ── */
+.mtab{transition:background .18s var(--e),color .18s var(--e),border-color .18s var(--e),transform .18s var(--es)}
+.mtab:not(.on):hover{transform:translateY(-1px)}
+.mtab.on{animation:popIn .22s var(--es) both}
+
+/* ── Mobile sync button ── */
+.mtb-sync{transition:background .15s var(--e),transform .15s var(--es)}
+.mtb-sync:active{transform:scale(.84)!important}
+.mtb-sync:hover{transform:scale(1.08)}
+
+/* ── Expand sections ── */
+.msec{animation:fadeUp .26s var(--ef) both}
+.msec:nth-child(2){animation-delay:.04s}
+.msec:nth-child(3){animation-delay:.08s}
+.msec:nth-child(4){animation-delay:.12s}
+.mreq{animation:slideInL .24s var(--ef) both}
+.mreq:nth-child(2){animation-delay:.05s}
+.mreq:nth-child(3){animation-delay:.09s}
+
+/* ── Scroll smoothness ── */
+.mlist,.exp-chat-thread,.exp-panel,.exp-side-details{
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* ── Focus ring — uniform across all interactive ── */
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2.5px solid var(--ac);outline-offset:2px;
+  transition:outline-color .15s var(--e);
+}
+
+/* ── Reduce motion for users who prefer it ── */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
@@ -584,7 +779,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v3.5.0 · View Only</div>
+        <div class="mtb-sub">v3.9.0 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
@@ -760,7 +955,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v3.5.0</span>
+      <span class="hdr-ver">v3.9.0</span>
     </div>
     <div class="hdr-acts">
       <button class="btn btn-g btn-sm" onclick="manualSync()" id="hdr-sync-btn">
@@ -913,18 +1108,57 @@ function debounceSave(fn,ms=400){clearTimeout(_saveTimer);_saveTimer=setTimeout(
 /* ══ BOOT ══ */
 window.onload=()=>{
   applyTheme();
+  // Load cache instantly — render before any network
   try{const c=localStorage.getItem('qt_db');if(c)DB=JSON.parse(c);}catch{}
   if(localStorage.getItem('qt_auth')){
     const ls=document.getElementById('lscr');
     ls.style.opacity=0;
     setTimeout(()=>{
       ls.classList.add('hidden');
-      bootApp();         // render immediately from cache
-      syncData(false);   // then fetch fresh from sheet
-    },300);
+      bootApp();            // render from cache immediately (zero network wait)
+      bgSync();             // background sync — never blocks UI
+    },200);
   }
 };
+/* Silent background sync — flushes dirty, fetches fresh, merges without disrupting UI */
+async function bgSync(){
+  try{
+    await flushDirty();
+    const r=await apicall({action:'sync'},true); // always silent
+    if(r&&r.success){
+      // Merge: keep any locally-dirty claims over what sheet returned
+      var incoming=r.claims||[];
+      var dirtyIds=[..._dirty];
+      // Replace DB with sheet data, but re-apply any claims still dirty (unsaved local edits)
+      var localDirtyMap={};
+      dirtyIds.forEach(function(id){
+        var c=DB.claims.find(function(x){return x.id===id;});
+        if(c)localDirtyMap[id]=c;
+      });
+      DB.claims=incoming.map(function(c){
+        return localDirtyMap[c.id]||c; // prefer local dirty version
+      });
+      // Add any dirty claims not yet in sheet (new, unsaved)
+      dirtyIds.forEach(function(id){
+        if(!DB.claims.find(function(x){return x.id===id;})&&localDirtyMap[id]){
+          DB.claims.push(localDirtyMap[id]);
+        }
+      });
+      DB.statuses=r.statuses||DB.statuses;
+      save();
+      if(window.innerWidth<=720)mobRender();else renderClaims();
+    }
+  }catch(e){console.warn('bgSync error:',e);}
+}
 function bootApp(){
+  /* Entrance animation only once per calendar day */
+  var today=new Date().toDateString();
+  if(localStorage.getItem('qt_boot_day')!==today){
+    localStorage.setItem('qt_boot_day',today);
+    document.body.classList.add('boot-anim');
+    // Remove class after animations finish so re-renders don't replay them
+    setTimeout(function(){document.body.classList.remove('boot-anim');},1200);
+  }
   if(window.innerWidth<=720){
     mobRender();
   } else {
@@ -966,7 +1200,7 @@ function startSmartScheduler(){
           scheduleNext();
           return;
         }
-        syncData(false);
+        bgSync();
       },30000);
       // Schedule a re-evaluation at DAY_END
       var msToEnd=((DAY_END - mins)*60 - now.getSeconds())*1000 - now.getMilliseconds();
@@ -975,7 +1209,7 @@ function startSmartScheduler(){
     } else if(mins>=DAY_END && mins<NIGHT_PING1){
       // ── EVENING: no polling, wait until 23:00 ──
       var msToNight=((NIGHT_PING1 - mins)*60 - now.getSeconds())*1000 - now.getMilliseconds();
-      window._schedTimer=setTimeout(function(){syncData(false);scheduleNext();}, msToNight+500);
+      window._schedTimer=setTimeout(function(){bgSync();scheduleNext();}, msToNight+500);
 
     } else if(mins>=NIGHT_PING1 || mins<NIGHT_PING2){
       // ── NIGHT: already fired or between 23:00–05:00 ──
@@ -984,7 +1218,7 @@ function startSmartScheduler(){
       if(mins>=NIGHT_PING1){minsTo5=(24*60 - mins)+NIGHT_PING2;}
       else{minsTo5=NIGHT_PING2 - mins;}
       var msTo5=(minsTo5*60 - now.getSeconds())*1000 - now.getMilliseconds();
-      window._schedTimer=setTimeout(function(){syncData(false);scheduleNext();}, msTo5+500);
+      window._schedTimer=setTimeout(function(){bgSync();scheduleNext();}, msTo5+500);
 
     } else {
       // ── EARLY MORNING 05:00–08:30: no polling, wait until DAY_START ──
@@ -997,10 +1231,7 @@ function startSmartScheduler(){
 }
 
 /* ══ MANUAL SYNC — dual-purpose button ══ */
-function manualSync(){
-  setSyncBusy(true);
-  syncData(true).then(function(){setSyncBusy(false);}).catch(function(){setSyncBusy(false);});
-}
+function manualSync(){syncData(true);}
 function setSyncBusy(busy){
   var db=document.getElementById('hdr-sync-btn');
   var mb=document.getElementById('mob-sync-btn');
@@ -1051,22 +1282,51 @@ async function uploadApicall(p){
 function setLdr(s){/* removed */}
 
 async function syncData(manual){
-  const r=await apicall({action:'sync'});
-  if(r&&r.success){
-    DB.claims=r.claims||[];
-    DB.statuses=r.statuses||DB.statuses;
-    save();
-    if(window.innerWidth<=720)mobRender();else renderClaims();
-    if(manual)toast('Synced — '+DB.claims.length+' claims','ok');
-  } else {
-    // Always render with cached data even if sync fails
-    if(window.innerWidth<=720)mobRender();else renderClaims();
-    if(manual)toast(r&&r.error?'Sync failed: '+r.error:'Sync failed — showing cached data','err');
-    else if(r&&r.error)console.warn('Auto-sync error:',r.error);
+  if(manual){setSyncBusy(true);}
+  try{
+    await flushDirty();
+    const r=await apicall({action:'sync'},!manual); // silent unless manual
+    if(r&&r.success){
+      // Merge: keep locally-dirty claims over sheet data
+      var dirtyIds=[..._dirty];
+      var localDirtyMap={};
+      dirtyIds.forEach(function(id){
+        var c=DB.claims.find(function(x){return x.id===id;});
+        if(c)localDirtyMap[id]=c;
+      });
+      DB.claims=(r.claims||[]).map(function(c){return localDirtyMap[c.id]||c;});
+      dirtyIds.forEach(function(id){
+        if(!DB.claims.find(function(x){return x.id===id;})&&localDirtyMap[id])
+          DB.claims.push(localDirtyMap[id]);
+      });
+      DB.statuses=r.statuses||DB.statuses;
+      save();
+      if(window.innerWidth<=720)mobRender();else renderClaims();
+      if(manual)toast('Synced — '+DB.claims.length+' claims','ok');
+    } else {
+      if(window.innerWidth<=720)mobRender();else renderClaims();
+      if(manual)toast(r&&r.error?'Sync failed: '+r.error:'Sync failed — showing cached data','err');
+      else if(r&&r.error)console.warn('Auto-sync error:',r.error);
+    }
+  }finally{
+    if(manual)setSyncBusy(false);
   }
 }
-async function persist(claim){save();renderClaims();await apicall({action:'saveClaim',claim});}
+function persist(claim){save();markDirty(claim.id);renderClaims();}
 function save(){localStorage.setItem('qt_db',JSON.stringify(DB));}
+
+/* ══ DIRTY TRACKING — deferred sheet writes ══ */
+var _dirty=new Set(); // claim IDs pending sheet write
+function markDirty(id){if(id)_dirty.add(id);}
+async function flushDirty(){
+  if(!_dirty.size)return;
+  var ids=[..._dirty];
+  _dirty.clear();
+  for(var i=0;i<ids.length;i++){
+    var cl=DB.claims.find(function(x){return x.id===ids[i];});
+    if(cl)await apicall({action:'saveClaim',claim:cl},true);
+  }
+}
 
 /* ══ LOGIN ══ */
 async function doLogin(){
@@ -1221,7 +1481,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.5.0</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.9.0</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -1230,7 +1490,7 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v3.5.0</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v3.9.0</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
   // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
@@ -1264,6 +1524,17 @@ function populateFilters(){
 
 /* ══ PARSING ══ */
 function genId(){return '2712_'+String(Math.floor(10000+Math.random()*90000));}
+/* Strip the AIA 30-day auto-close Khmer disclaimer from any string */
+function stripKhmerDisclaimer(s){
+  if(!s)return s;
+  // Full phrase match — remove from wherever it starts to end of string
+  const DISC='\u179f\u17bc\u1798\u1794\u1789\u17d2\u1787\u17b6\u1780\u17d2\u178f\u17b6 \u1780\u17b6\u179a\u178f\u17b6\u1798\u178f\u17b6\u179a\u179a\u1794\u179f\u17cb\u179b\u17c4\u1780\u17a2\u17d2\u1793\u1780\u1793\u17b9\u1784\u178f\u17d2\u179a\u17bc\u179f\u1794\u17b7\u178f\u178f\u17d2\u1794\u178f\u178b\u17d2\u179c\u17d0\u1799\u1794\u17d2\u179a\u179c\u178f\u17d2\u178f\u17b7';
+  const idx=s.indexOf(DISC);
+  if(idx>=0)s=s.substring(0,idx).trim();
+  // Also strip trailing "សូមអគុណ" and variants
+  s=s.replace(/\s*\u179f\u17bc\u1798\u17a2\u1782\u17bb\u178e[\s\S]*$/,'').trim();
+  return s;
+}
 function processInput(){
   const txt=document.getElementById('email-input').value.trim();if(!txt)return;
   let p={claimid:'',insurer:'',inscomp:'',customer:'',reqby:'',reqtext:'',amount:'',accdate:'',datePasted:new Date().toISOString()};
@@ -1352,6 +1623,8 @@ function processInput(){
     const am=txt.match(/Total Claim Amount Submitted\s+[A-Z]+\s*([\d,.]+)/i)||txt.match(/USD\s*([\d,.]+)/i);if(am)p.amount=am[1];
   }
   if(!p.claimid)p.claimid=genId();
+  // Strip Khmer auto-close disclaimer from parsed reqtext (never show it to user)
+  p.reqtext=stripKhmerDisclaimer(p.reqtext);
   // Always open review modal so user can verify/edit parsed data before saving
   openModal(p);
 }
@@ -1505,8 +1778,7 @@ async function uploadFilesToDrive(claimId,files){
   cl.remark=JSON.stringify(r);cl.dateModified=new Date().toISOString();
   setZone('');
   // Save without triggering full re-render (preserves open card state)
-  save();
-  await apicall({action:'saveClaim',claim:cl});
+  save();markDirty(cl.id);
   renderClaims();
   const ok=results.filter(x=>x.driveId).length;
   const fail=results.length-ok;
@@ -1860,8 +2132,7 @@ function addRemark(cid){
     thread.appendChild(makeBubble());
     thread.scrollTop=thread.scrollHeight;
   });
-  save();
-  apicall({action:'saveClaim',claim:cl});
+  save();markDirty(cl.id);
   toast('Remark added','ok');
 }
 function chatGrow(ta){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight+2,120)+'px';}
@@ -1871,7 +2142,7 @@ function deleteRemark(cid,ridx){
   if(!Array.isArray(r.remarks)||ridx<0||ridx>=r.remarks.length)return;
   r.remarks.splice(ridx,1);
   cl.remark=JSON.stringify(r);cl.dateModified=new Date().toISOString();
-  save();apicall({action:'saveClaim',claim:cl});
+  save();markDirty(cl.id);
   // Remove all bubbles with this ridx from DOM and re-index
   ['chat-thread-','chat-thread2-'].forEach(pfx=>{
     const thread=document.getElementById(pfx+cid);
