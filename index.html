@@ -1,4 +1,4 @@
-<!-- VERSION: 3.2.1 -->
+<!-- VERSION: 3.2.2 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -192,7 +192,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 /* ═══ CHAT THREAD (Remark panel) ═══ */
 /* Right side becomes a flex column: details at top, thread fills rest, input pinned bottom */
 .exp-side{padding:0!important;display:flex!important;flex-direction:column!important;background:var(--surf2);overflow:hidden!important;max-height:calc(100vh - 110px);min-height:0}
-.exp-side-details{padding:14px 16px;border-bottom:1.5px solid var(--bd);overflow-y:auto;flex-shrink:0;max-height:55%;display:flex;flex-direction:column;gap:8px}
+.exp-side-details{padding:14px 16px;border-bottom:none;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:8px}
 .exp-chat-wrap{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .exp-chat-hd{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1.5px solid var(--bd);background:var(--surf);flex-shrink:0}
 .exp-chat-hd-ico{width:20px;height:20px;border-radius:5px;background:var(--surf3);border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -540,7 +540,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v3.2.1 · View Only</div>
+        <div class="mtb-sub">v3.2.2 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
@@ -713,7 +713,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v3.2.1</span>
+      <span class="hdr-ver">v3.2.2</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -857,7 +857,7 @@ function bootApp(){
 async function apicall(p,silent=false){
   if(!silent)setLdr(true);
   try{
-    const r=await fetch(API,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p)});
+    const r=await fetch(API,{method:'POST',mode:'cors',body:JSON.stringify(p)});
     const d=await r.json();
     if(!silent)setLdr(false);
     return d;
@@ -872,7 +872,7 @@ async function uploadApicall(p){
   try{
     const ctrl=new AbortController();
     const tid=setTimeout(()=>ctrl.abort(),120000); // 2 min timeout for large files
-    const r=await fetch(API,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(p),signal:ctrl.signal});
+    const r=await fetch(API,{method:'POST',mode:'cors',body:JSON.stringify(p),signal:ctrl.signal});
     clearTimeout(tid);
     const text=await r.text();
     try{return JSON.parse(text);}
@@ -1025,7 +1025,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.2.1</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.2.2</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -1034,7 +1034,7 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v3.2.1</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v3.2.2</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
   // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
