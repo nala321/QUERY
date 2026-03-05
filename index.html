@@ -1,18 +1,21 @@
-<!-- VERSION: 3.0.0 -->
+<!-- VERSION: 2.15.0 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Query Tracker</title>
+<!-- PWA webapp meta -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="QueryTracker">
 <meta name="application-name" content="QueryTracker">
 <meta name="theme-color" content="#2563eb">
-<link rel="apple-touch-icon" href="https://cdn2.cdnstep.com/ox30xs33iaZah89YunOM/cover-1.thumb256.png">
-<link rel="shortcut icon" href="https://cdn2.cdnstep.com/ox30xs33iaZah89YunOM/cover-1.thumb256.png">
+<!-- Home screen icon (iPhone & Android) -->
+<link rel="apple-touch-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDer3AHwDQ5t5k8meBYeyXVpwClXiUxddSQ&s">
+<link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDer3AHwDQ5t5k8meBYeyXVpwClXiUxddSQ&s">
+<!-- Tab favicon: white circle -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,13 +102,14 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ib.del:hover{background:var(--dg);color:#fff;border-color:var(--dg);box-shadow:0 4px 12px rgba(239,68,68,.25)}
 
 /* ═══════════════════════════════════════════ LAYOUT */
-.wrap{max-width:1300px;margin:0 auto;padding:22px 26px;width:100%}
+.wrap{max-width:100%;margin:0 auto;padding:22px 26px;width:100%}
 
 /* ═══════════════════════════════════════════ HEADER */
 .hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;margin-bottom:18px;background:var(--surf);border-radius:var(--r20);border:1.5px solid var(--bd);box-shadow:var(--s1)}
 .hdr-brand{display:flex;align-items:center;gap:11px}
 .hdr-logo{width:34px;height:34px;background:var(--acg);border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:var(--acs);flex-shrink:0}
 .hdr-title{font-family:var(--ff-h);font-size:16px;font-weight:700;line-height:1}
+/* Version badge next to title */
 .hdr-ver{font-family:var(--ff-h);font-size:9px;font-weight:700;color:var(--mu);background:var(--surf3);border:1.5px solid var(--bd);border-radius:var(--rpill);padding:1px 7px;margin-left:2px;letter-spacing:.3px;align-self:center}
 .hdr-acts{display:flex;align-items:center;gap:7px}
 .th-sel{background-image:none!important;padding:7px 12px;width:auto;font-size:11px;font-weight:600;font-family:var(--ff-h);border-radius:var(--r12);cursor:pointer;border:1.5px solid var(--bd);background:var(--surf2)!important;color:var(--tx2);transition:border-color var(--d) var(--e),color var(--d) var(--e)}
@@ -163,16 +167,61 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .cc.open .chevron{transform:rotate(180deg);background:var(--ac);border-color:var(--ac)}
 .cc.open .chevron svg{color:#fff!important}
 
-/* ═══════════════════════════════════════════ EXPAND PANEL */
+/* ═══════════════════════════════════════════ EXPAND PANEL — fits viewport */
 .ccp{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dl) var(--eo)}
 .cc.open .ccp{grid-template-rows:1fr}
 .ccp-inner{overflow:hidden}
 .ccp-body{border-top:1.5px solid var(--bd);background:var(--surf3)}
 
-/* Two-column layout inside expand */
-.exp-layout{display:grid;grid-template-columns:1fr 360px;gap:0;min-height:0}
-.exp-main{padding:16px;display:flex;flex-direction:column;gap:12px;border-right:1.5px solid var(--bd);overflow-y:auto;max-height:calc(100vh - 110px);min-height:0}
+/* Tabbed expand layout */
+.exp-layout{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:0}
+.exp-main{display:flex;flex-direction:column;border-right:1.5px solid var(--bd);min-height:0;overflow:hidden}
 .exp-side{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surf2);overflow-y:auto;max-height:calc(100vh - 110px);min-height:0}
+/* Tab bar */
+.exp-tabs{display:flex;gap:0;border-bottom:1.5px solid var(--bd);background:var(--surf2);flex-shrink:0;padding:0 16px}
+.exp-tab{font-family:var(--ff-h);font-size:11px;font-weight:700;color:var(--mu);padding:9px 14px;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;margin-bottom:-1.5px;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.exp-tab.on{color:var(--ac);border-bottom-color:var(--ac)}
+.exp-tab:hover:not(.on){color:var(--tx2)}
+.exp-tab-badge{font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;background:var(--surf3);border:1px solid var(--bd);color:var(--mu)}
+.exp-tab.on .exp-tab-badge{background:rgba(37,99,235,.1);border-color:rgba(37,99,235,.2);color:var(--ac)}
+/* Tab panels */
+.exp-panels{flex:1;overflow:hidden;position:relative}
+.exp-panel{position:absolute;inset:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;opacity:0;pointer-events:none;transition:opacity .15s}
+.exp-panel.on{opacity:1;pointer-events:all;position:relative}
+
+/* ═══ CHAT THREAD (Remark panel) ═══ */
+/* Right side becomes a flex column: details at top, thread fills rest, input pinned bottom */
+.exp-side{padding:0!important;display:flex!important;flex-direction:column!important;background:var(--surf2);overflow:hidden!important;max-height:calc(100vh - 110px)}
+.exp-side-details{padding:14px 16px;border-bottom:1.5px solid var(--bd);overflow-y:auto;flex-shrink:0;max-height:55%;display:flex;flex-direction:column;gap:8px}
+.exp-chat-wrap{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.exp-chat-hd{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1.5px solid var(--bd);background:var(--surf);flex-shrink:0}
+.exp-chat-hd-ico{width:20px;height:20px;border-radius:5px;background:var(--surf3);border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.exp-chat-hd-t{font-family:var(--ff-h);font-size:11px;font-weight:700;color:var(--tx2)}
+.exp-chat-thread{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+/* Query bubble — LEFT, blue */
+.chat-q{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.chat-q-meta{display:flex;align-items:center;gap:6px}
+.chat-q-who{font-family:var(--ff-h);font-size:9.5px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.4px}
+.chat-q-date{font-family:var(--ff-h);font-size:9px;color:var(--mu)}
+.chat-q-bubble{background:var(--scb);border:1.5px solid rgba(37,99,235,.15);color:var(--sct);border-radius:4px 14px 14px 14px;padding:9px 13px;font-size:13px;line-height:1.65;max-width:92%;word-break:break-word;white-space:pre-wrap}
+[data-theme=dark] .chat-q-bubble{background:#0f1f3d;border-color:rgba(77,159,255,.2);color:#93c5fd}
+/* Remark bubble — RIGHT, green */
+.chat-r{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.chat-r-meta{display:flex;align-items:center;gap:6px}
+.chat-r-who{font-family:var(--ff-h);font-size:9.5px;font-weight:700;color:var(--su);text-transform:uppercase;letter-spacing:.4px}
+.chat-r-date{font-family:var(--ff-h);font-size:9px;color:var(--mu)}
+.chat-r-bubble{background:var(--skb);border:1.5px solid rgba(16,185,129,.15);color:var(--skt);border-radius:14px 4px 14px 14px;padding:9px 13px;font-size:13px;line-height:1.65;max-width:92%;word-break:break-word;white-space:pre-wrap}
+[data-theme=dark] .chat-r-bubble{background:#001a0d;border-color:rgba(74,222,128,.2);color:#4ade80}
+/* Input bar */
+.exp-chat-input{display:flex;align-items:flex-end;gap:8px;padding:10px 14px;border-top:1.5px solid var(--bd);background:var(--surf);flex-shrink:0}
+.exp-chat-ta{flex:1;border:1.5px solid var(--bd);border-radius:12px;padding:8px 12px;font-size:13px;line-height:1.5;resize:none;overflow:hidden;min-height:38px;max-height:120px;background:var(--surf2);color:var(--tx);font-family:var(--ff-b);outline:none;transition:border-color .2s,box-shadow .2s}
+.exp-chat-ta::placeholder{color:var(--mu)}
+.exp-chat-ta:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.exp-chat-send{width:34px;height:34px;border-radius:10px;background:var(--acg);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--acs);transition:transform .1s,box-shadow .1s;align-self:flex-end}
+.exp-chat-send:hover{transform:scale(1.06)}
+.exp-chat-send:active{transform:scale(.93)}
+.exp-chat-send:disabled{opacity:.4;cursor:default;transform:none}
+.chat-empty{text-align:center;color:var(--mu);font-size:12px;padding:20px 0;font-style:italic}
 
 /* Section box */
 .psec{background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--r16);overflow:hidden}
@@ -212,9 +261,11 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ri-ta{font-size:13px;border:none;background:transparent;padding:0;resize:none;box-shadow:none;color:var(--tx);line-height:1.6;width:100%;overflow:hidden}
 .ri-ta:hover,.ri-ta:focus{border:none;box-shadow:none;background:transparent}
 
-/* ═══════════════════════════════════════════ FILE ATTACHMENTS */
+/* ═══════════════════════════════════════════ FILE ATTACHMENTS — Google Drive */
 .file-uploading{font-family:var(--ff-h);font-size:10px;color:var(--ac);font-weight:600;padding:2px 0}
 .gdrive-badge{display:inline-flex;align-items:center;gap:3px;font-family:var(--ff-h);font-size:9.5px;font-weight:700;color:#1967d2;background:#e8f0fe;border-radius:var(--rpill);padding:1px 6px;margin-left:4px}
+
+/* File section compact redesign */
 .file-drop-zone{border:2px dashed var(--bd);border-radius:var(--r12);padding:10px 12px;background:var(--surf3);transition:border-color var(--d) var(--e),background var(--d) var(--e);cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px}
 .file-drop-zone:hover,.file-drop-zone.drag{border-color:var(--ac);background:rgba(37,99,235,.04)}
 .file-drop-zone p{font-family:var(--ff-h);font-size:11px;font-weight:600;color:var(--mu);margin:0}
@@ -291,8 +342,8 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .toast.in{opacity:1;transform:translateY(0) scale(1)}
 .tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ═══════════════════════════════════════════ LOADER — now bottom-right */
-#ldr{position:fixed;bottom:72px;right:16px;padding:7px 15px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--rpill);font-family:var(--ff-h);font-size:11.5px;font-weight:600;box-shadow:var(--s2);color:var(--tx2);transform:translateY(60px);opacity:0;transition:all var(--d) var(--e);z-index:9500;display:flex;align-items:center;gap:7px}
+/* ═══════════════════════════════════════════ LOADER */
+#ldr{position:fixed;top:16px;right:16px;padding:7px 15px;background:var(--surf);border:1.5px solid var(--bd);border-radius:var(--rpill);font-family:var(--ff-h);font-size:11.5px;font-weight:600;box-shadow:var(--s2);color:var(--tx2);transform:translateY(-60px);opacity:0;transition:all var(--d) var(--e);z-index:9500;display:flex;align-items:center;gap:7px}
 #ldr.on{transform:translateY(0);opacity:1}
 .lspin{width:12px;height:12px;border-radius:50%;border:2px solid var(--bd);border-top-color:var(--ac);animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -304,7 +355,9 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 
 /* ═══════════════════════════════════════════ RESPONSIVE ROUTING */
 #mblk{display:none!important}
+/* Desktop: hide mobile UI */
 @media(min-width:721px){#mob-app{display:none!important}}
+/* Mobile: hide desktop app, show mobile UI */
 @media(max-width:720px){
   #app{display:none!important}
   #mob-app{display:flex!important}
@@ -360,29 +413,18 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   background:transparent;transition:all .15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .mtab.on{background:var(--surf3);color:var(--ac);border-color:var(--bd)}
 
-/* List — FIX: don't let flex shrink cards */
+/* List */
 .mlist{flex:1;overflow-y:auto;padding:10px 12px 16px;
   display:flex;flex-direction:column;gap:9px;
   -webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 
-/* ═══ MOBILE CARD — FIXED HEIGHT ROW, NO SHRINKING ═══ */
-/* Cards must never shrink when siblings expand */
-.mcard{
-  background:var(--surf);border:1.5px solid var(--bd);border-radius:18px;
+/* Card */
+.mcard{background:var(--surf);border:1.5px solid var(--bd);border-radius:18px;
   overflow:hidden;transition:border-color .15s;
-  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  flex-shrink:0;       /* CRITICAL: prevent card from shrinking */
-}
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .mcard:active .mcard-top{background:var(--surf3)}
-
-/* Top row: fixed height, always centered, never squishes */
-.mcard-top{
-  display:flex;align-items:center;gap:10px;padding:0 14px;
-  cursor:pointer;transition:background .1s;
-  height:70px;          /* fixed row height */
-  min-height:70px;      /* enforce minimum */
-  flex-shrink:0;        /* never compress */
-}
+.mcard-top{display:flex;align-items:center;gap:10px;padding:13px 14px;
+  cursor:pointer;transition:background .1s}
 .mcard-idcol{flex-shrink:0;min-width:52px}
 .mcard-id{font-family:var(--ff-h);font-size:13.5px;font-weight:700;color:var(--ac);line-height:1.2}
 .mcard-ins{font-family:var(--ff-h);font-size:9px;font-weight:800;
@@ -394,10 +436,10 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .mcard-body{flex:1;min-width:0}
 .mcard-name{font-size:14px;font-weight:600;color:var(--tx);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
-.mcard-meta{display:flex;flex-wrap:nowrap;gap:4px;margin-top:4px;align-items:center;overflow:hidden}
+.mcard-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;align-items:center}
 .mpill{font-family:var(--ff-h);font-size:9.5px;font-weight:700;
   padding:2px 8px;border-radius:99px;
-  background:var(--surf3);border:1px solid var(--bd);color:var(--mu);white-space:nowrap;flex-shrink:0}
+  background:var(--surf3);border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
 .mpill-g{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
 .mpill-b{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
 [data-theme=dark] .mpill-g{background:#001a0d;border-color:#166534;color:#4ade80}
@@ -407,9 +449,9 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .mcard-chev{color:var(--mu);transition:transform .25s var(--eo)}
 .mcard.mopen .mcard-chev{transform:rotate(180deg)}
 
-/* Expand — smooth height transition, full content visible */
-.mxpand{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0,0,.2,1)}
-.mcard.mopen .mxpand{max-height:9999px;transition:max-height .55s cubic-bezier(0,0,.2,1)}
+/* Expand — max-height approach, no card-shrinking side effects */
+.mxpand{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(0,0,.2,1)}
+.mcard.mopen .mxpand{max-height:9999px;transition:max-height .5s cubic-bezier(0,0,.2,1)}
 .mxpand-inner{overflow:visible}
 .mxpand-body{border-top:1px solid var(--bd);background:var(--surf2)}
 
@@ -472,7 +514,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
 .mempty-t{font-family:var(--ff-h);font-size:14px;font-weight:700;color:var(--tx2);margin-bottom:4px}
 
-/* ═══════════════════════════════════════════ PRINT */
+/* ═══════════════════════════════════════════ PRINT — handled by doPrint popup window */
 @media print{
   body > *{display:none!important}
   #print-win{display:block!important}
@@ -495,7 +537,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v3.0.0 · View Only</div>
+        <div class="mtb-sub">v3.1.0 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
@@ -548,8 +590,8 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   <div class="mbox">
     <div class="mhd">
       <div>
-        <div class="mtt">Complete Missing Information</div>
-        <div class="mst">Fields marked <span class="ftag ftag-r">Required</span> must be filled before saving.</div>
+        <div class="mtt" id="modal-title">Review &amp; Confirm</div>
+        <div class="mst" id="modal-subtitle">All fields detected. Review and edit if needed, then confirm.</div>
       </div>
       <button class="mcl" onclick="closeModal()">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -562,11 +604,11 @@ textarea{resize:none;overflow:hidden;min-height:48px}
           <input id="mf-cid" type="text" placeholder="Leave blank to auto-generate">
         </div>
         <div>
-          <div class="fl-row"><span class="fl">Insurer</span><span class="ftag ftag-o">Optional</span></div>
+          <div class="fl-row"><span class="fl">Insurer</span><span id="mt-ins" class="ftag ftag-o">Optional</span></div>
           <input id="mf-ins" type="text" placeholder="e.g. AIA, Infinity">
         </div>
         <div>
-          <div class="fl-row"><span class="fl">Insured Company</span><span class="ftag ftag-o">Optional</span></div>
+          <div class="fl-row"><span class="fl">Insured Company</span><span id="mt-ico" class="ftag ftag-o">Optional</span></div>
           <input id="mf-ico" type="text" placeholder="Employer / group">
         </div>
         <div>
@@ -574,16 +616,24 @@ textarea{resize:none;overflow:hidden;min-height:48px}
           <input id="mf-cus" type="text" placeholder="Full name of patient">
         </div>
         <div>
-          <div class="fl-row"><span class="fl">Requested By</span><span class="ftag ftag-o">Optional</span></div>
+          <div class="fl-row"><span class="fl">Requested By</span><span id="mt-rby" class="ftag ftag-o">Optional</span></div>
           <input id="mf-rby" type="text" placeholder="Name of requester">
         </div>
         <div>
-          <div class="fl-row"><span class="fl">Accident / Incident Date</span><span class="ftag ftag-o">Optional</span></div>
+          <div class="fl-row"><span class="fl">Accident / Incident Date</span><span id="mt-acd" class="ftag ftag-o">Optional</span></div>
           <input id="mf-acd" type="date">
         </div>
         <div>
-          <div class="fl-row"><span class="fl">Claim Amount (USD)</span><span class="ftag ftag-o">Optional</span></div>
+          <div class="fl-row"><span class="fl">Claim Amount (USD)</span><span id="mt-amt" class="ftag ftag-o">Optional</span></div>
           <input id="mf-amt" type="text" placeholder="e.g. 57.50">
+        </div>
+        <div>
+          <div class="fl-row"><span class="fl">Phone Number</span><span id="mt-phn" class="ftag ftag-o">Optional</span></div>
+          <input id="mf-phn" type="text" placeholder="Contact number">
+        </div>
+        <div>
+          <div class="fl-row"><span class="fl">Personal ID / NID</span><span id="mt-pid" class="ftag ftag-o">Optional</span></div>
+          <input id="mf-pid" type="text" placeholder="National ID / Passport">
         </div>
         <div class="mfc">
           <div class="fl-row"><span class="fl">Request Details</span><span id="mt-rtx" class="ftag ftag-r">Required</span></div>
@@ -636,7 +686,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <div><label class="fl">Requested By <span style="color:var(--mu);font-size:9px">(optional)</span></label><input id="m-rby" type="text" placeholder="Requester name"></div>
         <div><label class="fl">Accident / Incident Date</label><input id="m-acd" type="date"></div>
         <div><label class="fl">Claim Amount (USD)</label><input id="m-amt" type="text" placeholder="e.g. 57.50"></div>
-        <div><label class="fl">Request Details</label><input id="m-rtx" type="text" placeholder="What is being requested?"></div>
+        <div style="grid-column:1/-1"><label class="fl">Request Details</label><textarea id="m-rtx" rows="5" placeholder="What is being requested? (e.g. supporting documents, medical recordsâ¦)" style="resize:vertical;min-height:100px" oninput="autoGrow(this)"></textarea></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:4px">
         <button class="btn btn-p" onclick="saveManual()">
@@ -660,7 +710,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v3.0.0</span>
+      <span class="hdr-ver">v2.15.0</span>
     </div>
     <div class="hdr-acts">
       <select class="th-sel" id="thsel" onchange="setTheme()">
@@ -748,6 +798,13 @@ textarea{resize:none;overflow:hidden;min-height:48px}
    CONFIGURATION
 ══════════════════════════════════════════════════════ */
 const API="https://script.google.com/macros/s/AKfycbwgZyOi0TAyQwXV_j7jqOAi2K4eYq6dBDuv4hFVbST8uE9cXfc4XNohrNWZDEDpaIAa/exec";
+
+/* ── Google Drive upload config ───────────────────────
+   Set GDRIVE_FOLDER_ID to your target folder ID from the
+   Drive URL: drive.google.com/drive/folders/[FOLDER_ID]
+   Leave blank to upload to root of Drive.
+   The upload goes through the same Apps Script endpoint.
+───────────────────────────────────────────────────── */
 const GDRIVE_FOLDER_ID = "1oVb3pwE6Gxnn_ZpCO1yYZqidLHsrllwR";
 
 let DB={claims:[],statuses:[]};
@@ -769,6 +826,7 @@ function closeConfirm(){
   _confirmCb=null;
 }
 
+// Debounce timer for saves
 let _saveTimer=null;
 function debounceSave(fn,ms=400){clearTimeout(_saveTimer);_saveTimer=setTimeout(fn,ms);}
 
@@ -784,6 +842,7 @@ window.onload=()=>{
 };
 function bootApp(){
   if(window.innerWidth<=720){
+    // Mobile mode: show mobile UI, keep desktop hidden
     mobRender();
   } else {
     document.getElementById('app').classList.remove('hidden');
@@ -849,8 +908,9 @@ function setNQMode(m){
   document.getElementById('nq-manual').classList.toggle('hidden',m!=='manual');
 }
 
-/* ══ PRINT ══ */
+/* ══ PRINT — opens clean table popup, works on ALL browsers / PCs ══ */
 function doPrint(claimId){
+  // Print single claim
   const claims=claimId?DB.claims.filter(x=>x.id===claimId):DB.claims.filter(x=>x.status!=='Complete');
   openPrintWindow(claims, claimId?'single':'all');
 }
@@ -939,7 +999,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.0.0</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v2.15.0</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -948,9 +1008,10 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v3.0.0</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v2.15.0</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
+  // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
   var ifr=document.getElementById('print-frame');
   if(!ifr){
     ifr=document.createElement('iframe');
@@ -960,6 +1021,7 @@ function openPrintWindow(claims,mode){
   }
   var doc=ifr.contentDocument||ifr.contentWindow.document;
   doc.open();doc.write(html);doc.close();
+  // Wait for iframe content to render, then print it
   setTimeout(function(){
     ifr.contentWindow.focus();
     ifr.contentWindow.print();
@@ -992,14 +1054,39 @@ function processInput(){
     const rm=txt.match(/Date:[^\n]*\n([\s\S]*?)(?=View Claim Details|This notification)/i);if(rm)p.reqtext=rm[1].trim();
   } else if(/AIA BROKER|(Send Back By[\s\S]{0,30}Reimbursement)/i.test(txt)){
     p.insurer='AIA';
+    // ── Claim number ─────────────────────────────────────────────────────────
     const cm=txt.match(/Reimbursement\s*-\s*#([A-Z0-9]+)/i)||txt.match(/#([A-Z][A-Z0-9]{4,})/);
     if(cm)p.claimid=cm[1];
+    // ── Customer: "Name of Insured" block (new format) ──────────────────────
+    // New format has: "Name of Insured\n<KhLabel>\n<NAME>" — pick first Latin line.
+    const niBlock=txt.match(/Name of Insured\s*\n([\s\S]{0,300}?)(?=អត្ត|National ID|Phone Number|Agent Name|Send Back|Total Claim|$)/i);
+    if(niBlock){
+      const niLines=niBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
+      const nameVal=niLines.find(l=>/[A-Za-z]{2,}/.test(l)&&!/^(Name of|Agent|Send|Phone|National|Passport|Birth|Date of|Policy|Member|Total|Loading|AIA|POLICY|HELP|ណ្ហ)/i.test(l));
+      if(nameVal)p.customer=nameVal;
+    }
+    // ── Personal ID ──────────────────────────────────────────────────────────
+    const pidBlock=txt.match(/National ID[^\n]*\n([\s\S]{0,200}?)(?=ថ្ងៃ|Date of Birth|Phone Number|Agent|Send Back|Total|$)/i);
+    if(pidBlock){
+      const pidLines=pidBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
+      const pidVal=pidLines.find(l=>/[A-Z0-9]{4,}/.test(l)&&!/^(National|Passport|Birth Certificate|Date)/i.test(l));
+      if(pidVal)p.personalId=pidVal;
+    }
+    // ── Phone number ─────────────────────────────────────────────────────────
+    const phBlock=txt.match(/(?:^|\n)Phone Number\s*\n([\s\S]{0,150}?)(?:Phone Number Optional|Agent Name|Send Back|Total|ឈ្មោះ)/i);
+    if(phBlock){
+      const phLines=phBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
+      const phVal=phLines.find(l=>/^[\d\s\+\-\.]{6,}$/.test(l));
+      if(phVal)p.phone=phVal.trim();
+    }
+    // ── Requester (Send Back By) ──────────────────────────────────────────────
     const sbBlock=txt.match(/Send Back By\s*\n([\s\S]{0,150}?)(?=កាលបរិច្ឆេទ|Send Back Date)/i);
     if(sbBlock){
       const sbLines=sbBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
       const nameLine=sbLines.find(l=>/[a-zA-Z]/.test(l));
       if(nameLine)p.reqby=nameLine;
     }
+    // ── Date (Send Back Date) ─────────────────────────────────────────────────
     const sdBlock=txt.match(/Send Back Date\s*\n([\s\S]{0,150}?)(?=មូលហេតុ|Reason for Need|Comments on Need|ការកំណត់)/i);
     if(sdBlock){
       const sdLines=sdBlock[1].split('\n').map(l=>l.trim()).filter(Boolean);
@@ -1009,12 +1096,18 @@ function processInput(){
       const sd=txt.match(/Send Back Date\s*\n([^\n]+)/i)||txt.match(/Send Back Date\s+([^\n]+)/i);
       if(sd){const d=new Date(sd[1].trim());if(!isNaN(d))p.datePasted=d.toISOString();}
     }
+    // ── Request text (Comments on Need Information) ───────────────────────────
     const co=txt.match(/Comments on Need Information\s*\n([\s\S]*?)(?=Total Claim Amount|$)/i);
     if(co){
       let raw=co[1];
+      // Strip AIA disclaimer block: "(PC) *<content> See more" — from (XX)* to end.
+      raw=raw.replace(/\n?\([A-Z]{1,5}\)\s*\*[\s\S]*?See more\s*$/i,'').trim();
+      // Strip bare trailing "See more" variants.
       raw=raw.replace(/\s*\(?\w{1,5}\)?\s*See more\s*$/i,'').trim();
+      // Strip Khmer disclaimer "សូមបញ្ជាក់ថា" + everything after.
       const discIdx=raw.indexOf('\u179f\u17bc\u1798\u1794\u1789\u17d2\u1787\u17b6\u1780\u17d2\u178f\u17b6');
       if(discIdx>0)raw=raw.substring(0,discIdx).trim();
+      // Strip Khmer greeting preamble — ends with "ងរបស់លោកអ្នក៖", take text after.
       const greetMarker='\u1784\u179a\u1794\u179f\u17cb\u179b\u17c4\u1780\u17a2\u17d2\u1793\u1780\u17d6';
       const greetIdx=raw.indexOf(greetMarker);
       if(greetIdx>=0){
@@ -1025,6 +1118,7 @@ function processInput(){
       }
       p.reqtext=raw.trim();
     }
+    // ── Claim amount ──────────────────────────────────────────────────────────
     const am=txt.match(/Total Claim Amount Submitted\s+[A-Z]+\s*([\d,.]+)/i)||txt.match(/USD\s*([\d,.]+)/i);
     if(am)p.amount=am[1];
   } else if(txt.includes('Send Back By')&&txt.includes('Comments on Need Information')){
@@ -1036,22 +1130,51 @@ function processInput(){
     const am=txt.match(/Total Claim Amount Submitted\s+[A-Z]+\s*([\d,.]+)/i)||txt.match(/USD\s*([\d,.]+)/i);if(am)p.amount=am[1];
   }
   if(!p.claimid)p.claimid=genId();
-  if(!p.reqtext||!p.customer){openModal(p);return;}
-  commitQuery(p);
+  // Always open review modal so user can verify/edit parsed data before saving
+  openModal(p);
 }
 
 /* ══ MODAL ══ */
 function openModal(p){
   PENDING=p;
-  const fields=[{id:'cid',val:p.claimid},{id:'ins',val:p.insurer},{id:'ico',val:p.inscomp},{id:'cus',val:p.customer,req:true},{id:'rby',val:p.reqby},{id:'acd',val:p.accdate||''},{id:'amt',val:p.amount},{id:'rtx',val:p.reqtext,req:true}];
+  // All fields: show "Detected" if auto-filled, "Required" if missing+required, "Optional" otherwise
+  const fields=[
+    {id:'cid',val:p.claimid,label:'Auto-generated'},
+    {id:'ins',val:p.insurer,label:'Optional'},
+    {id:'ico',val:p.inscomp,label:'Optional'},
+    {id:'cus',val:p.customer,req:true},
+    {id:'rby',val:p.reqby,label:'Optional'},
+    {id:'acd',val:p.accdate||'',label:'Optional'},
+    {id:'amt',val:p.amount,label:'Optional'},
+    {id:'phn',val:p.phone,label:'Optional'},
+    {id:'pid',val:p.personalId,label:'Optional'},
+    {id:'rtx',val:p.reqtext,req:true}
+  ];
   fields.forEach(f=>{
     const inp=document.getElementById('mf-'+f.id);if(!inp)return;
     inp.value=f.val||'';inp.classList.remove('inwarn');
-    if(f.req){const tag=document.getElementById('mt-'+f.id);if(!tag)return;const det=(f.val||'').trim()!=='';tag.textContent=det?'Detected':'Required';tag.className=det?'ftag ftag-k':'ftag ftag-r';if(!det)inp.classList.add('inwarn');}
+    const tag=document.getElementById('mt-'+f.id);if(!tag)return;
+    const det=(f.val||'').trim()!=='';
+    if(f.req){
+      tag.textContent=det?'Detected':'Required';
+      tag.className=det?'ftag ftag-k':'ftag ftag-r';
+      if(!det)inp.classList.add('inwarn');
+    } else {
+      tag.textContent=det?'Detected':(f.label||'Optional');
+      tag.className=det?'ftag ftag-k':'ftag ftag-o';
+    }
   });
+  // Set modal title based on whether all required fields are present
+  const allOk=fields.filter(f=>f.req).every(f=>(f.val||'').trim()!=='');
+  document.getElementById('modal-title').textContent=allOk?'Review & Confirm':'Complete Missing Information';
+  document.getElementById('modal-subtitle').innerHTML=allOk
+    ?'All fields detected. Review and edit if needed, then confirm.'
+    :'Fields marked <span class="ftag ftag-r">Required</span> must be filled before saving.';
   document.getElementById('modal').classList.add('open');
-  const first=['cus','rtx'].find(id=>!document.getElementById('mf-'+id).value.trim());
-  if(first)setTimeout(()=>document.getElementById('mf-'+first).focus(),320);
+  if(!allOk){
+    const first=['cus','rtx'].find(id=>!document.getElementById('mf-'+id).value.trim());
+    if(first)setTimeout(()=>document.getElementById('mf-'+first).focus(),320);
+  }
 }
 function closeModal(){document.getElementById('modal').classList.remove('open');PENDING=null;}
 function submitModal(){
@@ -1059,11 +1182,12 @@ function submitModal(){
   const ins=document.getElementById('mf-ins').value.trim(),ico=document.getElementById('mf-ico').value.trim();
   const cus=document.getElementById('mf-cus').value.trim(),rby=document.getElementById('mf-rby').value.trim();
   const acd=document.getElementById('mf-acd').value,amt=document.getElementById('mf-amt').value.trim();
+  const phn=document.getElementById('mf-phn').value.trim(),pid=document.getElementById('mf-pid').value.trim();
   const rtx=document.getElementById('mf-rtx').value.trim();
   if(!cus){markWarn('mf-cus','Claimant name is required');return;}
   if(!rtx){markWarn('mf-rtx','Request details are required');return;}
   closeModal();
-  commitQuery({...(PENDING||{}),claimid:cid,insurer:ins,inscomp:ico,customer:cus,reqby:rby,accdate:acd,amount:amt,reqtext:rtx});
+  commitQuery({...(PENDING||{}),claimid:cid,insurer:ins,inscomp:ico,customer:cus,reqby:rby,accdate:acd,amount:amt,phone:phn,personalId:pid,reqtext:rtx});
 }
 function markWarn(id,msg){const el=document.getElementById(id);el.classList.add('inwarn');el.focus();toast(msg,'err');el.addEventListener('input',()=>el.classList.remove('inwarn'),{once:true});}
 
@@ -1079,9 +1203,10 @@ function commitQuery(p){
     let r=getRem(c.remark);
     if(p.insurer)r.insurer=p.insurer;if(p.inscomp)r.inscomp=p.inscomp;
     if(p.amount)r.claimAmount=p.amount;if(p.accdate)r.accidentDate=p.accdate;
+    if(p.phone)r.phone=p.phone;if(p.personalId)r.personalId=p.personalId;
     c.remark=JSON.stringify(r);
   } else {
-    const r={handler:localStorage.getItem('qt_user')||'Admin',text:'',phone:'',personalId:'',insurer:p.insurer||'',inscomp:p.inscomp||'',claimAmount:p.amount||'',accidentDate:p.accdate||'',displayId:cid,files:[]};
+    const r={handler:localStorage.getItem('qt_user')||'Admin',text:'',phone:p.phone||'',personalId:p.personalId||'',insurer:p.insurer||'',inscomp:p.inscomp||'',claimAmount:p.amount||'',accidentDate:p.accdate||'',displayId:cid,files:[]};
     c={id:cid,customer:p.customer||'Unknown',requests:[reqObj],status:firstStatus(),remark:JSON.stringify(r),dateIn:new Date().toISOString(),dateModified:new Date().toISOString(),trashDate:''};
     DB.claims.push(c);
   }
@@ -1103,7 +1228,11 @@ function saveManual(){
   setNQMode('paste');commitQuery(p);
 }
 
-/* ══ FILE ATTACHMENTS ══ */
+/* ══ FILE ATTACHMENTS — Google Drive Upload ══
+   Files are uploaded to Google Drive via the Apps Script endpoint.
+   The stored record contains: {name, driveId, driveUrl}
+   Falls back gracefully if Drive upload is not configured.
+══════════════════════════════════════════════ */
 function attachFileToClaim(claimId){
   FILE_ATTACH_TARGET=claimId;
   document.getElementById('file-picker').value='';
@@ -1128,6 +1257,7 @@ async function uploadFilesToDrive(claimId,files){
   setZone('0.5');
   const results=[];
   for(const f of files){
+    // Size guard: Apps Script has ~50MB payload limit but practical limit ~5MB base64
     if(f.size>5*1024*1024){toast(f.name+' is too large (max 5 MB)','err');results.push({name:f.name,driveId:'',driveUrl:''});continue;}
     try{
       const b64=await fileToBase64(f);
@@ -1150,6 +1280,7 @@ async function uploadFilesToDrive(claimId,files){
   results.forEach(rf=>{if(!r.files.find(x=>x.name===rf.name&&x.driveId===rf.driveId)){r.files.push(rf);}});
   cl.remark=JSON.stringify(r);cl.dateModified=new Date().toISOString();
   setZone('');
+  // Save without triggering full re-render (preserves open card state)
   save();
   await apicall({action:'saveClaim',claim:cl});
   renderClaims();
@@ -1187,6 +1318,7 @@ function openFileByAttr(el){
 }
 
 /* ══ RENDER ══ */
+// Debounced render to avoid thrashing
 let _renderTimer=null;
 function renderClaims(){clearTimeout(_renderTimer);_renderTimer=setTimeout(_doRender,16);}
 function _doRender(){
@@ -1230,6 +1362,34 @@ function buildCard(c,isOpen=false){
   const qcount=c.requests.length;
   const files=r.files||[];
 
+  /* ── Build chat thread ── */
+  // Remarks: stored as array [{ts,text,by}]; legacy plain-text in r.text → single remark
+  const remarks=Array.isArray(r.remarks)?r.remarks
+    :(r.text&&r.text.trim()?[{ts:c.dateIn||new Date().toISOString(),text:r.text,by:r.handler||''}]:[]);
+
+  // Merge queries + remarks into a single timeline sorted by ts
+  const thread=[
+    ...c.requests.map(q=>({type:'q',ts:q.datePasted,by:q.requestedBy||'AIA',text:q.text||''})),
+    ...remarks.map(rm=>({type:'r',ts:rm.ts,by:rm.by||handler||'Staff',text:rm.text||''}))
+  ].sort((a,b)=>new Date(a.ts)-new Date(b.ts));
+
+  const fmtTs=ts=>{
+    const d=new Date(ts);
+    return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '
+          +d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  };
+
+  const chatHtml=thread.length?thread.map(item=>{
+    if(item.type==='q') return`<div class="chat-q">
+      <div class="chat-q-meta"><span class="chat-q-who">${esc(item.by)}</span><span class="chat-q-date">${fmtTs(item.ts)}</span></div>
+      <div class="chat-q-bubble">${esc(item.text).replace(/\n/g,'<br>')}</div>
+    </div>`;
+    return`<div class="chat-r">
+      <div class="chat-r-meta"><span class="chat-r-who">${esc(item.by)}</span><span class="chat-r-date">${fmtTs(item.ts)}</span></div>
+      <div class="chat-r-bubble">${esc(item.text).replace(/\n/g,'<br>')}</div>
+    </div>`;
+  }).join(''):'<div class="chat-empty">No remarks yet. Add one below.</div>';
+
   const statOpts=DB.statuses.map(s=>{const sn=typeof s==='object'?s.name:s;return`<option value="${esc(sn)}"${sn===c.status?' selected':''}>${esc(sn)}</option>`;}).join('');
   const amtPill=r.claimAmount?`<span class="pill pill-g">USD ${esc(r.claimAmount)}</span>`:'';
   const insPill=r.insurer?`<span class="pill pill-b pill-link" onclick="event.stopPropagation();filterByInsurer('${esc(r.insurer)}')" title="Filter by ${esc(r.insurer)}">${esc(r.insurer)}</span>`:'';
@@ -1239,6 +1399,7 @@ function buildCard(c,isOpen=false){
     ?`<button class="ib chk" title="Mark Complete" onclick="event.stopPropagation();ripple(this);confirmComplete('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></button>`
     :`<button class="ib rec" title="Recover" onclick="event.stopPropagation();ripple(this);recoverClaim('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>`;
 
+  /* Request items */
   const reqsHtml=c.requests.map((req,i)=>{
     const rd=new Date(req.datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
     return`<div class="ri">
@@ -1255,6 +1416,7 @@ function buildCard(c,isOpen=false){
     </div>`;
   }).join('');
 
+  /* Files list — safe onclick via data attributes, click to open in Drive */
   const filesHtml=files.map((f,i)=>{
     const hasDrive=f.driveUrl&&f.driveUrl.startsWith('http');
     const iconColor=hasDrive?'#2563eb':'#7a8ea6';
@@ -1283,6 +1445,8 @@ function buildCard(c,isOpen=false){
       <div class="chip"><span class="chip-l">Claimant</span><span class="chip-v">${esc(c.customer)||'—'}</span></div>
       ${r.inscomp?`<div class="chip"><span class="chip-l">Insured Co.</span><span class="chip-v">${esc(r.inscomp)}</span></div>`:''}
       <div class="chip"><span class="chip-l">Handler</span><span class="chip-v">${esc(handler)}</span></div>
+      ${r.phone?`<div class="chip"><span class="chip-l">Phone</span><span class="chip-v">${esc(r.phone)}</span></div>`:''}
+      ${r.personalId?`<div class="chip"><span class="chip-l">NID</span><span class="chip-v">${esc(r.personalId)}</span></div>`:''}
       <div class="pills">
         <span class="pill">${qcount} quer${qcount===1?'y':'ies'}</span>
         <span class="pill">${days}d open</span>
@@ -1301,96 +1465,117 @@ function buildCard(c,isOpen=false){
 
   <div class="ccp"><div class="ccp-inner"><div class="ccp-body">
     <div class="exp-layout">
+      <!-- LEFT: tabbed panel -->
       <div class="exp-main">
-        <div class="id-card">
-          <div class="id-card-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div class="id-card-body">
-            <div class="id-name">${esc(c.customer)||'Unknown Patient'}</div>
-            <div style="font-size:12.5px;color:var(--tx2);margin-top:2px">
-              ${r.inscomp?`<strong>${esc(r.inscomp)}</strong>`:'No company set'}
-              ${r.insurer?` &nbsp;·&nbsp; <span style="color:var(--ac);font-weight:600">${esc(r.insurer)}</span>`:''}
-            </div>
-            <div class="id-meta">
-              ${r.claimAmount?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>USD ${esc(r.claimAmount)}</span>`:''}
-              ${r.accidentDate?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${esc(r.accidentDate)}</span>`:''}
-              ${r.phone?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${esc(r.phone)}</span>`:''}
-              ${r.personalId?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>${esc(r.personalId)}</span>`:''}
-              <span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${esc(handler)}</span>
-            </div>
-          </div>
+        <!-- Tab bar -->
+        <div class="exp-tabs">
+          <button class="exp-tab on" id="etab-info-${c.id}" onclick="expTab(event,'${c.id}','info')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Overview
+          </button>
+          <button class="exp-tab" id="etab-req-${c.id}" onclick="expTab(event,'${c.id}','req')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Requests <span class="exp-tab-badge">${qcount}</span>
+          </button>
+          <button class="exp-tab" id="etab-files-${c.id}" onclick="expTab(event,'${c.id}','files')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+            Files <span class="exp-tab-badge">${files.length}</span>
+          </button>
         </div>
-
-        <div class="psec">
-          <div class="psec-hd">
-            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
-            <span class="psec-t">What They Are Requesting</span>
-            <span class="psec-c">${qcount}</span>
+        <!-- Tab panels -->
+        <div class="exp-panels">
+          <!-- Overview tab -->
+          <div class="exp-panel on" id="epanel-info-${c.id}">
+            <div class="id-card">
+              <div class="id-card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div class="id-card-body">
+                <div class="id-name">${esc(c.customer)||'Unknown Patient'}</div>
+                <div style="font-size:12.5px;color:var(--tx2);margin-top:2px">
+                  ${r.inscomp?`<strong>${esc(r.inscomp)}</strong>`:'No company set'}
+                  ${r.insurer?` &nbsp;·&nbsp; <span style="color:var(--ac);font-weight:600">${esc(r.insurer)}</span>`:''}
+                </div>
+                <div class="id-meta">
+                  ${r.claimAmount?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>USD ${esc(r.claimAmount)}</span>`:''}
+                  ${r.accidentDate?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${esc(r.accidentDate)}</span>`:''}
+                  ${r.phone?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${esc(r.phone)}</span>`:''}
+                  ${r.personalId?`<span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>${esc(r.personalId)}</span>`:''}
+                  <span class="id-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${esc(handler)}</span>
+                </div>
+              </div>
+            </div>
+            <!-- Quick summary of latest request -->
+            ${c.requests.length?`<div class="psec">
+              <div class="psec-hd"><div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><span class="psec-t">Latest Request</span><span class="psec-c">${new Date(c.requests[c.requests.length-1].datePasted).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span></div>
+              <div class="psec-bd"><div style="font-size:13px;color:var(--tx);line-height:1.65;white-space:pre-wrap">${esc(c.requests[c.requests.length-1].text||'').substring(0,400)}${c.requests[c.requests.length-1].text&&c.requests[c.requests.length-1].text.length>400?'…':''}</div></div>
+            </div>`:''}
           </div>
-          <div class="psec-bd"><div class="rlist">${reqsHtml}</div></div>
-        </div>
-
-        <div class="psec" style="margin-top:auto">
-          <div class="psec-hd">
-            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
-            <span class="psec-t">Attached Files</span>
-            <span class="psec-c">${files.length}</span>
-            <div class="psec-acts">
-              <button class="btn btn-g btn-sm" onclick="attachFileToClaim('${c.id}')">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Attach
-              </button>
+          <!-- Requests tab -->
+          <div class="exp-panel" id="epanel-req-${c.id}">
+            <div class="psec">
+              <div class="psec-hd"><div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
+              <span class="psec-t">What They Are Requesting</span><span class="psec-c">${qcount}</span></div>
+              <div class="psec-bd"><div class="rlist">${reqsHtml}</div></div>
             </div>
           </div>
-          <div class="psec-bd" style="padding:10px">
-            <div class="file-drop-zone" id="fdz-${c.id}"
-              ondragover="event.preventDefault();this.classList.add('drag')"
-              ondragleave="this.classList.remove('drag')"
-              ondrop="handleFileDrop(event,'${c.id}')"
-              onclick="attachFileToClaim('${c.id}')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
-              <p>Click or drag to upload to Drive</p>
+          <!-- Files tab -->
+          <div class="exp-panel" id="epanel-files-${c.id}">
+            <div class="psec">
+              <div class="psec-hd"><div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></div>
+              <span class="psec-t">Attached Files</span><span class="psec-c">${files.length}</span>
+              <div class="psec-acts"><button class="btn btn-g btn-sm" onclick="attachFileToClaim('${c.id}')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Attach</button></div></div>
+              <div class="psec-bd" style="padding:10px">
+                <div class="file-drop-zone" id="fdz-${c.id}" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleFileDrop(event,'${c.id}')" onclick="attachFileToClaim('${c.id}')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+                  <p>Click or drag to upload to Drive</p>
+                </div>
+                ${files.length?`<div class="file-list">${filesHtml}</div>`:''}
+              </div>
             </div>
-            ${files.length?`<div class="file-list">${filesHtml}</div>`:''}
           </div>
         </div>
       </div>
 
+      <!-- RIGHT: claim details (compact) + chat thread -->
       <div class="exp-side">
-        <div class="psec">
-          <div class="psec-hd">
-            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg></div>
-            <span class="psec-t">Claim Details</span>
+        <!-- Claim details — compact, collapsible scrollable area -->
+        <div class="exp-side-details">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+            <div style="width:18px;height:18px;border-radius:5px;background:var(--surf3);border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="14" y2="12"/></svg></div>
+            <span style="font-family:var(--ff-h);font-size:11px;font-weight:700;color:var(--tx2)">Claim Details</span>
           </div>
-          <div class="psec-bd">
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div><label class="fl">Claim Number</label><input type="text" value="${esc(did)}" onchange="updRem('${c.id}','displayId',this.value)"></div>
-              <div class="fg2">
-                <div><label class="fl">Insurer</label><input type="text" value="${esc(r.insurer||'')}" placeholder="e.g. AIA" onchange="updRem('${c.id}','insurer',this.value)"></div>
-                <div><label class="fl">Amount (USD)</label><input type="text" value="${esc(r.claimAmount||'')}" placeholder="0.00" onchange="updRem('${c.id}','claimAmount',this.value)"></div>
-              </div>
-              <div><label class="fl">Insured Company</label><input type="text" value="${esc(r.inscomp||'')}" placeholder="Employer / group" onchange="updRem('${c.id}','inscomp',this.value)"></div>
-              <div><label class="fl">Claimant — Patient</label><input type="text" value="${esc(c.customer)}" placeholder="Patient name" onchange="updCustomer('${c.id}',this.value)"></div>
-              <div class="fg2">
-                <div><label class="fl">Phone</label><input type="text" value="${esc(r.phone||'')}" placeholder="Contact" onchange="updRem('${c.id}','phone',this.value)"></div>
-                <div><label class="fl">Personal ID</label><input type="text" value="${esc(r.personalId||'')}" placeholder="NID" onchange="updRem('${c.id}','personalId',this.value)"></div>
-              </div>
-              <div class="fg2">
-                <div><label class="fl">Accident Date</label><input type="date" value="${esc(r.accidentDate||'')}" onchange="updRem('${c.id}','accidentDate',this.value)"></div>
-                <div><label class="fl">Handler</label><input type="text" value="${esc(handler)}" placeholder="Assign handler" onchange="updRem('${c.id}','handler',this.value)"></div>
-              </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div><label class="fl">Claim Number</label><input type="text" value="${esc(did)}" onchange="updRem('${c.id}','displayId',this.value)"></div>
+            <div class="fg2">
+              <div><label class="fl">Insurer</label><input type="text" value="${esc(r.insurer||'')}" placeholder="e.g. AIA" onchange="updRem('${c.id}','insurer',this.value)"></div>
+              <div><label class="fl">Amount (USD)</label><input type="text" value="${esc(r.claimAmount||'')}" placeholder="0.00" onchange="updRem('${c.id}','claimAmount',this.value)"></div>
+            </div>
+            <div><label class="fl">Insured Company</label><input type="text" value="${esc(r.inscomp||'')}" placeholder="Employer / group" onchange="updRem('${c.id}','inscomp',this.value)"></div>
+            <div><label class="fl">Claimant — Patient</label><input type="text" value="${esc(c.customer)}" placeholder="Patient name" onchange="updCustomer('${c.id}',this.value)"></div>
+            <div class="fg2">
+              <div><label class="fl">Phone</label><input type="text" value="${esc(r.phone||'')}" placeholder="Contact" onchange="updRem('${c.id}','phone',this.value)"></div>
+              <div><label class="fl">Personal ID</label><input type="text" value="${esc(r.personalId||'')}" placeholder="NID" onchange="updRem('${c.id}','personalId',this.value)"></div>
+            </div>
+            <div class="fg2">
+              <div><label class="fl">Accident Date</label><input type="date" value="${esc(r.accidentDate||'')}" onchange="updRem('${c.id}','accidentDate',this.value)"></div>
+              <div><label class="fl">Handler</label><input type="text" value="${esc(handler)}" placeholder="Assign handler" onchange="updRem('${c.id}','handler',this.value)"></div>
             </div>
           </div>
         </div>
-
-        <div class="psec">
-          <div class="psec-hd">
-            <div class="psec-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-            <span class="psec-t">Remark</span>
+        <!-- Chat thread -->
+        <div class="exp-chat-wrap">
+          <div class="exp-chat-hd">
+            <div class="exp-chat-hd-ico"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <span class="exp-chat-hd-t">Thread</span>
+            <span style="font-family:var(--ff-h);font-size:9px;color:var(--mu);margin-left:auto">queries + remarks</span>
           </div>
-          <div class="psec-bd">
-            <textarea class="remark-ta" placeholder="Internal notes, follow-up actions, observations…" oninput="autoGrow(this)" onchange="updRem('${c.id}','text',this.value)">${esc(r.text||'')}</textarea>
+          <div class="exp-chat-thread" id="chat-thread-${c.id}">${chatHtml}</div>
+          <div class="exp-chat-input">
+            <textarea class="exp-chat-ta" id="chat-input-${c.id}" placeholder="Add a remark or note…" rows="1"
+              oninput="chatGrow(this)"
+              onkeydown="if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();addRemark('${c.id}');}"></textarea>
+            <button class="exp-chat-send" onclick="addRemark('${c.id}')" title="Add remark (Ctrl+Enter)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -1399,14 +1584,73 @@ function buildCard(c,isOpen=false){
 </div>`;
 }
 
+/* ══ CHAT REMARKS ══ */
+function addRemark(cid){
+  const ta=document.getElementById('chat-input-'+cid);
+  if(!ta)return;
+  const txt=ta.value.trim();
+  if(!txt){ta.focus();return;}
+  const cl=DB.claims.find(x=>x.id===cid);
+  if(!cl)return;
+  const r=getRem(cl.remark);
+  if(!Array.isArray(r.remarks))r.remarks=[];
+  // Migrate legacy r.text → first remark entry
+  if(r.text&&r.text.trim()){
+    r.remarks.unshift({ts:cl.dateIn||new Date().toISOString(),text:r.text,by:r.handler||''});
+    r.text='';
+  }
+  const who=localStorage.getItem('qt_user')||r.handler||'Staff';
+  const entry={ts:new Date().toISOString(),text:txt,by:who};
+  r.remarks.push(entry);
+  cl.remark=JSON.stringify(r);
+  cl.dateModified=new Date().toISOString();
+  ta.value='';ta.style.height='auto';
+  // Append bubble to DOM without full re-render
+  const thread=document.getElementById('chat-thread-'+cid);
+  if(thread){
+    const empty=thread.querySelector('.chat-empty');
+    if(empty)empty.remove();
+    const fmtTs=ts=>{const d=new Date(ts);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});};
+    const div=document.createElement('div');
+    div.className='chat-r';
+    div.innerHTML='<div class="chat-r-meta"><span class="chat-r-who">'+esc(entry.by)+'</span><span class="chat-r-date">'+fmtTs(entry.ts)+'</span></div><div class="chat-r-bubble">'+esc(entry.text).replace(/\n/g,'<br>')+'</div>';
+    thread.appendChild(div);
+    thread.scrollTop=thread.scrollHeight;
+  }
+  save();
+  apicall({action:'saveClaim',claim:cl});
+  toast('Remark added','ok');
+}
+function chatGrow(ta){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight+2,120)+'px';}
+
+/* ══ EXPAND TABS ══ */
+function expTab(e,cid,tab){
+  e.stopPropagation();
+  const panels=['info','req','files'];
+  panels.forEach(p=>{
+    const btn=document.getElementById('etab-'+p+'-'+cid);
+    const pnl=document.getElementById('epanel-'+p+'-'+cid);
+    if(btn)btn.classList.toggle('on',p===tab);
+    if(pnl)pnl.classList.toggle('on',p===tab);
+  });
+  // Auto-grow textareas on Requests tab
+  if(tab==='req'){
+    const card=document.getElementById('card-'+cid);
+    if(card)card.querySelectorAll('.ri-ta').forEach(ta=>autoGrow(ta));
+  }
+}
+
 /* ══ TOGGLE ══ */
 function toggleCard(id){
   const card=document.getElementById('card-'+id);
   const opening=!card.classList.contains('open');
+  document.querySelectorAll('.cc.open').forEach(el=>{if(el.id!=='card-'+id)el.classList.remove('open');});
   card.classList.toggle('open');
   if(opening){
     setTimeout(()=>{
       document.querySelectorAll(`#card-${id} .ri-ta`).forEach(ta=>autoGrow(ta));
+      const thread=document.getElementById('chat-thread-'+id);
+      if(thread)thread.scrollTop=thread.scrollHeight;
       const y=card.getBoundingClientRect().top+window.scrollY-20;
       window.scrollTo({top:y,behavior:'smooth'});
     },300);
@@ -1421,8 +1665,8 @@ function filterByInsurer(v){document.getElementById('flt-insurer').value=v;rende
 function filterByCompany(v){document.getElementById('flt-inscomp').value=v;renderClaims();}
 
 /* ══ UPDATES ══ */
-function getRem(s){try{return JSON.parse(s||'{}');}catch{return{text:s||'',phone:'',personalId:'',handler:'',displayId:'',insurer:'',inscomp:'',claimAmount:'',accidentDate:'',files:[]};}}
-function updRem(id,field,val){const c=DB.claims.find(x=>x.id===id);const r=getRem(c.remark);r[field]=val;c.remark=JSON.stringify(r);c.dateModified=new Date().toISOString();persist(c);toast('Saved','ok');}
+function getRem(s){try{const o=JSON.parse(s||'{}');if(!Array.isArray(o.remarks))o.remarks=[];return o;}catch{return{text:s||'',remarks:[],phone:'',personalId:'',handler:'',displayId:'',insurer:'',inscomp:'',claimAmount:'',accidentDate:'',files:[]};}}
+function updRem(id,field,val){const c=DB.claims.find(x=>x.id===id);const r=getRem(c.remark);r[field]=val;if(!Array.isArray(r.remarks))r.remarks=[];c.remark=JSON.stringify(r);c.dateModified=new Date().toISOString();persist(c);toast('Saved','ok');}
 function updCustomer(id,val){const c=DB.claims.find(x=>x.id===id);c.customer=val;c.dateModified=new Date().toISOString();persist(c);toast('Saved','ok');}
 function updateReqText(id,i,val){const c=DB.claims.find(x=>x.id===id);c.requests[i].text=val;c.dateModified=new Date().toISOString();persist(c);toast('Saved','ok');}
 function updateReqBy(id,i,val){const c=DB.claims.find(x=>x.id===id);c.requests[i].requestedBy=val;c.dateModified=new Date().toISOString();persist(c);toast('Saved','ok');}
@@ -1442,7 +1686,18 @@ function setStatus(id,val){
   const c=DB.claims.find(x=>x.id===id);
   c.status=val;c.dateModified=new Date().toISOString();
   c.trashDate=val==='Complete'?new Date().toISOString():'';
-  persist(c);if(TAB==='active'&&val==='Complete')renderClaims();toast('Status updated','ok');
+  persist(c);
+  if(val==='Complete'){
+    // Switch to Trash / Recovery tab so user sees the claim move there
+    TAB='trash';
+    document.getElementById('tab-active').classList.remove('on');
+    document.getElementById('tab-trash').classList.add('on');
+    document.getElementById('nq-btn').style.display='none';
+    toast('Moved to Completed','ok');
+  } else {
+    toast('Status updated','ok');
+  }
+  renderClaims();
 }
 function recoverClaim(id){setStatus(id,firstStatus());setTimeout(()=>renderClaims(),80);}
 function statusColor(name){
@@ -1512,7 +1767,7 @@ dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');co
 
 
 /* ═══════════════════════════════════════════════════════
-   MOBILE UI LOGIC
+   MOBILE UI LOGIC — view-only, only remark is editable
 ═══════════════════════════════════════════════════════ */
 var _MOB_TAB = 'active';
 
@@ -1550,11 +1805,13 @@ function mobRender() {
     return;
   }
 
+  // Preserve open card IDs across re-render
   var openIds = {};
   [].forEach.call(document.querySelectorAll('.mcard.mopen'), function(el){ openIds[el.dataset.cid]=true; });
 
   list.innerHTML = items.map(function(cl){ return mobCard(cl, !!openIds[cl.id]); }).join('');
 
+  // Re-attach auto-grow on visible remarks
   [].forEach.call(document.querySelectorAll('.mremark'), function(ta){ mobGrow(ta); });
 }
 
@@ -1567,10 +1824,12 @@ function mobCard(cl, isOpen) {
            : slo.indexOf('process')>=0 ? '#3b82f6'
            : slo.indexOf('complete')>=0 ? '#10b981' : '#94a3b8';
 
-  // Collapsed row pills — keep to max 2 to avoid overflow
+  // Pills
   var pills = '';
   if(r.inscomp) pills += '<span class="mpill">'+esc(r.inscomp)+'</span>';
   if(r.claimAmount) pills += '<span class="mpill mpill-g">USD '+esc(r.claimAmount)+'</span>';
+  var days = daysSince(cl.dateIn);
+  pills += '<span class="mpill">'+days+'d open</span>';
 
   // Requests
   var reqsHtml = cl.requests.length ? cl.requests.map(function(q){
@@ -1597,15 +1856,12 @@ function mobCard(cl, isOpen) {
     }).join('');
   }
 
-  // Full info grid — includes ALL fields including insurer
-  var days = daysSince(cl.dateIn);
+  // Info grid
   var infoGrid = '<div class="migrid">';
-  infoGrid += '<div class="miitem"><span class="milabel">Status</span><span class="mival" style="font-family:var(--ff-h);font-weight:700;font-size:12px;color:'+col.tx+';background:'+col.bg+';padding:3px 10px;border-radius:99px;display:inline-block">'+esc(cl.status)+'</span></div>';
+  infoGrid += '<div class="miitem"><span class="milabel">Handler</span><span class="mival">'+(r.handler?esc(r.handler):'<span class="mu">Unassigned</span>')+'</span></div>';
   infoGrid += '<div class="miitem"><span class="milabel">Days Open</span><span class="mival">'+days+'d</span></div>';
-  if(r.insurer) infoGrid += '<div class="miitem"><span class="milabel">Insurer</span><span class="mival mpill-b" style="font-weight:700;font-family:var(--ff-h);font-size:12px">'+esc(r.insurer)+'</span></div>';
-  if(r.claimAmount) infoGrid += '<div class="miitem"><span class="milabel">Amount</span><span class="mival" style="font-weight:700;color:#15803d">USD '+esc(r.claimAmount)+'</span></div>';
   if(r.accidentDate) infoGrid += '<div class="miitem"><span class="milabel">Acc. Date</span><span class="mival">'+esc(r.accidentDate)+'</span></div>';
-  infoGrid += '<div class="miitem"><span class="milabel">Handler</span><span class="mival">'+(r.handler?esc(r.handler):'<span style="color:var(--mu);font-style:italic">Unassigned</span>')+'</span></div>';
+  if(r.claimAmount) infoGrid += '<div class="miitem"><span class="milabel">Amount</span><span class="mival mpill-g" style="font-weight:700">USD '+esc(r.claimAmount)+'</span></div>';
   if(r.phone) infoGrid += '<div class="miitem"><span class="milabel">Phone</span><span class="mival">'+esc(r.phone)+'</span></div>';
   if(r.personalId) infoGrid += '<div class="miitem"><span class="milabel">Personal ID</span><span class="mival">'+esc(r.personalId)+'</span></div>';
   if(r.inscomp) infoGrid += '<div class="miitem full"><span class="milabel">Insured Company</span><span class="mival">'+esc(r.inscomp)+'</span></div>';
@@ -1616,7 +1872,8 @@ function mobCard(cl, isOpen) {
   var expandHtml = '<div class="mxpand"><div class="mxpand-inner"><div class="mxpand-body">'
     // Info
     + '<div class="msec">'
-    + '<div class="msec-title">'+secIco('<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>')+'Claim Info</div>'
+    + '<div class="msec-title">'+secIco('<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>')+'Info</div>'
+    + '<span class="mstbadge" style="background:'+col.bg+';color:'+col.tx+'">'+esc(cl.status)+'</span>'
     + infoGrid
     + '</div>'
     // Requests
@@ -1625,7 +1882,7 @@ function mobCard(cl, isOpen) {
     + 'Requests <span style="background:var(--surf3);border:1px solid var(--bd);border-radius:99px;padding:0 6px;font-size:10px;margin-left:3px">'+cl.requests.length+'</span></div>'
     + reqsHtml
     + '</div>'
-    // Remark
+    // Remark — ONLY editable field
     + '<div class="msec">'
     + '<div class="msec-title">'+secIco('<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>')
     + 'Remark <span style="font-size:9px;font-weight:500;color:var(--su);margin-left:4px;text-transform:none;letter-spacing:0">✎ editable</span></div>'
@@ -1655,6 +1912,7 @@ function mobToggle(id) {
   var opening = !el.classList.contains('mopen');
   el.classList.toggle('mopen');
   if(opening) {
+    // Auto-grow remark and scroll card into view after animation
     setTimeout(function(){
       var ta = el.querySelector('.mremark');
       if(ta) mobGrow(ta);
@@ -1685,4 +1943,3 @@ document.getElementById('modal').addEventListener('click',function(e){if(e.targe
 </script>
 </body>
 </html>
-
