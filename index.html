@@ -145,11 +145,15 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .ccL{display:flex;flex-direction:column;justify-content:center;padding:13px 16px;border-right:1.5px solid var(--bd);gap:3px;min-width:0}
 .ccM{display:flex;align-items:center;flex-wrap:wrap;gap:14px;padding:11px 18px;flex:1;min-width:0}
 .ccR{display:flex;align-items:center;gap:7px;padding:11px 14px;border-left:1.5px solid var(--bd);flex-shrink:0;align-self:stretch}
+.ccR-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-right:4px}
+.ccR-handler{font-family:var(--ff-h);font-size:10px;font-weight:700;color:var(--tx2);white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}
+.ccR-days{font-family:var(--ff-h);font-size:10px;font-weight:700;white-space:nowrap;transition:color var(--d) var(--e)}
 .cc-id{font-family:var(--ff-h);font-size:14.5px;font-weight:700;color:var(--ac);white-space:nowrap}
-.cc-ins{font-family:var(--ff-h);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#fff;margin-top:3px;background:#2563eb;border-radius:4px;padding:2px 7px;display:inline-block;line-height:1.4;box-shadow:0 1px 3px rgba(37,99,235,.3)}
+.cc-ins{font-family:var(--ff-h);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#fff;margin-top:3px;background:#2563eb;border-radius:4px;padding:2px 7px;display:inline-block;line-height:1.4;box-shadow:0 1px 3px rgba(0,0,0,.22)}
 .chip{display:flex;flex-direction:column;gap:1px;min-width:0}
 .chip-l{font-family:var(--ff-h);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu)}
 .chip-v{font-size:12.5px;font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.chip-v-bold{font-weight:700!important;color:var(--tx)!important}
 .pills{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .pill{padding:2px 8px;border-radius:var(--rpill);font-family:var(--ff-h);font-size:10.5px;font-weight:700;background:var(--surf3);border:1.5px solid var(--bd);color:var(--mu);white-space:nowrap;cursor:default}
 .pill-g{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
@@ -477,8 +481,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
   text-transform:uppercase;letter-spacing:.5px;
   color:#fff;background:#2563eb;border-radius:3px;
   padding:1px 4px;display:inline-block;line-height:1.4;
-  box-shadow:0 1px 3px rgba(37,99,235,.3);width:fit-content}
-[data-theme=dark] .mcard-ins{background:#1d4ed8}
+  box-shadow:0 1px 3px rgba(0,0,0,.22);width:fit-content}
 .mcard-body{flex:1;min-width:0;overflow:hidden}
 .mcard-name{font-size:13px;font-weight:600;color:var(--tx);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
@@ -573,7 +576,7 @@ textarea{resize:none;overflow:hidden;min-height:48px}
 .rpling::before{content:'';position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,.3);animation:ripple .5s var(--e) forwards}
 
 /* ════════════════════════════════════════════════════════
-   BUTTERY-SMOOTH ANIMATION LAYER  v3.9.0
+   BUTTERY-SMOOTH ANIMATION LAYER  v3.9.2
 ════════════════════════════════════════════════════════ */
 
 /* ── Keyframes ── */
@@ -779,7 +782,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
       </div>
       <div class="mtb-text">
         <div class="mtb-title">Query Tracker</div>
-        <div class="mtb-sub">v3.9.0 · View Only</div>
+        <div class="mtb-sub">v3.9.2 · View Only</div>
       </div>
     </div>
     <div class="mtb-acts">
@@ -955,7 +958,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       </div>
       <div class="hdr-title H">Query Tracker</div>
-      <span class="hdr-ver">v3.9.0</span>
+      <span class="hdr-ver">v3.9.2</span>
     </div>
     <div class="hdr-acts">
       <button class="btn btn-g btn-sm" onclick="manualSync()" id="hdr-sync-btn">
@@ -1481,7 +1484,7 @@ function openPrintWindow(claims,mode){
     +'<body onload="setTimeout(function(){window.print();},450)">'
     +'<div class="ph">'
     +'<div class="ph-brand"><div class="ph-logo">'+svgLogo+'</div><div><div class="ph-title">Query Tracker</div><div class="ph-sub">'+title+'</div></div></div>'
-    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.9.0</div>'
+    +'<div class="ph-meta">Printed: '+now+'<br>Total: '+claims.length+' claim'+(claims.length!==1?'s':'')+'<br>v3.9.2</div>'
     +'</div>'
     +'<table><colgroup>'
     +'<col class="td-id"><col class="td-ins"><col class="td-name"><col class="td-co">'
@@ -1490,7 +1493,7 @@ function openPrintWindow(claims,mode){
     +'<th>Claim #</th><th>Insurer</th><th>Claimant</th><th>Company</th>'
     +'<th style="text-align:right">Amount</th><th>Acc. Date</th><th style="text-align:center">Status</th><th>Requests</th><th>Remark / Files</th>'
     +'</tr></thead><tbody>'+rows+'</tbody></table>'
-    +'<div class="footer"><span>Query Tracker v3.9.0</span><span>Generated '+now+'</span></div>'
+    +'<div class="footer"><span>Query Tracker v3.9.2</span><span>Generated '+now+'</span></div>'
     +'</body></html>';
 
   // Write into a hidden iframe so no popup window appears; browser print dialog opens directly
@@ -1848,6 +1851,32 @@ function _doRender(){
   document.querySelectorAll('.ri-ta').forEach(ta=>autoGrow(ta));
 }
 
+/* ══ INSURER COLOR MAP ══ */
+var _INS_COLORS={
+  'aia':'#d6264e',
+  'infinity':'#743394'
+};
+var _INS_PALETTE=[
+  '#0e7490','#0369a1','#1d4ed8','#4338ca','#6d28d9',
+  '#7c3aed','#be185d','#b45309','#065f46','#1e3a5f',
+  '#6b21a8','#9f1239','#164e63','#713f12','#14532d'
+];
+function insurerColor(name){
+  if(!name)return'#2563eb';
+  var key=(name||'').trim().toLowerCase();
+  if(_INS_COLORS[key])return _INS_COLORS[key];
+  // Generate deterministic color from name using palette
+  var hash=0;
+  for(var i=0;i<key.length;i++)hash=(hash*31+key.charCodeAt(i))&0xffffffff;
+  // Pick from palette, but ensure no collision with existing assigned colors
+  var usedColors=Object.values(_INS_COLORS);
+  var available=_INS_PALETTE.filter(function(c){return usedColors.indexOf(c)<0;});
+  var pool=available.length?available:_INS_PALETTE;
+  var color=pool[Math.abs(hash)%pool.length];
+  // Cache it so same insurer always gets same color this session
+  _INS_COLORS[key]=color;
+  return color;
+}
 /* ══ BUILD CARD ══ */
 function buildCard(c,isOpen=false){
   const r=getRem(c.remark);
@@ -1944,21 +1973,23 @@ function buildCard(c,isOpen=false){
   <div class="ccrow" onclick="toggleCard('${c.id}')">
     <div class="ccL">
       <div class="cc-id">#${esc(did)}</div>
-      ${r.insurer?`<div class="cc-ins">${esc(r.insurer)}</div>`:''}
+      ${r.insurer?`<div class="cc-ins" style="background:${insurerColor(r.insurer)}">${esc(r.insurer)}</div>`:''}
     </div>
     <div class="ccM">
-      <div class="chip"><span class="chip-l">Claimant</span><span class="chip-v">${esc(c.customer)||'—'}</span></div>
+      <div class="chip"><span class="chip-l">Claimant</span><span class="chip-v chip-v-bold">${esc(c.customer)||'—'}</span></div>
       ${r.inscomp?`<div class="chip"><span class="chip-l">Insured Co.</span><span class="chip-v">${esc(r.inscomp)}</span></div>`:''}
-      <div class="chip"><span class="chip-l">Handler</span><span class="chip-v">${esc(handler)}</span></div>
       ${r.phone?`<div class="chip"><span class="chip-l">Phone</span><span class="chip-v">${esc(r.phone)}</span></div>`:''}
       ${r.personalId?`<div class="chip"><span class="chip-l">NID</span><span class="chip-v">${esc(r.personalId)}</span></div>`:''}
       <div class="pills">
         <span class="pill">${qcount} quer${qcount===1?'y':'ies'}</span>
-        <span class="pill">${days}d open</span>
         ${amtPill}${insPill}${compPill}
       </div>
     </div>
     <div class="ccR">
+      <div class="ccR-meta">
+        <span class="ccR-handler">${esc(handler)}</span>
+        <span class="ccR-days" style="color:${dayColor(days)}">${days}d open</span>
+      </div>
       ${qBtn}
       <button class="ib" title="Print A4 Portrait" onclick="event.stopPropagation();doPrint('${c.id}')">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -2297,6 +2328,11 @@ function exportXLSX(){
 
 /* ══ UTILS ══ */
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function dayColor(d){
+  if(d>=5)return'#ef4444';
+  if(d>=3)return'#f59e0b';
+  return'var(--mu)';
+}
 function daysSince(d){return Math.floor(Math.abs(new Date()-new Date(d))/86400000);}
 function toast(msg,type='info'){
   const dock=document.getElementById('tdock');const t=document.createElement('div');t.className='toast';
@@ -2458,7 +2494,7 @@ function mobCard(cl, isOpen) {
 
   return '<div class="mcard'+(isOpen?' mopen':'')+'" data-cid="'+cl.id+'">'
     + '<div class="mcard-top" onclick="mobToggle(\''+cl.id+'\')">'
-    + '<div class="mcard-idcol"><div class="mcard-id">#'+esc(did)+'</div>'+(r.insurer?'<div class="mcard-ins">'+esc(r.insurer)+'</div>':'')+'</div>'
+    + '<div class="mcard-idcol"><div class="mcard-id">#'+esc(did)+'</div>'+(r.insurer?'<div class="mcard-ins" style="background:'+insurerColor(r.insurer)+';">'+esc(r.insurer)+'</div>':'')+'</div>'
     + '<div class="mcard-body"><div class="mcard-name">'+esc(cl.customer||'Unknown')+'</div><div class="mcard-meta">'+pills+'</div></div>'
     + '<div class="mcard-right"><div class="mcard-dot" style="background:'+dot+'"></div>'
     + '<svg class="mcard-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>'
